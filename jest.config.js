@@ -3,7 +3,7 @@ module.exports = {
         // 모듈 이름을 매핑
         "^domain/(.*)$": "<rootDir>/src/domain/$1",
         "^application/(.*)$": "<rootDir>/src/application/$1",
-        "^presentation/(.*)$": "<rootDir>/src/presentation/$1",
+        "^adapter/(.*)$": "<rootDir>/src/adapter/$1",
         "^infrastructure/(.*)$": "<rootDir>/src/infrastructure/$1",
         "^utility/(.*)$": "<rootDir>/src/utility/$1",
     },
