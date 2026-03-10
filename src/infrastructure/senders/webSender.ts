@@ -51,7 +51,7 @@ export class WebNotificationSender implements INotificationSender {
             });
 
             console.log("Notification sent successfully:", response.data);
-        } catch (error) {
+        } catch (error: any) {
             console.error("Error sending notification:", error.response?.data || error.message);
         }
     }

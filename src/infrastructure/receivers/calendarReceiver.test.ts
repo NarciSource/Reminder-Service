@@ -39,35 +39,29 @@ describe("CalendarEventReceiver", () => {
             description: "mock-description",
             clientId: "mock-client-id",
         };
-        (client.get as jest.Mock).mockResolvedValue({ status: 200, data: schedule });
+        (client.get as jest.Mock).mockResolvedValue({ status: 200, data: { success: true, data: schedule } });
 
         const result = await receiver.receive({ event_id: "test-event-id" });
 
         expect(result).toEqual(schedule);
-        expect(client.get).toHaveBeenCalledWith(null, {
-            params: { interviewDetailId: "test-event-id" },
-        });
+        expect(client.get).toHaveBeenCalledWith("/test-event-id");
     });
 
     it("세부 정보가 없는 경우 오류", async () => {
-        (client.get as jest.Mock).mockResolvedValue({ status: 200, data: null });
+        (client.get as jest.Mock).mockResolvedValue({ status: 200, data: { success: false, data: null } });
 
         await expect(receiver.receive({ event_id: "test-event-id" })).rejects.toThrow(
             "해당 이벤트 ID에 대한 상세 정보가 없습니다.",
         );
-        expect(client.get).toHaveBeenCalledWith(null, {
-            params: { interviewDetailId: "test-event-id" },
-        });
+        expect(client.get).toHaveBeenCalledWith("/test-event-id");
     });
 
     it("호출 실패", async () => {
-        (client.get as jest.Mock).mockResolvedValue({ status: 500, data: null });
+        (client.get as jest.Mock).mockResolvedValue({ status: 500, data: { success: false, data: null } });
 
         await expect(receiver.receive({ event_id: "test-event-id" })).rejects.toThrow(
             "캘린더 API 호출 실패",
         );
-        expect(client.get).toHaveBeenCalledWith(null, {
-            params: { interviewDetailId: "test-event-id" },
-        });
+        expect(client.get).toHaveBeenCalledWith("/test-event-id");
     });
 });
