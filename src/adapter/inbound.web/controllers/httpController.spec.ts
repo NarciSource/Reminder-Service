@@ -1,31 +1,41 @@
 import { Test, TestingModule } from "@nestjs/testing";
 import { INestApplication } from "@nestjs/common";
-import * as request from "supertest";
+import { CommandBus, QueryBus } from "@nestjs/cqrs";
 
 import { NotificationStatus } from "domain/model/entity";
-import NotificationService from "application/service";
 import { CreateRequestDTO, ParametersDTO, UpdateRequestDTO } from "../dtos";
 import NotificationController from "./httpController";
 
 describe("NotificationController", () => {
+    const request = require("supertest");
+
     let app: INestApplication;
-    let service: NotificationService;
+    let commandBus: jest.Mocked<CommandBus>;
+    let queryBus: jest.Mocked<QueryBus>;
 
     beforeAll(async () => {
         const moduleFixture: TestingModule = await Test.createTestingModule({
             controllers: [NotificationController],
             providers: [
                 {
-                    provide: NotificationService,
+                    provide: CommandBus,
                     useValue: {
-                        register: jest.fn().mockResolvedValue({}),
+                        execute: jest.fn(),
+                    },
+                },
+                {
+                    provide: QueryBus,
+                    useValue: {
+                        execute: jest.fn(),
                     },
                 },
             ],
         }).compile();
 
         app = moduleFixture.createNestApplication();
-        service = moduleFixture.get<NotificationService>(NotificationService);
+        commandBus = moduleFixture.get(CommandBus);
+        queryBus = moduleFixture.get(QueryBus);
+
         await app.init();
     });
 
@@ -35,105 +45,78 @@ describe("NotificationController", () => {
             send_at: new Date(),
             status: NotificationStatus.Pending,
         };
-        const response = null;
+        const response = undefined;
 
-        jest.spyOn(service, "register").mockResolvedValue(response);
+        commandBus.execute.mockResolvedValue(response);
 
-        return request(app.getHttpServer()).post("/reminder").send(dto).expect(201);
+        await request(app.getHttpServer()).post("/").send(dto).expect(201);
+
+        expect(commandBus.execute).toHaveBeenCalledWith(
+            expect.objectContaining({
+                ...dto,
+                send_at: dto.send_at.toISOString(),
+            }),
+        );
     });
 
-    describe("NotificationController", () => {
-        let app: INestApplication;
-        let service: NotificationService;
+    it("/GET read", async () => {
+        const response = undefined;
 
-        beforeAll(async () => {
-            const moduleFixture: TestingModule = await Test.createTestingModule({
-                controllers: [NotificationController],
-                providers: [
-                    {
-                        provide: NotificationService,
-                        useValue: {
-                            register: jest.fn().mockResolvedValue({}),
-                            get: jest.fn().mockResolvedValue({}),
-                            getFilteredList: jest.fn().mockResolvedValue([]),
-                            update: jest.fn().mockResolvedValue({}),
-                            delete: jest.fn().mockResolvedValue({}),
-                        },
-                    },
-                ],
-            }).compile();
+        queryBus.execute.mockResolvedValue(response);
 
-            app = moduleFixture.createNestApplication();
-            service = moduleFixture.get<NotificationService>(NotificationService);
-            await app.init();
-        });
+        await request(app.getHttpServer()).get("/1").expect(200);
+    });
 
-        it("/POST create", async () => {
-            const dto: CreateRequestDTO = {
-                event_id: "1",
-                send_at: new Date(),
-                status: NotificationStatus.Pending,
-            };
-            const response = undefined;
+    it("/GET list", async () => {
+        const query: ParametersDTO = { status: NotificationStatus.Pending };
+        const response = [];
 
-            jest.spyOn(service, "register").mockResolvedValue(response);
+        queryBus.execute.mockResolvedValue(response);
 
-            return request(app.getHttpServer()).post("/reminder").send(dto).expect(201);
-        });
+        await request(app.getHttpServer()).get("/").query(query).expect(200);
+    });
 
-        it("/GET read", async () => {
-            const response = undefined;
+    it("/PUT replace", async () => {
+        const bodyDTO: CreateRequestDTO = {
+            event_id: "1",
+            send_at: new Date(),
+            status: NotificationStatus.Pending,
+        };
+        const response = undefined;
 
-            jest.spyOn(service, "get").mockResolvedValue(response);
+        commandBus.execute.mockResolvedValue(response);
 
-            return request(app.getHttpServer()).get("/reminder/1").expect(200);
-        });
+        await request(app.getHttpServer()).put("/1").send(bodyDTO).expect(200);
 
-        it("/GET readByOptions", async () => {
-            const query: ParametersDTO = { status: NotificationStatus.Pending };
-            const response = [];
+        expect(commandBus.execute).toHaveBeenCalledWith(
+            expect.objectContaining({
+                ...bodyDTO,
+                send_at: bodyDTO.send_at.toISOString(),
+            }),
+        );
+    });
 
-            jest.spyOn(service, "getFilteredList").mockResolvedValue(response);
+    it("/PATCH update", async () => {
+        const bodyDTO: UpdateRequestDTO = {
+            status: NotificationStatus.Sent,
+            event_id: "1",
+        };
+        const response = undefined;
+        commandBus.execute.mockResolvedValue(response);
 
-            return request(app.getHttpServer()).get("/reminder").query(query).expect(200);
-        });
+        await request(app.getHttpServer()).patch("/1").send(bodyDTO).expect(200);
 
-        it("/PUT update", async () => {
-            const bodyDTO: CreateRequestDTO = {
-                event_id: "1",
-                send_at: new Date(),
-                status: NotificationStatus.Pending,
-            };
-            const response = undefined;
+        expect(commandBus.execute).toHaveBeenCalledWith(
+            expect.objectContaining(bodyDTO),
+        );
+    });
 
-            jest.spyOn(service, "register").mockResolvedValue(response);
+    it("/DELETE delete", async () => {
+        const response = undefined;
 
-            return request(app.getHttpServer()).put("/reminder/1").send(bodyDTO).expect(200);
-        });
+        commandBus.execute.mockResolvedValue(response);
 
-        it("/PATCH updatePartial", async () => {
-            const bodyDTO: UpdateRequestDTO = {
-                status: NotificationStatus.Sent,
-                event_id: "",
-            };
-            const response = undefined;
-
-            jest.spyOn(service, "update").mockResolvedValue(response);
-
-            return request(app.getHttpServer()).patch("/reminder/1").send(bodyDTO).expect(200);
-        });
-
-        it("/DELETE delete", async () => {
-            const response = undefined;
-
-            jest.spyOn(service, "delete").mockResolvedValue(response);
-
-            return request(app.getHttpServer()).delete("/reminder/1").expect(200);
-        });
-
-        afterAll(async () => {
-            await app.close();
-        });
+        await request(app.getHttpServer()).delete("/1").expect(200);
     });
 
     afterAll(async () => {

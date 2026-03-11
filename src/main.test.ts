@@ -24,10 +24,11 @@ jest.mock("aws-jwt-verify", () => {
     };
 });
 
-jest.mock("./utility/generatorSwagger", () => ({
+jest.mock("infrastructure/config/generatorSwagger", () => ({
+    __esModule: true,
     default: jest.fn(),
 }));
-jest.mock("./infrastructure/auth/jwtInterceptor");
+jest.mock("infrastructure/auth/jwtInterceptor");
 
 describe("bootstrap", () => {
     let mockApp: any;
@@ -52,7 +53,7 @@ describe("bootstrap", () => {
         process.env.PORT = 3000;
         process.env.MS_PORT = 3001;
 
-        const { bootstrap } = await import("./main");
+        const { bootstrap } = require("./main");
         await bootstrap();
 
         expect(NestFactory.create).toHaveBeenCalledWith(NotificationModule);

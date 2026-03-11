@@ -26,7 +26,7 @@ jest.mock("yamljs", () => ({
     stringify: jest.fn().mockReturnValue("yaml-content"),
 }));
 
-jest.mock("./generatorSwagger");
+jest.mock("infrastructure/config/generatorSwagger");
 
 describe("openapi", () => {
     let mockApp: any;
@@ -48,7 +48,7 @@ describe("openapi", () => {
 
         try {
             await openapi();
-        } catch (e) {
+        } catch (e: any) {
             expect(e.message).toBe("exit");
         }
 
@@ -70,7 +70,7 @@ describe("openapi", () => {
 
         try {
             await openapi();
-        } catch (e) {
+        } catch (e: any) {
             expect(e.message).toBe("exit");
         }
 

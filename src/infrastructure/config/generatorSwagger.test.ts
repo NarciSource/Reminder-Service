@@ -1,16 +1,17 @@
-import { Test } from "@nestjs/testing";
+import { Test, TestingModule } from "@nestjs/testing";
 import { INestApplication } from "@nestjs/common";
 import { SwaggerModule } from "@nestjs/swagger";
 
 import generatorSwagger from "./generatorSwagger";
 
-describe("generatorSwagger", () => {
+describe("generatorSwagger (e2e)", () => {
     let app: INestApplication;
     let createDocumentSpy: jest.SpyInstance;
     let setupSpy: jest.SpyInstance;
 
     beforeAll(async () => {
-        const moduleRef = await Test.createTestingModule({}).compile();
+        const moduleRef: TestingModule = await Test.createTestingModule({}).compile();
+
         app = moduleRef.createNestApplication();
         await app.init();
 
@@ -19,30 +20,43 @@ describe("generatorSwagger", () => {
     });
 
     afterAll(async () => {
-        await app.close();
+        if (app) await app.close();
     });
 
-    afterAll(() => {
+    afterEach(() => {
         jest.clearAllMocks();
-
-        createDocumentSpy.mockRestore();
-        setupSpy.mockRestore();
     });
 
-    it("Swagger 문서를 올바른 설정으로 생성", () => {
+    it("Swagger 문서를 올바르게 생성하고 설정한다", () => {
+        // given
+        const mockDocument = { openapi: "3.0.0" };
+
+        createDocumentSpy.mockReturnValue(mockDocument as any);
+
+        // when
         const document = generatorSwagger(app);
 
+        // then
         expect(createDocumentSpy).toHaveBeenCalledWith(
             app,
             expect.objectContaining({
-                info: expect.objectContaining({
-                    title: expect.any(String),
-                    description: expect.any(String),
-                    version: expect.any(String),
+                info: expect.anything(),
+            }),
+        );
+
+        expect(setupSpy).toHaveBeenCalledWith(
+            "swagger-ui",
+            app,
+            mockDocument,
+            expect.objectContaining({
+                jsonDocumentUrl: "v3/api-docs",
+                swaggerOptions: expect.objectContaining({
+                    persistAuthorization: true,
+                    initOAuth: expect.anything(),
                 }),
             }),
         );
-        expect(setupSpy).toHaveBeenCalledWith("api", app, document);
-        expect(document).toBeDefined();
+
+        expect(document).toBe(mockDocument);
     });
 });

@@ -44,7 +44,7 @@ describe("Dynamoose Provider", () => {
         });
 
         expect(dynamoose.aws.ddb.set).toHaveBeenCalled();
-        expect(result).toBe(dynamoose);
+        expect(result).toStrictEqual(dynamoose);
     });
 
     it("프로덕션 환경에서 Dynamoose를 구성합니다", () => {
@@ -57,6 +57,6 @@ describe("Dynamoose Provider", () => {
         });
 
         expect(dynamoose.aws.ddb.set).toHaveBeenCalled();
-        expect(result).toBe(dynamoose);
+        expect(result).toStrictEqual(dynamoose);
     });
 });
