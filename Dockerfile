@@ -21,7 +21,7 @@ RUN npm run build --workspace notification
 RUN npm prune --omit=dev --workspace notification
 
 # 2. 실행 단계
-FROM node:20-bullseye-slim AS runner
+FROM node:20-bullseye AS runner
 
 ## 작업 디렉토리 설정
 WORKDIR /app

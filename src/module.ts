@@ -54,9 +54,9 @@ import DynamooseProvider from "infrastructure/config/dynamoProvider";
         ...Object.values(commands),
     ],
     controllers: [
+        HealthCheckController,
         NotificationHttpController,
         NotificationsMessageController,
-        HealthCheckController,
     ],
 })
 export class NotificationModule {}

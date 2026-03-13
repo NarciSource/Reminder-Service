@@ -24,7 +24,7 @@ describe("HealthCheckController", () => {
     });
 
     it("헬스체크", async () => {
-        const response = await request(app.getHttpServer()).get("/");
+        const response = await request(app.getHttpServer()).get("/health");
         const expectedResponse = {
             status: "ok",
         };

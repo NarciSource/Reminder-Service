@@ -37,7 +37,7 @@ describe("Bootstrap E2E Test", () => {
 
     it("헬스 체크 엔드포인트는 JWT 없이 통과", async () => {
         await request(app.getHttpServer())
-            .get("/")
+            .get("/health")
             .expect(200);
     });
 
