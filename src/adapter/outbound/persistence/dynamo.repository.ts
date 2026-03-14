@@ -1,11 +1,11 @@
 import { Injectable } from "@nestjs/common";
 import type { ModelType } from "dynamoose/dist/General";
 
-import type { NotificationRepository } from "@/application/port.out/notification.repository";
+import type { NotificationRepository } from "@/application/port.out/repository";
 import type NotificationEntity from "@/domain/model/entity";
 import type { NotificationStatus } from "@/domain/model/entity";
 // biome-ignore lint/style/useImportType: NestJS DI requires runtime class reference
-import DynamoModel from "./dynamo.model";
+import DynamoModel from "@/infrastructure/persistence/dynamo/model";
 
 /**
  * DynamoDB를 사용하여 알림 데이터를 관리하는 저장소 클래스입니다.

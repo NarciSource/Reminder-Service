@@ -2,7 +2,7 @@ import { Inject } from "@nestjs/common";
 import { CommandHandler, type ICommandHandler } from "@nestjs/cqrs";
 
 import NotificationEntity from "@/domain/model/entity";
-import { NotificationRepository } from "../port.out/notification.repository";
+import { NotificationRepository } from "../port.out/repository";
 import RegisterCommand from "./register.command";
 
 @CommandHandler(RegisterCommand)

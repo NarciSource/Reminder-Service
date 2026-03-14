@@ -2,7 +2,7 @@ import { promises } from "node:fs";
 import { NestFactory } from "@nestjs/core";
 import * as YAML from "yamljs";
 
-import generatorSwagger from "@/infrastructure/config/generator-swagger";
+import { SwaggerService } from "@/infrastructure/swagger/service";
 import { NotificationModule } from "../module";
 
 /**
@@ -14,7 +14,8 @@ export async function openapi() {
     const app = await NestFactory.create(NotificationModule);
 
     // Swagger 명세서 생성
-    const document = generatorSwagger(app);
+    const swagger = app.get(SwaggerService);
+    const document = swagger.setup(app);
 
     // Swagger JSON을 YAML로 변환
     const yamlDocument = YAML.stringify(document, 10, 2);

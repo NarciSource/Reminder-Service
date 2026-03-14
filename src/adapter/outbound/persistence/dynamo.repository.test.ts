@@ -2,7 +2,7 @@ import { Test, type TestingModule } from "@nestjs/testing";
 import type { ModelType } from "dynamoose/dist/General";
 
 import NotificationEntity, { NotificationStatus } from "@/domain/model/entity";
-import DynamoModel from "./dynamo.model";
+import DynamoModel from "@/infrastructure/persistence/dynamo/model";
 import DynamoRepository from "./dynamo.repository";
 
 describe("DynamoRepository", () => {

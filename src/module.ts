@@ -3,12 +3,12 @@ import { ConfigModule } from "@nestjs/config";
 import { CqrsModule } from "@nestjs/cqrs";
 import { TerminusModule } from "@nestjs/terminus";
 
-import { HealthCheckController, HttpController, MessageController } from "@/adapter/inbound.web/controllers";
-import DynamoModel from "@/adapter/outbound.persistence/dynamo.model";
-import DynamoRepository from "@/adapter/outbound.persistence/dynamo.repository";
+import { DynamoRepository } from "@/adapter/outbound/persistence";
 import { commands, queries } from "@/application";
-import { NotificationRepository } from "@/application/port.out/notification.repository";
-import DynamooseProvider from "@/infrastructure/config/dynamo.provider";
+import { NotificationRepository } from "@/application/port.out/repository";
+import { DynamoModule } from "@/infrastructure/persistence/dynamo";
+import { SwaggerModule } from "@/infrastructure/swagger";
+import { HealthCheckController, HttpController, MessageController } from "./adapter/inbound/web/controllers";
 
 /**
  * NotificationModule
@@ -19,10 +19,10 @@ import DynamooseProvider from "@/infrastructure/config/dynamo.provider";
  *   - `ConfigModule`: 환경 변수 설정을 글로벌로 적용하며, `.env.local` 및 `.env` 파일을 로드합니다.
  *   - `CqrsModule`: CQRS 패턴을 구현하기 위한 모듈입니다.
  *   - `TerminusModule`: 헬스 체크 기능을 제공하는 모듈입니다.
+ *   - `SwaggerModule`: API 문서 생성을 위한 모듈입니다.
+ *   - `DynamoModule`: DynamoDB와의 통신을 위한 모듈입니다.
  *
  * - `providers`: 서비스와 리포지토리, 그리고 Dynamoose 모델을 제공하는 프로바이더를 정의합니다.
- *   - `DynamooseProvider`: Dynamoose 관련 설정 및 초기화를 담당합니다.
- *   - `DynamoModel`: Dynamoose 모델을 제공합니다.
  *   - `NotificationRepository`: 애플리케이션에서 사용할 저장소 인터페이스를 제공합니다.
  *   - `queries`와 `commands`: CQRS 패턴을 구현하기 위한 쿼리와 커맨드 핸들러를 제공합니다.
  *
@@ -39,10 +39,10 @@ import DynamooseProvider from "@/infrastructure/config/dynamo.provider";
         }),
         CqrsModule,
         TerminusModule,
+        SwaggerModule,
+        DynamoModule,
     ],
     providers: [
-        DynamooseProvider,
-        DynamoModel,
         {
             provide: NotificationRepository, // 인터페이스 제공
             useClass: DynamoRepository, // 구현체 연결

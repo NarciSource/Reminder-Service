@@ -3,7 +3,7 @@ import { NestFactory } from "@nestjs/core";
 import { type MicroserviceOptions, Transport } from "@nestjs/microservices";
 
 import { JwtInterceptor } from "@/infrastructure/auth/jwt.interceptor";
-import generatorSwagger from "@/infrastructure/config/generator-swagger";
+import { SwaggerService } from "@/infrastructure/swagger/service";
 import { NotificationModule } from "./module";
 
 /**
@@ -31,7 +31,8 @@ export async function bootstrap(): Promise<void> {
     const app = await NestFactory.create(NotificationModule);
 
     // Swagger 설정
-    generatorSwagger(app);
+    const swagger = app.get(SwaggerService);
+    swagger.setup(app);
 
     // 전역 파이프 설정
     app.useGlobalPipes(

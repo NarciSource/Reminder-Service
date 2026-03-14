@@ -2,7 +2,7 @@ import { Inject } from "@nestjs/common";
 import { type IQueryHandler, QueryHandler } from "@nestjs/cqrs";
 
 import type NotificationEntity from "@/domain/model/entity";
-import { NotificationRepository } from "../port.out/notification.repository";
+import { NotificationRepository } from "../port.out/repository";
 import ListQuery from "./list.query";
 
 @QueryHandler(ListQuery)

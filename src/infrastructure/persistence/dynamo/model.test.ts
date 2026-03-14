@@ -2,8 +2,8 @@ import { Test, type TestingModule } from "@nestjs/testing";
 import type dynamoose from "dynamoose";
 
 import { NotificationStatus } from "@/domain/model/entity";
-import { DYNAMO_STORAGE } from "@/infrastructure/config/dynamo.provider";
-import DynamoModel from "./dynamo.model";
+import DynamoModel from "./model";
+import { DYNAMO_STORAGE } from "./provider";
 
 describe("DynamoModel", () => {
     let model: DynamoModel;

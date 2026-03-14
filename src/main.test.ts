@@ -24,10 +24,6 @@ jest.mock("aws-jwt-verify", () => {
     };
 });
 
-jest.mock("@/infrastructure/config/generator-swagger", () => ({
-    __esModule: true,
-    default: jest.fn(),
-}));
 jest.mock("@/infrastructure/auth/jwt.interceptor");
 
 describe("bootstrap", () => {
@@ -35,6 +31,7 @@ describe("bootstrap", () => {
 
     beforeEach(() => {
         mockApp = {
+            get: jest.fn().mockReturnValue({ setup: jest.fn() }),
             useGlobalPipes: jest.fn(),
             useGlobalInterceptors: jest.fn(),
             listen: jest.fn(),

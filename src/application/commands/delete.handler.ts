@@ -1,7 +1,7 @@
 import { Inject } from "@nestjs/common";
 import { CommandHandler, type ICommandHandler } from "@nestjs/cqrs";
 
-import { NotificationRepository } from "../port.out/notification.repository";
+import { NotificationRepository } from "../port.out/repository";
 import DeleteCommand from "./delete.command";
 
 @CommandHandler(DeleteCommand)

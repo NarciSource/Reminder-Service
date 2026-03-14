@@ -4,7 +4,7 @@ import type { ModelType } from "dynamoose/dist/General";
 import type { AnyItem } from "dynamoose/dist/Item";
 
 import { NotificationStatus } from "@/domain/model/entity";
-import { DYNAMO_STORAGE } from "@/infrastructure/config/dynamo.provider";
+import { DYNAMO_STORAGE } from "./provider";
 
 /**
  * DynamoModel 클래스는 DynamoDB와 상호작용하기 위한 Dynamoose 모델을 생성하고 관리합니다.

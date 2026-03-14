@@ -12,7 +12,7 @@
     "start:worker": "nest start worker",
     "format": "biome format --write",
     "lint": "biome check --write",
-    "generate-openapi": "ts-node -P tsconfig.json --require tsconfig-paths/register src/utility/download-open-api.ts"
+    "generate-openapi": "ts-node -P tsconfig.json --require tsconfig-paths/register src/tools/download-open-api.ts"
   },
   "dependencies": {
     "@nestjs/cqrs": "^11.0.3",
