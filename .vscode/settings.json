@@ -7,7 +7,7 @@
     "tsconfig.json": "tsconfig.*.json, env.d.ts, global.d.ts, typedoc.*",
     "*.ts": "$(capture).spec.ts, $(capture).test.ts",
     "docker-compose.yml": "Dockerfile.*",
-    "package.json": "package-lock.json, pnpm*, .yarnrc*, yarn*, .eslint*, eslint*, .prettier*, prettier*, .editorconfig, steiger.config.ts, jest.config.js, nest-cli.json"
+    "package.json": "package-lock.json, pnpm*, .yarnrc*, yarn*, biome.json, .eslint*, eslint*, .prettier*, prettier*, .editorconfig, steiger.config.ts, jest.config.js, nest-cli.json"
   },
   "cSpell.words": ["dynamoose", "nestjs", "ONESIGNAL", "pickme"]
 }

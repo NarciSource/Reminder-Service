@@ -15,13 +15,7 @@ module.exports = {
 
     // 커버리지 수집 설정
     collectCoverage: true,
-    collectCoverageFrom: [
-        "**/*.{ts,js}",
-        "!**/node_modules/**",
-        "!**/dist/**",
-        "!**/*.config.{ts,js}",
-        "!**/*.d.ts",
-    ],
+    collectCoverageFrom: ["**/*.{ts,js}", "!**/node_modules/**", "!**/dist/**", "!**/*.config.{ts,js}", "!**/*.d.ts"],
     coverageDirectory: "dist/coverage",
     coverageReporters: ["html", "lcov", "text-summary"],
 
