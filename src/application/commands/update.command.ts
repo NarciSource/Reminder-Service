@@ -1,4 +1,4 @@
-import type { NotificationStatus } from "@/domain/model/entity";
+import type { ReminderStatus } from "@/domain/model/entity";
 
 export default class UpdateCommand {
     /**
@@ -9,6 +9,6 @@ export default class UpdateCommand {
     constructor(
         public readonly event_id: string,
         public readonly send_at?: Date,
-        public readonly status?: NotificationStatus,
+        public readonly status?: ReminderStatus,
     ) {}
 }

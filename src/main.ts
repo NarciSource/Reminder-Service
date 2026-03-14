@@ -4,7 +4,7 @@ import { type MicroserviceOptions, Transport } from "@nestjs/microservices";
 
 import { JwtInterceptor } from "@/infrastructure/auth/jwt.interceptor";
 import { SwaggerService } from "@/infrastructure/swagger/service";
-import { NotificationModule } from "./module";
+import { ApiModule } from "./module";
 
 /**
  * 애플리케이션 부트스트랩 함수
@@ -28,7 +28,7 @@ import { NotificationModule } from "./module";
  */
 export async function bootstrap(): Promise<void> {
     // 알림 서비스 생성
-    const app = await NestFactory.create(NotificationModule);
+    const app = await NestFactory.create(ApiModule);
 
     // Swagger 설정
     const swagger = app.get(SwaggerService);

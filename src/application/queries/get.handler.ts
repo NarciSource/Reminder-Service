@@ -1,15 +1,15 @@
 import { Inject } from "@nestjs/common";
 import { type IQueryHandler, QueryHandler } from "@nestjs/cqrs";
 
-import type NotificationEntity from "@/domain/model/entity";
-import { NotificationRepository } from "../port.out/repository";
+import type ReminderEntity from "@/domain/model/entity";
+import { ReminderRepository } from "../port.out/repository";
 import GetQuery from "./get.query";
 
 @QueryHandler(GetQuery)
 export default class GetHandler implements IQueryHandler<GetQuery> {
     constructor(
-        @Inject(NotificationRepository)
-        private readonly repository: NotificationRepository,
+        @Inject(ReminderRepository)
+        private readonly repository: ReminderRepository,
     ) {}
 
     /**
@@ -17,7 +17,7 @@ export default class GetHandler implements IQueryHandler<GetQuery> {
      *
      * @param {GetQuery} query - 알림 조회 요청 쿼리 페이로드
      */
-    async execute({ event_id }: GetQuery): Promise<NotificationEntity> {
+    async execute({ event_id }: GetQuery): Promise<ReminderEntity> {
         return this.repository.findById(event_id);
     }
 }

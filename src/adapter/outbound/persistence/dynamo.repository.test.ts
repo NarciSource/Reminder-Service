@@ -1,7 +1,7 @@
 import { Test, type TestingModule } from "@nestjs/testing";
 import type { ModelType } from "dynamoose/dist/General";
 
-import NotificationEntity, { NotificationStatus } from "@/domain/model/entity";
+import ReminderEntity, { ReminderStatus } from "@/domain/model/entity";
 import DynamoModel from "@/infrastructure/persistence/dynamo/model";
 import DynamoRepository from "./dynamo.repository";
 
@@ -40,7 +40,7 @@ describe("DynamoRepository", () => {
 
     describe("create", () => {
         it("알림 데이터를 생성", async () => {
-            const eventData = new NotificationEntity("1", new Date(), NotificationStatus.Pending);
+            const eventData = new ReminderEntity("1", new Date(), ReminderStatus.Pending);
             const ttl = Math.floor(eventData.send_at.getTime() / 1000) + 60 * 60;
 
             model.update.mockResolvedValue(eventData);
@@ -58,7 +58,7 @@ describe("DynamoRepository", () => {
     describe("findById", () => {
         it("ID로 알림 데이터를 조회", async () => {
             const event_id = "1";
-            const entity = new NotificationEntity(event_id, new Date(), NotificationStatus.Pending);
+            const entity = new ReminderEntity(event_id, new Date(), ReminderStatus.Pending);
 
             model.get.mockResolvedValue(entity);
 
@@ -73,8 +73,8 @@ describe("DynamoRepository", () => {
         it("예약된 시간과 상태로 알림 데이터를 조회", async () => {
             const start_time = new Date();
             const end_time = new Date();
-            const status = NotificationStatus.Pending;
-            const entities = [new NotificationEntity("1", start_time, status)];
+            const status = ReminderStatus.Pending;
+            const entities = [new ReminderEntity("1", start_time, status)];
 
             model.query("send_at").exec.mockResolvedValue(entities);
 

@@ -1,1 +1,1 @@
-export { default as DynamoRepository } from "./dynamo.repository"
+export { default as DynamoRepository } from "./dynamo.repository";

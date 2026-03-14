@@ -1,4 +1,4 @@
-import type { NotificationStatus } from "@/domain/model/entity";
+import type { ReminderStatus } from "@/domain/model/entity";
 
 export default class ListQuery {
     /**
@@ -9,6 +9,6 @@ export default class ListQuery {
     constructor(
         public readonly start_time?: Date,
         public readonly end_time?: Date,
-        public readonly status?: NotificationStatus,
+        public readonly status?: ReminderStatus,
     ) {}
 }

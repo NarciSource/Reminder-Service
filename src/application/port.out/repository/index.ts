@@ -1,1 +1,1 @@
-export { NotificationRepository } from "./notification.repository"
+export { ReminderRepository } from "./reminder.repository";

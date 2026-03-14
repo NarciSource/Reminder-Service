@@ -3,7 +3,7 @@ import { Test, type TestingModule } from "@nestjs/testing";
 
 import { JwtInterceptor } from "@/infrastructure/auth/jwt.interceptor";
 import verifyJwt from "@/infrastructure/auth/verify-jwt";
-import { NotificationModule } from "../src/module";
+import { ApiModule } from "../src/module";
 
 jest.mock("@/infrastructure/auth/verify-jwt", () => ({
     __esModule: true,
@@ -17,7 +17,7 @@ describe("Bootstrap E2E Test", () => {
 
     beforeAll(async () => {
         const moduleFixture: TestingModule = await Test.createTestingModule({
-            imports: [NotificationModule], // NotificationModule을 테스트 모듈로 사용
+            imports: [ApiModule], // ApiModule 테스트 모듈로 사용
         }).compile();
 
         app = moduleFixture.createNestApplication();

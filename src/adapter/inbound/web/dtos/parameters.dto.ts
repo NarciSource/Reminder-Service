@@ -2,7 +2,7 @@ import { ApiProperty } from "@nestjs/swagger";
 import { Type } from "class-transformer";
 import { IsDate, IsOptional, IsString, ValidateIf } from "class-validator";
 
-import { NotificationStatus } from "@/domain/model/entity";
+import { ReminderStatus } from "@/domain/model/entity";
 import { AtLeastOneOption, IsTimeRange, TrimSeconds } from "../decorators";
 
 export default class ParametersDTO {
@@ -37,11 +37,11 @@ export default class ParametersDTO {
     @IsOptional()
     @ApiProperty({
         description: "알림 상태",
-        enum: NotificationStatus,
+        enum: ReminderStatus,
         required: false,
         example: "Pending",
     })
-    status?: NotificationStatus;
+    status?: ReminderStatus;
 
     @AtLeastOneOption({ message: "적어도 하나의 옵션이 필요합니다." })
     filter_options?: any;

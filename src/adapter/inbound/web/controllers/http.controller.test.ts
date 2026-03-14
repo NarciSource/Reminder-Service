@@ -2,7 +2,7 @@ import type { INestApplication } from "@nestjs/common";
 import { CommandBus, QueryBus } from "@nestjs/cqrs";
 import { Test, type TestingModule } from "@nestjs/testing";
 
-import { NotificationStatus } from "@/domain/model/entity";
+import { ReminderStatus } from "@/domain/model/entity";
 import type { CreateRequestDTO, ParametersDTO, UpdateRequestDTO } from "../dtos";
 import HttpController from "./http.controller";
 
@@ -43,7 +43,7 @@ describe("HttpController", () => {
         const dto: CreateRequestDTO = {
             event_id: "1",
             send_at: new Date(),
-            status: NotificationStatus.Pending,
+            status: ReminderStatus.Pending,
         };
         const response = undefined;
 
@@ -68,7 +68,7 @@ describe("HttpController", () => {
     });
 
     it("/GET list", async () => {
-        const query: ParametersDTO = { status: NotificationStatus.Pending };
+        const query: ParametersDTO = { status: ReminderStatus.Pending };
         const response = [];
 
         queryBus.execute.mockResolvedValue(response);
@@ -80,7 +80,7 @@ describe("HttpController", () => {
         const bodyDTO: CreateRequestDTO = {
             event_id: "1",
             send_at: new Date(),
-            status: NotificationStatus.Pending,
+            status: ReminderStatus.Pending,
         };
         const response = undefined;
 
@@ -98,7 +98,7 @@ describe("HttpController", () => {
 
     it("/PATCH update", async () => {
         const bodyDTO: UpdateRequestDTO = {
-            status: NotificationStatus.Sent,
+            status: ReminderStatus.Sent,
             event_id: "1",
         };
         const response = undefined;

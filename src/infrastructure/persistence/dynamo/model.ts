@@ -3,7 +3,7 @@ import type dynamoose from "dynamoose";
 import type { ModelType } from "dynamoose/dist/General";
 import type { AnyItem } from "dynamoose/dist/Item";
 
-import { NotificationStatus } from "@/domain/model/entity";
+import { ReminderStatus } from "@/domain/model/entity";
 import { DYNAMO_STORAGE } from "./provider";
 
 /**
@@ -44,7 +44,7 @@ export default class DynamoModel {
             },
             status: {
                 type: String,
-                enum: Object.values(NotificationStatus),
+                enum: Object.values(ReminderStatus),
             },
         });
 

@@ -2,7 +2,7 @@ import { ApiProperty } from "@nestjs/swagger";
 import { Type } from "class-transformer";
 import { IsDate, IsOptional, IsString } from "class-validator";
 
-import { NotificationStatus } from "@/domain/model/entity";
+import { ReminderStatus } from "@/domain/model/entity";
 
 export default class UpdateRequestDTO {
     @IsString()
@@ -20,9 +20,9 @@ export default class UpdateRequestDTO {
     @IsOptional()
     @ApiProperty({
         description: "알림 상태",
-        enum: NotificationStatus,
+        enum: ReminderStatus,
         required: false,
         example: "Pending",
     })
-    status?: NotificationStatus;
+    status?: ReminderStatus;
 }

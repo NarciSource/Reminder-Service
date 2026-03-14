@@ -3,7 +3,7 @@ import { NestFactory } from "@nestjs/core";
 import * as YAML from "yamljs";
 
 import { SwaggerService } from "@/infrastructure/swagger/service";
-import { NotificationModule } from "../module";
+import { ApiModule } from "../module";
 
 /**
  * OpenAPI 명세서를 생성하고 YAML 파일로 저장하는 함수입니다.
@@ -11,7 +11,7 @@ import { NotificationModule } from "../module";
  * @throws 디렉토리 생성 또는 파일 쓰기 중 오류가 발생할 경우 에러를 출력하고 프로세스를 종료합니다.
  */
 export async function openapi() {
-    const app = await NestFactory.create(NotificationModule);
+    const app = await NestFactory.create(ApiModule);
 
     // Swagger 명세서 생성
     const swagger = app.get(SwaggerService);

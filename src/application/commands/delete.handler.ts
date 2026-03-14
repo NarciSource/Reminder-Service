@@ -1,14 +1,14 @@
 import { Inject } from "@nestjs/common";
 import { CommandHandler, type ICommandHandler } from "@nestjs/cqrs";
 
-import { NotificationRepository } from "../port.out/repository";
+import { ReminderRepository } from "../port.out/repository";
 import DeleteCommand from "./delete.command";
 
 @CommandHandler(DeleteCommand)
 export default class DeleteHandler implements ICommandHandler<DeleteCommand> {
     constructor(
-        @Inject(NotificationRepository)
-        private repository: NotificationRepository,
+        @Inject(ReminderRepository)
+        private repository: ReminderRepository,
     ) {}
 
     /**

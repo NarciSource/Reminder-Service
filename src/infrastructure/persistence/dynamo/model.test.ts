@@ -1,7 +1,7 @@
 import { Test, type TestingModule } from "@nestjs/testing";
 import type dynamoose from "dynamoose";
 
-import { NotificationStatus } from "@/domain/model/entity";
+import { ReminderStatus } from "@/domain/model/entity";
 import DynamoModel from "./model";
 import { DYNAMO_STORAGE } from "./provider";
 
@@ -42,7 +42,7 @@ describe("DynamoModel", () => {
                 },
                 status: {
                     type: String,
-                    enum: Object.values(NotificationStatus),
+                    enum: Object.values(ReminderStatus),
                 },
             });
 

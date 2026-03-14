@@ -1,5 +1,5 @@
 {
-  "name": "@pickme/reminder-notification",
+  "name": "@pickme/reminder-api",
   "version": "0.0.1",
   "description": "",
   "private": true,
@@ -8,7 +8,7 @@
     "start": "nest start",
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
-    "start:prod": "node dist/notification/main",
+    "start:prod": "node dist/reminder/api/main",
     "start:worker": "nest start worker",
     "format": "biome format --write",
     "lint": "biome check --write",

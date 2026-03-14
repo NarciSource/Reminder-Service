@@ -1,15 +1,15 @@
 import { Inject } from "@nestjs/common";
 import { type IQueryHandler, QueryHandler } from "@nestjs/cqrs";
 
-import type NotificationEntity from "@/domain/model/entity";
-import { NotificationRepository } from "../port.out/repository";
+import type ReminderEntity from "@/domain/model/entity";
+import { ReminderRepository } from "../port.out/repository";
 import ListQuery from "./list.query";
 
 @QueryHandler(ListQuery)
 export default class ListHandler implements IQueryHandler<ListQuery> {
     constructor(
-        @Inject(NotificationRepository)
-        private readonly repository: NotificationRepository,
+        @Inject(ReminderRepository)
+        private readonly repository: ReminderRepository,
     ) {}
 
     /**
@@ -18,7 +18,7 @@ export default class ListHandler implements IQueryHandler<ListQuery> {
      * @param {FindQuery} query - 알림 검색 요청 쿼리 페이로드
      * @returns 필터링된 알림 엔티티 배열
      */
-    async execute({ start_time, end_time, status }: ListQuery): Promise<NotificationEntity[]> {
+    async execute({ start_time, end_time, status }: ListQuery): Promise<ReminderEntity[]> {
         return this.repository.findBetween(start_time, end_time, status);
     }
 }

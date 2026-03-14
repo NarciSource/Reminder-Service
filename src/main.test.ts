@@ -6,7 +6,7 @@ process.env.COGNITO_USER_POOL_ID = "dummy-pool-id";
 process.env.COGNITO_CLIENT_ID = "dummy-client-id";
 
 import { JwtInterceptor } from "@/infrastructure/auth/jwt.interceptor";
-import { NotificationModule } from "./module";
+import { ApiModule } from "./module";
 
 jest.mock("@nestjs/core", () => ({
     NestFactory: {
@@ -53,7 +53,7 @@ describe("bootstrap", () => {
         const { bootstrap } = require("./main");
         await bootstrap();
 
-        expect(NestFactory.create).toHaveBeenCalledWith(NotificationModule);
+        expect(NestFactory.create).toHaveBeenCalledWith(ApiModule);
         expect(mockApp.useGlobalPipes).toHaveBeenCalledWith(expect.any(ValidationPipe));
         expect(mockApp.useGlobalInterceptors).toHaveBeenCalledWith(expect.any(JwtInterceptor));
         expect(mockApp.listen).toHaveBeenCalledWith("3000");

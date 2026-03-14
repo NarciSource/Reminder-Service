@@ -10,7 +10,7 @@
     "allowSyntheticDefaultImports": true,
     "target": "ES2021",
     "sourceMap": true,
-    "outDir": "../dist/notification",
+    "outDir": "../dist/reminder/api",
     "rootDir": ".",
     "incremental": true,
     "skipLibCheck": true,
