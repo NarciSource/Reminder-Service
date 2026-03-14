@@ -9,19 +9,19 @@ services:
       - "${DB_PORT}:8000"
 
   # 마이크로서비스 컨테이너 1
-  notification-microservice:
-    image: pickme/reminder-notification
+  api-microservice:
+    image: pickme/reminder-api
     build:
       context: . # 현재 디렉토리의 Dockerfile로 빌드
-      dockerfile: ./notification/Dockerfile # notification Dockerfile 사용
-    container_name: notification-microservice
+      dockerfile: ./api/Dockerfile # api Dockerfile 사용
+    container_name: api-microservice
     networks: # 지정 네트워크에 연결
       - reminder-service-network
     env_file:
       - .env # 공용 환경 변수
       - .env.local # 공용 시크릿 환경 변수
-      - notification/.env # 마이크로서비스 환경 변수
-      - notification/.env.local # 시크릿 환경 변수
+      - api/.env # 마이크로서비스 환경 변수
+      - api/.env.local # 시크릿 환경 변수
     environment:
       - DB_HOST=db-service # db-service 컨테이너의 서비스 이름
     ports: # 외부에서 접근할 수 있도록 포트 할당
@@ -43,9 +43,9 @@ services:
       - worker/.env
       - worker/.env.local
     environment:
-      - MS_HOST=notification-microservice
+      - MS_HOST=api-microservice
     depends_on:
-      - notification-microservice
+      - api-microservice
 
 # 네트워크 정의
 networks:

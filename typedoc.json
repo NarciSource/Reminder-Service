@@ -1,5 +1,5 @@
 {
-  "entryPoints": ["notification/src", "worker/src"],
+  "entryPoints": ["api/src", "worker/src"],
   "entryPointStrategy": "expand",
   "tsconfig": "tsconfig.json",
   "readme": "none",

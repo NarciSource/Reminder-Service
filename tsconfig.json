@@ -1,20 +1,20 @@
 {
   "files": [],
-  "include": ["../notification/src/**/*.ts", "../worker/src/**/*.ts"],
+  "include": ["../api/src/**/*.ts", "../worker/src/**/*.ts"],
   "exclude": ["node_modules", "dist", "test"],
 
   "compilerOptions": {
     "experimentalDecorators": true, // 데코레이터 기능 활성화
     "emitDecoratorMetadata": true, // 데코레이터 메타데이터를 생성
     "paths": {
-      "@notification/*": ["./notification/src/*"],
+      "@api/*": ["./api/src/*"],
       "@worker/*": ["./worker/src/*"]
     }
   },
 
   "references": [
     {
-      "path": "notification"
+      "path": "api"
     },
     {
       "path": "worker"

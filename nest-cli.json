@@ -3,15 +3,15 @@
   "collection": "@nestjs/schematics",
   "monorepo": true,
   "sourceRoot": "src",
-  "entryFile": "notification/main",
+  "entryFile": "api/main",
   "projects": {
-    "notification": {
+    "api": {
       "type": "application",
-      "root": "notification",
+      "root": "api",
       "entryFile": "main",
-      "sourceRoot": "notification/src",
+      "sourceRoot": "api/src",
       "compilerOptions": {
-        "tsConfigPath": "notification/tsconfig.build.json"
+        "tsConfigPath": "api/tsconfig.build.json"
       }
     },
     "worker": {

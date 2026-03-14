@@ -5,25 +5,25 @@
   "author": "",
   "private": true,
   "workspaces": [
-    "notification",
+    "api",
     "worker"
   ],
   "scripts": {
-    "build:notification": "npm run build -workspace notification",
+    "build:api": "npm run build -workspace api",
     "build:worker": "npm run build -workspace worker",
-    "build": "npm run build:notification && npm run build:worker",
-    "start:notification": "dotenv -e .env -- npm run start -workspace notification",
+    "build": "npm run build:api && npm run build:worker",
+    "start:api": "dotenv -e .env -- npm run start -workspace api",
     "start:worker": "dotenv -e .env -- npm run start -workspace worker",
-    "start": "concurrently \"npm run start:notification\" \"npm run start:worker\"",
-    "format": "npm run format -workspace notification && npm run format -workspace worker",
-    "lint": "npm run lint -workspace notification && npm run lint -workspace worker",
+    "start": "concurrently \"npm run start:api\" \"npm run start:worker\"",
+    "format": "npm run format -workspace api && npm run format -workspace worker",
+    "lint": "npm run lint -workspace api && npm run lint -workspace worker",
     "docs": "typedoc",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "generate-openapi": "npm run generate-openapi -workspace notification"
+    "generate-openapi": "npm run generate-openapi -workspace api"
   },
   "dependencies": {
     "@nestjs/common": "^11.1.19",

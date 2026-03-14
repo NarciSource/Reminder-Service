@@ -7,7 +7,7 @@ module.exports = {
 
     projects: [
         // 워크스페이스
-        "<rootDir>/notification",
+        "<rootDir>/api",
         "<rootDir>/worker",
         // 루트 e2e
         "<rootDir>/test",
