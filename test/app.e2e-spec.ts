@@ -1,11 +1,11 @@
-import { Test, TestingModule } from "@nestjs/testing";
-import { INestApplication } from "@nestjs/common";
+import type { INestApplication } from "@nestjs/common";
+import { Test, type TestingModule } from "@nestjs/testing";
 
-import { JwtInterceptor } from "infrastructure/auth/jwtInterceptor";
-import verifyJwt from "infrastructure/auth/verifyJwt";
+import { JwtInterceptor } from "@/infrastructure/auth/jwt.interceptor";
+import verifyJwt from "@/infrastructure/auth/verify-jwt";
 import { NotificationModule } from "../src/module";
 
-jest.mock("infrastructure/auth/verifyJwt", () => ({
+jest.mock("@/infrastructure/auth/verify-jwt", () => ({
     __esModule: true,
     default: jest.fn(),
 }));
@@ -36,26 +36,17 @@ describe("Bootstrap E2E Test", () => {
     });
 
     it("헬스 체크 엔드포인트는 JWT 없이 통과", async () => {
-        await request(app.getHttpServer())
-            .get("/health")
-            .expect(200);
+        await request(app.getHttpServer()).get("/health").expect(200);
     });
 
     it("JWT 없으면 보호된 API는 401", async () => {
-        await request(app.getHttpServer())
-            .get("/1")
-            .expect(401);
+        await request(app.getHttpServer()).get("/1").expect(401);
     });
 
     it("잘못된 JWT면 401", async () => {
-        (verifyJwt as jest.Mock).mockRejectedValue(
-            new Error("invalid token"),
-        );
+        (verifyJwt as jest.Mock).mockRejectedValue(new Error("invalid token"));
 
-        await request(app.getHttpServer())
-            .get("/1")
-            .set("Authorization", "Bearer invalid-token")
-            .expect(401);
+        await request(app.getHttpServer()).get("/1").set("Authorization", "Bearer invalid-token").expect(401);
     });
 
     it("정상 JWT면 통과", async () => {
@@ -63,10 +54,7 @@ describe("Bootstrap E2E Test", () => {
 
         (verifyJwt as jest.Mock).mockResolvedValue(mockUser);
 
-        const res = await request(app.getHttpServer())
-            .get("/1")
-            .set("Authorization", "Bearer valid-token")
-            .expect(200);
+        const res = await request(app.getHttpServer()).get("/1").set("Authorization", "Bearer valid-token").expect(200);
 
         expect(res.body).toBeDefined();
     });

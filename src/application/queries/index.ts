@@ -1,4 +1,4 @@
-export { default as GetHandler } from "./Get.handler";
-export { default as GetQuery } from "./Get.query";
-export { default as ListHandler } from "./List.handler";
-export { default as ListQuery } from "./List.query";
+export { default as GetHandler } from "./get.handler";
+export { default as GetQuery } from "./get.query";
+export { default as ListHandler } from "./list.handler";
+export { default as ListQuery } from "./list.query";

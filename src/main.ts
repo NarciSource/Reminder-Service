@@ -1,9 +1,9 @@
-import { NestFactory } from "@nestjs/core";
 import { ValidationPipe } from "@nestjs/common";
-import { MicroserviceOptions, Transport } from "@nestjs/microservices";
+import { NestFactory } from "@nestjs/core";
+import { type MicroserviceOptions, Transport } from "@nestjs/microservices";
 
-import generatorSwagger from "infrastructure/config/generatorSwagger";
-import { JwtInterceptor } from "infrastructure/auth/jwtInterceptor";
+import { JwtInterceptor } from "@/infrastructure/auth/jwt.interceptor";
+import generatorSwagger from "@/infrastructure/config/generator-swagger";
 import { NotificationModule } from "./module";
 
 /**

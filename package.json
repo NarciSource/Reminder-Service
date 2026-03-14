@@ -10,9 +10,9 @@
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/notification/main",
     "start:worker": "nest start worker",
-    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
-    "lint": "eslint \"src/**/*.ts\" --fix",
-    "generate-openapi": "ts-node -P tsconfig.json --require tsconfig-paths/register src/utility/downloadOpenAPI.ts"
+    "format": "biome format --write",
+    "lint": "biome check --write",
+    "generate-openapi": "ts-node -P tsconfig.json --require tsconfig-paths/register src/utility/download-open-api.ts"
   },
   "dependencies": {
     "@nestjs/cqrs": "^11.0.3",

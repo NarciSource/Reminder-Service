@@ -5,7 +5,7 @@ import { Transport } from "@nestjs/microservices";
 process.env.COGNITO_USER_POOL_ID = "dummy-pool-id";
 process.env.COGNITO_CLIENT_ID = "dummy-client-id";
 
-import { JwtInterceptor } from "infrastructure/auth/jwtInterceptor";
+import { JwtInterceptor } from "@/infrastructure/auth/jwt.interceptor";
 import { NotificationModule } from "./module";
 
 jest.mock("@nestjs/core", () => ({
@@ -24,11 +24,11 @@ jest.mock("aws-jwt-verify", () => {
     };
 });
 
-jest.mock("infrastructure/config/generatorSwagger", () => ({
+jest.mock("@/infrastructure/config/generator-swagger", () => ({
     __esModule: true,
     default: jest.fn(),
 }));
-jest.mock("infrastructure/auth/jwtInterceptor");
+jest.mock("@/infrastructure/auth/jwt.interceptor");
 
 describe("bootstrap", () => {
     let mockApp: any;
