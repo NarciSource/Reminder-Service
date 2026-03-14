@@ -61,10 +61,11 @@
               ":BLANK_LINE:",
               [
                 "@/domain/**",
+                "@/application",
                 "@/application/**",
                 "@/adapter/**",
                 "@/infrastructure/**",
-                "@/utility/**"
+                "@/tools/**"
               ],
               "**"
             ]
