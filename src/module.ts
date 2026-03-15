@@ -2,11 +2,9 @@ import { Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 import { ScheduleModule } from "@nestjs/schedule";
 
+import { CalendarEventReceiver, WebNotificationSender, WorkerClientImpl } from "@/adapter/outbound/api";
+import { EventReceiver, NotificationSender, WorkerClient } from "@/application/port.out/api";
 import { WorkerCronService, WorkerService } from "@/application/usecases";
-import { CalendarClient, OnesignalClient } from "@/infrastructure/api";
-import { CalendarEventReceiver } from "@/infrastructure/receivers/calendar.receiver";
-import { WebNotificationSender } from "@/infrastructure/senders/web.sender";
-import { WorkerClientImpl } from "@/infrastructure/worker.client";
 
 /**
  * @module WorkerModule
@@ -21,11 +19,9 @@ import { WorkerClientImpl } from "@/infrastructure/worker.client";
  * - `providers`: 서비스와 인프라스트럭처를 정의합니다.
  *   - `WorkerService`: 작업자 서비스의 핵심 유즈케이스를 처리합니다.
  *   - `WorkerCronService`: 작업자 크론 작업을 처리합니다.
- *   - `IWorkerClient`: Notification 마이크로서비스와의 TCP 통신을 처리하는 인프라입니다.
- *   - `INotificationSender`: 알림 발송을 처리하는 인프라입니다.
- *   - `IEventReceiver`: 캘린더 이벤트 수신을 처리하는 인프라입니다.
- *   - `OnesignalClient`: OneSignal API와의 통신을 처리합니다.
- *   - `CalendarClient`: 캘린더 API와의 통신을 처리합니다.
+ *   - `IWorkerClient`: Notification 마이크로서비스와의 TCP 통신을 처리하는 클라이언트입니다.
+ *   - `IEventReceiver`: 캘린더 이벤트 수신을 처리하는 클라이언트입니다.
+ *   - `INotificationSender`: 알림 발송을 처리하는 클라이언트입니다.
  */
 @Module({
     imports: [
@@ -43,23 +39,19 @@ import { WorkerClientImpl } from "@/infrastructure/worker.client";
         /** 외부 서비스 호출 */
         {
             // Notification 마이크로서비스 TCP 송발신 클라이언트
-            provide: "IWorkerClient", // 인터페이스 제공
+            provide: WorkerClient, // 인터페이스 제공
             useClass: WorkerClientImpl, // 구현체 연결
         },
         {
-            // 알림 발송하는 클라이언트
-            provide: "INotificationSender",
-            useClass: WebNotificationSender,
-        },
-        {
             // 캘린더 이벤트 수신하는 클라이언트
-            provide: "IEventReceiver",
+            provide: EventReceiver,
             useClass: CalendarEventReceiver,
         },
-
-        /** API 래핑 */
-        OnesignalClient,
-        CalendarClient,
+        {
+            // 알림 발송하는 클라이언트
+            provide: NotificationSender,
+            useClass: WebNotificationSender,
+        },
     ],
 })
 export class WorkerModule {}

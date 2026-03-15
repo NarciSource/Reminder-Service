@@ -2,22 +2,18 @@ import { Injectable } from "@nestjs/common";
 import { ClientTCP } from "@nestjs/microservices";
 import { firstValueFrom } from "rxjs";
 
-import type { IWorkerClient } from "@/application/ports";
+import { WorkerClient } from "@/application/port.out/api";
 
 /**
- * WorkerClientImpl 클래스는 IWorkerClient 인터페이스를 구현하며,
  * 마이크로서비스와 TCP 연결을 관리하고 요청을 처리하는 역할을 합니다.
  */
 @Injectable()
-export class WorkerClientImpl implements IWorkerClient {
+export default class TcpWorkerClient extends WorkerClient {
     private client: ClientTCP;
-    private isConnected = false;
 
-    /**
-     * ClientTCP 인스턴스를 초기화하고 연결 에러를 처리합니다.
-     * 호스트와 포트는 환경 변수에서 가져오며, 기본값은 localhost와 3001입니다.
-     */
     constructor() {
+        super();
+
         // 마이크로서비스 TCP 연결
         this.client = new ClientTCP({
             host: process.env.MS_HOST || "localhost", // Notification 서비스의 호스트

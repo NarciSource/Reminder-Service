@@ -1,8 +1,7 @@
 import { Inject, Injectable } from "@nestjs/common";
 
-import { NotificationStatus } from "../dto";
-// biome-ignore lint/style/useImportType: NestJS DI requires runtime class reference
-import { IEventReceiver, INotificationSender, IWorkerClient } from "../ports";
+import { NotificationStatus } from "@/domain/model/notification.entity";
+import { EventReceiver, NotificationSender, WorkerClient } from "../port.out/api";
 
 // 알림 조회 범위
 const NOTIFICATION_READ_RANGE = Number(process.env.READ_RANGE) || 60 * 60 * 1000; // 1시간
@@ -17,13 +16,13 @@ const NOTIFICATION_READ_RANGE = Number(process.env.READ_RANGE) || 60 * 60 * 1000
 export default class WorkerService {
     /**
      * @param client - 작업자 클라이언트 인터페이스를 구현한 객체. 작업자와의 통신을 처리합니다.
-     * @param sender - 알림 전송 인터페이스를 구현한 객체. 알림 전송 로직을 처리합니다.
      * @param receiver - 이벤트 수신 인터페이스를 구현한 객체. 외부 이벤트를 수신하고 처리합니다.
+     * @param sender - 알림 전송 인터페이스를 구현한 객체. 알림 전송 로직을 처리합니다.
      */
     constructor(
-        @Inject("IWorkerClient") private readonly client: IWorkerClient,
-        @Inject("INotificationSender") private readonly sender: INotificationSender,
-        @Inject("IEventReceiver") private readonly receiver: IEventReceiver,
+        @Inject(WorkerClient) private readonly client: WorkerClient,
+        @Inject(EventReceiver) private readonly receiver: EventReceiver,
+        @Inject(NotificationSender) private readonly sender: NotificationSender,
     ) {}
 
     /**

@@ -1,7 +1,7 @@
 import type { ClientTCP } from "@nestjs/microservices";
 import { Test, type TestingModule } from "@nestjs/testing";
 
-import { WorkerClientImpl } from "./worker.client";
+import TcpWorkerClient from "./worker.client";
 
 jest.mock("@nestjs/microservices", () => ({
     ClientTCP: jest.fn().mockImplementation(() => ({
@@ -11,16 +11,16 @@ jest.mock("@nestjs/microservices", () => ({
     })),
 }));
 
-describe("WorkerClientImpl", () => {
-    let client: WorkerClientImpl;
+describe("WorkerClient", () => {
+    let client: TcpWorkerClient;
     let tcpClientMock: jest.Mocked<ClientTCP>;
 
     beforeEach(async () => {
         const module: TestingModule = await Test.createTestingModule({
-            providers: [WorkerClientImpl],
+            providers: [TcpWorkerClient],
         }).compile();
 
-        client = module.get<WorkerClientImpl>(WorkerClientImpl);
+        client = module.get<TcpWorkerClient>(TcpWorkerClient);
         tcpClientMock = client["client"] as jest.Mocked<ClientTCP>;
     });
 

@@ -1,21 +1,21 @@
 import { Test, type TestingModule } from "@nestjs/testing";
 
-import { type NotificationEntity, NotificationStatus } from "../dto";
-import type { IEventReceiver, INotificationSender, IWorkerClient } from "../ports";
+import { type NotificationEntity, NotificationStatus } from "@/domain/model/notification.entity";
+import { EventReceiver, NotificationSender, WorkerClient } from "../port.out/api";
 import WorkerService from "./service";
 
 describe("WorkerService", () => {
     let service: WorkerService;
-    let client: IWorkerClient;
-    let sender: INotificationSender;
-    let receiver: IEventReceiver;
+    let client: WorkerClient;
+    let receiver: EventReceiver;
+    let sender: NotificationSender;
 
     beforeEach(async () => {
         const module: TestingModule = await Test.createTestingModule({
             providers: [
                 WorkerService,
                 {
-                    provide: "IWorkerClient",
+                    provide: WorkerClient,
                     useValue: {
                         ensureConnected: jest.fn(),
                         readByOptions: jest.fn(),
@@ -23,24 +23,24 @@ describe("WorkerService", () => {
                     },
                 },
                 {
-                    provide: "INotificationSender",
+                    provide: EventReceiver,
                     useValue: {
-                        dispatch: jest.fn(),
+                        receive: jest.fn(),
                     },
                 },
                 {
-                    provide: "IEventReceiver",
+                    provide: NotificationSender,
                     useValue: {
-                        receive: jest.fn(),
+                        dispatch: jest.fn(),
                     },
                 },
             ],
         }).compile();
 
         service = module.get<WorkerService>(WorkerService);
-        client = module.get<IWorkerClient>("IWorkerClient");
-        sender = module.get<INotificationSender>("INotificationSender");
-        receiver = module.get<IEventReceiver>("IEventReceiver");
+        client = module.get<WorkerClient>(WorkerClient);
+        receiver = module.get<EventReceiver>(EventReceiver);
+        sender = module.get<NotificationSender>(NotificationSender);
     });
 
     it("서비스 정의", () => {
