@@ -1,3 +1,3 @@
-export { default as WorkerClient } from "./client";
-export { default as EventReceiver } from "./receiver";
-export { default as NotificationSender } from "./sender";
+export { default as NotificationClient } from "./notification.client";
+export { default as ReminderClient } from "./reminder.client";
+export { default as ScheduleClient } from "./schedule.client";

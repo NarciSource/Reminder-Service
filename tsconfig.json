@@ -10,7 +10,7 @@
     "allowSyntheticDefaultImports": true,
     "target": "ES2021",
     "sourceMap": true,
-    "outDir": "../dist/worker",
+    "outDir": "../dist/reminder/worker",
     "rootDir": ".",
     "incremental": true,
     "skipLibCheck": true,

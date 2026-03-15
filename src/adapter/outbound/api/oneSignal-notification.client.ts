@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 // biome-ignore lint/style/useImportType: NestJS DI requires runtime class reference
 import axios, { AxiosInstance } from "axios";
 
-import { NotificationSender } from "@/application/port.out/api";
+import { NotificationClient } from "@/application/port.out/api";
 import type { ScheduleEntity } from "@/domain/model/schedule.entity";
 
 /**
@@ -10,7 +10,7 @@ import type { ScheduleEntity } from "@/domain/model/schedule.entity";
  */
 
 @Injectable()
-export default class WebNotificationClient extends NotificationSender {
+export default class OneSignalNotificationClient extends NotificationClient {
     private readonly instance: AxiosInstance;
 
     constructor() {
@@ -54,7 +54,7 @@ export default class WebNotificationClient extends NotificationSender {
      * @returns {Promise<void>} 알림 전송 작업이 완료되면 반환됩니다.
      * @throws {Error} 알림 전송 중 오류가 발생하면 예외를 던집니다.
      */
-    async dispatch({
+    async postNotification({
         company: { name: companyName, location },
         date,
         position,

@@ -2,7 +2,7 @@ import { Test, type TestingModule } from "@nestjs/testing";
 import axios from "axios";
 
 import type { ScheduleEntity } from "@/domain/model/schedule.entity";
-import WebNotificationClient from "./web-notification.client";
+import OneSignalNotificationClient from "./oneSignal-notification.client";
 
 jest.mock("axios", () => ({
     __esModule: true,
@@ -11,9 +11,9 @@ jest.mock("axios", () => ({
     },
 }));
 
-describe("WebNotificationClient", () => {
+describe("OneSignalNotificationClient", () => {
     let mockPost: jest.Mock;
-    let client: WebNotificationClient;
+    let client: OneSignalNotificationClient;
     let schedule: ScheduleEntity;
 
     beforeEach(async () => {
@@ -29,10 +29,10 @@ describe("WebNotificationClient", () => {
         });
 
         const module: TestingModule = await Test.createTestingModule({
-            providers: [WebNotificationClient],
+            providers: [OneSignalNotificationClient],
         }).compile();
 
-        client = module.get<WebNotificationClient>(WebNotificationClient);
+        client = module.get<OneSignalNotificationClient>(OneSignalNotificationClient);
 
         schedule = {
             id: "67890",
@@ -49,7 +49,7 @@ describe("WebNotificationClient", () => {
         const response = { data: "success" };
         mockPost.mockResolvedValue(response);
 
-        await client.dispatch(schedule);
+        await client.postNotification(schedule);
 
         expect(mockPost).toHaveBeenCalledWith(null, {
             target_channel: "push",
@@ -68,7 +68,7 @@ describe("WebNotificationClient", () => {
 
         console.error = jest.fn();
 
-        await client.dispatch(schedule);
+        await client.postNotification(schedule);
 
         expect(console.error).toHaveBeenCalledWith("Error sending notification:", error.message);
     });

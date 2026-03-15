@@ -2,13 +2,13 @@ import { Injectable } from "@nestjs/common";
 import { ClientTCP } from "@nestjs/microservices";
 import { firstValueFrom } from "rxjs";
 
-import { WorkerClient } from "@/application/port.out/api";
+import { ReminderClient } from "@/application/port.out/api";
 
 /**
  * 마이크로서비스와 TCP 연결을 관리하고 요청을 처리하는 역할을 합니다.
  */
 @Injectable()
-export default class TcpWorkerClient extends WorkerClient {
+export default class TcpReminderClient extends ReminderClient {
     private client: ClientTCP;
 
     constructor() {
@@ -16,8 +16,8 @@ export default class TcpWorkerClient extends WorkerClient {
 
         // 마이크로서비스 TCP 연결
         this.client = new ClientTCP({
-            host: process.env.MS_HOST || "localhost", // Notification 서비스의 호스트
-            port: process.env.MS_PORT || 3001, // Notification 서비스의 포트
+            host: process.env.MS_HOST || "localhost", // Reminder-Api 서비스의 호스트
+            port: process.env.MS_PORT || 3001, // Reminder-Api 서비스의 포트
         });
 
         // 연결 에러 처리

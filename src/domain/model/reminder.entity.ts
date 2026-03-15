@@ -5,7 +5,7 @@
  * - `Sent`: 알림이 성공적으로 전송된 상태.
  * - `Failed`: 알림 전송이 실패한 상태.
  */
-export enum NotificationStatus {
+export enum ReminderStatus {
     Pending = "Pending",
     Sent = "Sent",
     Failed = "Failed",
@@ -18,8 +18,8 @@ export enum NotificationStatus {
  * @property send_at 알림 발송 시간입니다.
  * @property status 알림의 상태를 나타냅니다.
  */
-export interface NotificationEntity {
+export interface ReminderEntity {
     event_id: string;
     send_at: Date;
-    status: NotificationStatus;
+    status: ReminderStatus;
 }

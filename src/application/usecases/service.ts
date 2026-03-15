@@ -1,10 +1,10 @@
 import { Inject, Injectable } from "@nestjs/common";
 
-import { NotificationStatus } from "@/domain/model/notification.entity";
-import { EventReceiver, NotificationSender, WorkerClient } from "../port.out/api";
+import { ReminderStatus } from "@/domain/model/reminder.entity";
+import { NotificationClient, ReminderClient, ScheduleClient } from "../port.out/api";
 
 // 알림 조회 범위
-const NOTIFICATION_READ_RANGE = Number(process.env.READ_RANGE) || 60 * 60 * 1000; // 1시간
+const REMINDER_READ_RANGE = Number(process.env.READ_RANGE) || 60 * 60 * 1000; // 1시간
 
 /**
  * WorkerService 클래스는 알림 발송 작업을 처리하는 서비스입니다.
@@ -15,14 +15,14 @@ const NOTIFICATION_READ_RANGE = Number(process.env.READ_RANGE) || 60 * 60 * 1000
 @Injectable()
 export default class WorkerService {
     /**
-     * @param client - 작업자 클라이언트 인터페이스를 구현한 객체. 작업자와의 통신을 처리합니다.
-     * @param receiver - 이벤트 수신 인터페이스를 구현한 객체. 외부 이벤트를 수신하고 처리합니다.
-     * @param sender - 알림 전송 인터페이스를 구현한 객체. 알림 전송 로직을 처리합니다.
+     * @param reminderClient - 작업자 클라이언트 인터페이스를 구현한 객체. 작업자와의 통신을 처리합니다.
+     * @param scheduleClient - 이벤트 수신 인터페이스를 구현한 객체. 외부 이벤트를 수신하고 처리합니다.
+     * @param notificationClient - 알림 전송 인터페이스를 구현한 객체. 알림 전송 로직을 처리합니다.
      */
     constructor(
-        @Inject(WorkerClient) private readonly client: WorkerClient,
-        @Inject(EventReceiver) private readonly receiver: EventReceiver,
-        @Inject(NotificationSender) private readonly sender: NotificationSender,
+        @Inject(ReminderClient) private readonly reminderClient: ReminderClient,
+        @Inject(ScheduleClient) private readonly scheduleClient: ScheduleClient,
+        @Inject(NotificationClient) private readonly notificationClient: NotificationClient,
     ) {}
 
     /**
@@ -33,33 +33,33 @@ export default class WorkerService {
      */
     async start() {
         const start_time = new Date();
-        const end_time = new Date(start_time.getTime() + NOTIFICATION_READ_RANGE);
+        const end_time = new Date(start_time.getTime() + REMINDER_READ_RANGE);
 
         // 마이크로서비스 연결 확인
-        await this.client.ensureConnected();
+        await this.reminderClient.ensureConnected();
 
         // 발송할 알림들
-        const notifications = await this.client.readByOptions({
+        const reminders = await this.reminderClient.readByOptions({
             start_time,
             end_time,
-            status: NotificationStatus.Pending,
+            status: ReminderStatus.Pending,
         });
 
-        for (const notification of notifications) {
+        for (const reminder of reminders) {
             try {
                 // 알림 내용 조회
-                const schedule = await this.receiver.receive(notification);
+                const schedule = await this.scheduleClient.getSchedule(reminder);
 
                 // 발송 처리
-                this.sender.dispatch(schedule);
+                this.notificationClient.postNotification(schedule);
                 console.log("발송 완료");
 
                 // 발송 완료 처리
                 const { id: event_id } = schedule;
 
-                await this.client.updatePartial({
+                await this.reminderClient.updatePartial({
                     event_id,
-                    status: NotificationStatus.Sent,
+                    status: ReminderStatus.Sent,
                 });
             } catch (error) {
                 console.error("발송 처리 중 에러 발생", error);
