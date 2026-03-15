@@ -1,2 +1,2 @@
-export { CalendarClient } from "./calendarClient";
-export { OnesignalClient } from "./onesignalClient";
+export { CalendarClient } from "./calendar.client";
+export { OnesignalClient } from "./onesignal.client";

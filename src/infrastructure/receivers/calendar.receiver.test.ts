@@ -1,9 +1,8 @@
-import { Test, TestingModule } from "@nestjs/testing";
+import { Test, type TestingModule } from "@nestjs/testing";
 
-import { Schedule } from "application/dto";
-
-import { CalendarEventReceiver } from "./calendarReceiver";
+import type { Schedule } from "@/application/dto";
 import { CalendarClient } from "../api";
+import { CalendarEventReceiver } from "./calendar.receiver";
 
 describe("CalendarEventReceiver", () => {
     let receiver: CalendarEventReceiver;
@@ -59,9 +58,7 @@ describe("CalendarEventReceiver", () => {
     it("호출 실패", async () => {
         (client.get as jest.Mock).mockResolvedValue({ status: 500, data: { success: false, data: null } });
 
-        await expect(receiver.receive({ event_id: "test-event-id" })).rejects.toThrow(
-            "캘린더 API 호출 실패",
-        );
+        await expect(receiver.receive({ event_id: "test-event-id" })).rejects.toThrow("캘린더 API 호출 실패");
         expect(client.get).toHaveBeenCalledWith("/test-event-id");
     });
 });

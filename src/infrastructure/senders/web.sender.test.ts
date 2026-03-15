@@ -1,12 +1,11 @@
-import { Test, TestingModule } from "@nestjs/testing";
+import { Test, type TestingModule } from "@nestjs/testing";
 
-import { Schedule } from "application/dto";
-
-import { OnesignalClient } from "../api/onesignalClient";
-import { WebNotificationSender } from "./webSender";
+import type { Schedule } from "@/application/dto";
+import { OnesignalClient } from "../api/onesignal.client";
+import { WebNotificationSender } from "./web.sender";
 
 describe("WebNotificationSender", () => {
-    let webNotificationSender: WebNotificationSender;
+    let sender: WebNotificationSender;
     let onesignalClient: OnesignalClient;
     let schedule: Schedule;
 
@@ -23,7 +22,7 @@ describe("WebNotificationSender", () => {
             ],
         }).compile();
 
-        webNotificationSender = module.get<WebNotificationSender>(WebNotificationSender);
+        sender = module.get<WebNotificationSender>(WebNotificationSender);
         onesignalClient = module.get<OnesignalClient>(OnesignalClient);
 
         schedule = {
@@ -41,7 +40,7 @@ describe("WebNotificationSender", () => {
         const response = { data: "success" };
         jest.spyOn(onesignalClient, "post").mockResolvedValue(response);
 
-        await webNotificationSender.dispatch(schedule);
+        await sender.dispatch(schedule);
 
         expect(onesignalClient.post).toHaveBeenCalledWith(null, {
             target_channel: "push",
@@ -60,7 +59,7 @@ describe("WebNotificationSender", () => {
 
         console.error = jest.fn();
 
-        await webNotificationSender.dispatch(schedule);
+        await sender.dispatch(schedule);
 
         expect(console.error).toHaveBeenCalledWith("Error sending notification:", error.message);
     });

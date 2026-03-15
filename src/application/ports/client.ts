@@ -1,4 +1,4 @@
-import { NotificationEntity, ParametersDTO } from "../dto";
+import type { NotificationEntity, ParametersDTO } from "../dto";
 
 /**
  * IWorkerClient 인터페이스는 Worker 클라이언트와의 상호작용을 정의합니다.

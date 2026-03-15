@@ -1,8 +1,8 @@
-import { Test, TestingModule } from "@nestjs/testing";
+import { Test, type TestingModule } from "@nestjs/testing";
 
-import { NotificationEntity, NotificationStatus } from "../dto";
-import { IEventReceiver, INotificationSender, IWorkerClient } from "../ports";
-import { WorkerService } from "./service";
+import { type NotificationEntity, NotificationStatus } from "../dto";
+import type { IEventReceiver, INotificationSender, IWorkerClient } from "../ports";
+import WorkerService from "./service";
 
 describe("WorkerService", () => {
     let service: WorkerService;

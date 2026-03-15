@@ -1,5 +1,6 @@
-import { CalendarClient } from "./calendarClient";
 import axios from "axios";
+
+import { CalendarClient } from "./calendar.client";
 
 jest.mock("axios");
 
@@ -15,9 +16,9 @@ describe("CalendarClient", () => {
     });
 
     it("올바른 baseURL과 헤더로 Axios 인스턴스를 생성", () => {
-        const calendarClient = new CalendarClient();
+        const client = new CalendarClient();
 
-        expect(calendarClient).toBeDefined();
+        expect(client).toBeDefined();
         expect((axios.create as jest.Mock).mock.calls[0][0]).toEqual({
             baseURL: SCHEDULE_API_URL,
             headers: {
@@ -31,8 +32,8 @@ describe("CalendarClient", () => {
         const mockGet = jest.fn();
         (axios.create as jest.Mock).mockReturnValue({ get: mockGet });
 
-        const calendarClient = new CalendarClient();
+        const client = new CalendarClient();
 
-        expect(calendarClient.get).toBe(mockGet);
+        expect(client.get).toBe(mockGet);
     });
 });

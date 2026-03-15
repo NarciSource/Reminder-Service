@@ -20,8 +20,7 @@
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false,
     "paths": {
-      "application/*": ["./src/application/*"],
-      "infrastructure/*": ["./src/infrastructure/*"]
+      "@/*": ["./src/*"]
     },
     "types": ["node", "jest"]
   },

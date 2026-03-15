@@ -1,8 +1,8 @@
 import { Injectable } from "@nestjs/common";
 
-import { IEventReceiver } from "application/ports";
-import { ResponseDTO, Schedule } from "application/dto";
-
+import type { ResponseDTO, Schedule } from "@/application/dto";
+import type { IEventReceiver } from "@/application/ports";
+// biome-ignore lint/style/useImportType: NestJS DI requires runtime class reference
 import { CalendarClient } from "../api";
 
 /**
@@ -30,9 +30,9 @@ export class CalendarEventReceiver implements IEventReceiver {
         const {
             status,
             data: { success, data: schedule },
-        }: { status: number; data: ResponseDTO<Schedule> } = await this.client.get<
-            ResponseDTO<Schedule>
-        >(`/${event_id}`);
+        }: { status: number; data: ResponseDTO<Schedule> } = await this.client.get<ResponseDTO<Schedule>>(
+            `/${event_id}`,
+        );
 
         if (status === 200) {
             if (success) {

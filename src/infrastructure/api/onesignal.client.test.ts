@@ -1,5 +1,6 @@
 import axios from "axios";
-import { OnesignalClient } from "./onesignalClient";
+
+import { OnesignalClient } from "./onesignal.client";
 
 jest.mock("axios");
 

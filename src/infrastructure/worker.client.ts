@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { ClientTCP } from "@nestjs/microservices";
 import { firstValueFrom } from "rxjs";
 
-import { IWorkerClient } from "application/ports";
+import type { IWorkerClient } from "@/application/ports";
 
 /**
  * WorkerClientImpl 클래스는 IWorkerClient 인터페이스를 구현하며,

@@ -1,9 +1,9 @@
 import { Injectable } from "@nestjs/common";
 
-import { INotificationSender } from "application/ports";
-import { Schedule } from "application/dto";
-
-import { OnesignalClient } from "../api/onesignalClient";
+import type { Schedule } from "@/application/dto";
+import type { INotificationSender } from "@/application/ports";
+// biome-ignore lint/style/useImportType: NestJS DI requires runtime class reference
+import { OnesignalClient } from "../api/onesignal.client";
 
 /**
  * 웹 알림을 전송하는 클래스입니다.

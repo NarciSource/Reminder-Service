@@ -1,5 +1,5 @@
 import { Injectable } from "@nestjs/common";
-import axios, { AxiosInstance } from "axios";
+import axios, { type AxiosInstance } from "axios";
 
 /**
  * 이 클래스는 OneSignal API와의 통신을 담당합니다.

@@ -2,13 +2,11 @@ import { Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 import { ScheduleModule } from "@nestjs/schedule";
 
-import { WorkerService } from "application/usecases/service";
-import { WorkerCronService } from "application/usecases/cron";
-
-import { WorkerClientImpl } from "infrastructure/clientImpl";
-import { WebNotificationSender } from "infrastructure/senders/webSender";
-import { CalendarEventReceiver } from "infrastructure/receivers/calendarReceiver";
-import { OnesignalClient, CalendarClient } from "infrastructure/api";
+import { WorkerCronService, WorkerService } from "@/application/usecases";
+import { CalendarClient, OnesignalClient } from "@/infrastructure/api";
+import { CalendarEventReceiver } from "@/infrastructure/receivers/calendar.receiver";
+import { WebNotificationSender } from "@/infrastructure/senders/web.sender";
+import { WorkerClientImpl } from "@/infrastructure/worker.client";
 
 /**
  * @module WorkerModule
@@ -42,19 +40,19 @@ import { OnesignalClient, CalendarClient } from "infrastructure/api";
         WorkerService,
         WorkerCronService,
 
-        /** 인프라스트럭처 */
+        /** 외부 서비스 호출 */
         {
-            // Notification 마이크로서비스 TCP 송발신 인프라
+            // Notification 마이크로서비스 TCP 송발신 클라이언트
             provide: "IWorkerClient", // 인터페이스 제공
             useClass: WorkerClientImpl, // 구현체 연결
         },
         {
-            // 알림 발송하는 인프라
+            // 알림 발송하는 클라이언트
             provide: "INotificationSender",
             useClass: WebNotificationSender,
         },
         {
-            // 캘린더 이벤트 수신하는 인프라
+            // 캘린더 이벤트 수신하는 클라이언트
             provide: "IEventReceiver",
             useClass: CalendarEventReceiver,
         },

@@ -1,7 +1,7 @@
-import { Test, TestingModule } from "@nestjs/testing";
-import { ClientTCP } from "@nestjs/microservices";
+import type { ClientTCP } from "@nestjs/microservices";
+import { Test, type TestingModule } from "@nestjs/testing";
 
-import { WorkerClientImpl } from "./clientImpl";
+import { WorkerClientImpl } from "./worker.client";
 
 jest.mock("@nestjs/microservices", () => ({
     ClientTCP: jest.fn().mockImplementation(() => ({
@@ -12,16 +12,16 @@ jest.mock("@nestjs/microservices", () => ({
 }));
 
 describe("WorkerClientImpl", () => {
-    let workerClient: WorkerClientImpl;
-    let clientTCPMock: jest.Mocked<ClientTCP>;
+    let client: WorkerClientImpl;
+    let tcpClientMock: jest.Mocked<ClientTCP>;
 
     beforeEach(async () => {
         const module: TestingModule = await Test.createTestingModule({
             providers: [WorkerClientImpl],
         }).compile();
 
-        workerClient = module.get<WorkerClientImpl>(WorkerClientImpl);
-        clientTCPMock = workerClient["client"] as jest.Mocked<ClientTCP>;
+        client = module.get<WorkerClientImpl>(WorkerClientImpl);
+        tcpClientMock = client["client"] as jest.Mocked<ClientTCP>;
     });
 
     afterEach(() => {
@@ -33,10 +33,10 @@ describe("WorkerClientImpl", () => {
             const consoleErrorSpy = jest.spyOn(console, "error").mockImplementation();
             const error = new Error("Test error");
 
-            clientTCPMock.handleError(error);
+            tcpClientMock.handleError(error);
 
             expect(consoleErrorSpy).toHaveBeenCalledWith("Connection error", error);
-            expect(workerClient["isConnected"]).toBe(false);
+            expect(client["isConnected"]).toBe(false);
 
             consoleErrorSpy.mockRestore();
         });
@@ -45,11 +45,9 @@ describe("WorkerClientImpl", () => {
     describe("ensureConnected", () => {
         it("연결되지 않은 경우 재연결을 시도", async () => {
             jest.useFakeTimers();
-            const connectClientSpy = jest
-                .spyOn(workerClient, "connectClient")
-                .mockResolvedValue(true);
+            const connectClientSpy = jest.spyOn(client, "connectClient").mockResolvedValue(true);
 
-            const promise = workerClient.ensureConnected();
+            const promise = client.ensureConnected();
             jest.advanceTimersByTime(1000 * 60 * 10);
             await promise;
 
@@ -61,19 +59,19 @@ describe("WorkerClientImpl", () => {
 
     describe("connectClient", () => {
         it("연결 시도", async () => {
-            clientTCPMock.connect.mockResolvedValueOnce(undefined);
+            tcpClientMock.connect.mockResolvedValueOnce(undefined);
 
-            const result = await workerClient.connectClient();
+            const result = await client.connectClient();
 
-            expect(clientTCPMock.connect).toHaveBeenCalled();
+            expect(tcpClientMock.connect).toHaveBeenCalled();
             expect(result).toBe(true);
         });
 
         it("연결 실패 시 오류를 로깅하고 false를 반환해야 함", async () => {
             const consoleErrorSpy = jest.spyOn(console, "error").mockImplementation();
-            clientTCPMock.connect.mockRejectedValueOnce(new Error("Connection failed"));
+            tcpClientMock.connect.mockRejectedValueOnce(new Error("Connection failed"));
 
-            const result = await workerClient.connectClient();
+            const result = await client.connectClient();
 
             expect(consoleErrorSpy).toHaveBeenCalledWith(
                 "Connection failed. Retrying in 10 minutes...",

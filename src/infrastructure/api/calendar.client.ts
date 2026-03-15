@@ -1,5 +1,5 @@
 import { Injectable } from "@nestjs/common";
-import axios, { AxiosInstance } from "axios";
+import axios, { type AxiosInstance } from "axios";
 
 /**
  * 이 클래스는 캘린더 API와의 통신을 담당하는 클라이언트입니다.

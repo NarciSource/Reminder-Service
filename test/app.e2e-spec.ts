@@ -1,9 +1,9 @@
-import { Test, TestingModule } from "@nestjs/testing";
-import { INestApplication } from "@nestjs/common";
+import type { INestApplication } from "@nestjs/common";
+import { Test, type TestingModule } from "@nestjs/testing";
 import { of } from "rxjs";
 
+import type { WorkerClientImpl } from "../src/infrastructure/worker.client";
 import { WorkerModule } from "../src/module";
-import { WorkerClientImpl } from "../src/infrastructure/clientImpl";
 
 jest.mock("@nestjs/microservices", () => ({
     ClientTCP: jest.fn().mockImplementation(() => ({
