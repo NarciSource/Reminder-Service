@@ -2,10 +2,10 @@ import { Test, type TestingModule } from "@nestjs/testing";
 
 import { type ReminderEntity, ReminderStatus } from "@/domain/model/reminder.entity";
 import { NotificationClient, ReminderClient, ScheduleClient } from "../port.out/api";
-import WorkerService from "./service";
+import RunHandler from "./run.handler";
 
-describe("WorkerService", () => {
-    let service: WorkerService;
+describe("RunRemindersHandler", () => {
+    let service: RunHandler;
     let reminderClient: ReminderClient;
     let notificationClient: NotificationClient;
     let scheduleClient: ScheduleClient;
@@ -13,7 +13,7 @@ describe("WorkerService", () => {
     beforeEach(async () => {
         const module: TestingModule = await Test.createTestingModule({
             providers: [
-                WorkerService,
+                RunHandler,
                 {
                     provide: ReminderClient,
                     useValue: {
@@ -37,7 +37,7 @@ describe("WorkerService", () => {
             ],
         }).compile();
 
-        service = module.get<WorkerService>(WorkerService);
+        service = module.get<RunHandler>(RunHandler);
         reminderClient = module.get<ReminderClient>(ReminderClient);
         scheduleClient = module.get<ScheduleClient>(ScheduleClient);
         notificationClient = module.get<NotificationClient>(NotificationClient);
@@ -68,7 +68,7 @@ describe("WorkerService", () => {
             Promise.resolve({ ...notification, send_at: new Date() } as ReminderEntity),
         );
 
-        await service.start();
+        await service.execute();
 
         expect(reminderClient.readByOptions).toHaveBeenCalledWith({
             start_time: expect.any(Date),

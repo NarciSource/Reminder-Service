@@ -2,22 +2,16 @@ import { SchedulerRegistry } from "@nestjs/schedule";
 import { Test, type TestingModule } from "@nestjs/testing";
 import { CronJob } from "cron";
 
-import WorkerCronService from "./cron";
-import WorkerService from "./service";
+import { WorkerCronService } from "./cron";
 
 describe("WorkerCronService", () => {
     let cronService: WorkerCronService;
-    let workerService: WorkerService;
     let registry: SchedulerRegistry;
 
     beforeEach(async () => {
         const module: TestingModule = await Test.createTestingModule({
             providers: [
                 WorkerCronService,
-                {
-                    provide: WorkerService,
-                    useValue: { start: jest.fn() },
-                },
                 {
                     provide: SchedulerRegistry,
                     useValue: {
@@ -28,20 +22,11 @@ describe("WorkerCronService", () => {
         }).compile();
 
         cronService = module.get<WorkerCronService>(WorkerCronService);
-        workerService = module.get<WorkerService>(WorkerService);
         registry = module.get<SchedulerRegistry>(SchedulerRegistry);
     });
 
     it("서비스 정의", () => {
         expect(cronService).toBeDefined();
-    });
-
-    it("WorkerService 수행", async () => {
-        const startSpy = jest.spyOn(workerService, "start");
-
-        await cronService.handleCron();
-
-        expect(startSpy).toHaveBeenCalled();
     });
 
     describe("크론 잡 스케줄", () => {

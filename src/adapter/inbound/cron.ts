@@ -1,34 +1,36 @@
 import { Injectable, type OnModuleInit } from "@nestjs/common";
+import type { CommandBus } from "@nestjs/cqrs";
 // biome-ignore lint/style/useImportType: NestJS DI requires runtime class reference
 import { CronExpression, SchedulerRegistry } from "@nestjs/schedule";
 import { CronJob } from "cron";
 
-// biome-ignore lint/style/useImportType: NestJS DI requires runtime class reference
-import WorkerService from "./service";
+import { RunCommand } from "@/application/commands";
 
 /**
  * `WorkerCronService` 클래스는 작업자 서비스의 크론 작업을 처리하고 관리하는 역할을 합니다.
  */
 @Injectable()
-export default class WorkerCronService implements OnModuleInit {
+export class WorkerCronService implements OnModuleInit {
     /**
-     * @param service - 작업자 서비스의 비즈니스 로직을 처리하는 데 사용되는 서비스입니다.
+     * @param commandBus - CQRS 패턴에서 명령을 실행하기 위한 CommandBus입니다.
      * @param registry - 작업 스케줄링 및 관리에 사용되는 스케줄러 레지스트리입니다.
      */
     constructor(
-        private readonly service: WorkerService,
+        private readonly commandBus: CommandBus,
         private readonly registry: SchedulerRegistry,
     ) {}
 
     /**
      * 주기적으로 실행되는 크론 작업을 처리하는 메서드입니다.
-     * 현재 시간을 콘솔에 출력하고, WorkerService의 작업을 시작합니다.
+     * 현재 시간을 콘솔에 출력하고, `RunCommand` 명령을 실행합니다.
      *
      * @returns {Promise<void>} 비동기 작업이 완료되면 반환됩니다.
      */
     async handleCron(): Promise<void> {
         console.log("잡 수행 시간:", new Date());
-        this.service.start();
+
+        const command = new RunCommand();
+        await this.commandBus.execute(command);
     }
 
     /**
