@@ -1,8 +1,10 @@
 import { Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
+import { CqrsModule } from "@nestjs/cqrs";
 import { ScheduleModule } from "@nestjs/schedule";
 
 import { HttpScheduleClient, OneSignalNotificationClient, TcpReminderClient } from "@/adapter/outbound/api";
+import { events } from "@/application";
 import { NotificationClient, ReminderClient, ScheduleClient } from "@/application/port.out/api";
 import { WorkerCronService, WorkerService } from "@/application/usecases";
 
@@ -15,6 +17,7 @@ import { WorkerCronService, WorkerService } from "@/application/usecases";
  * - `imports`: 서비스와 인프라스트럭처를 정의합니다.
  *   - `ScheduleModule`: 작업 스케줄링을 위한 모듈입니다.
  *   - `ConfigModule`: 환경설정을 전역적으로 관리하기 위한 모듈입니다.
+ *   - `CqrsModule`: CQRS 패턴을 구현하기 위한 모듈입니다.
  *
  * - `providers`: 서비스와 인프라스트럭처를 정의합니다.
  *   - `WorkerService`: 작업자 서비스의 핵심 유즈케이스를 처리합니다.
@@ -30,11 +33,13 @@ import { WorkerCronService, WorkerService } from "@/application/usecases";
             isGlobal: true,
             envFilePath: [".env.local", ".env"],
         }),
+        CqrsModule,
     ],
     providers: [
         /** 유즈케이스 */
         WorkerService,
         WorkerCronService,
+        ...Object.values(events),
 
         /** 외부 서비스 호출 */
         {

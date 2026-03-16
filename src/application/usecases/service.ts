@@ -1,7 +1,9 @@
 import { Inject, Injectable } from "@nestjs/common";
+import type { EventBus } from "@nestjs/cqrs";
 
 import { ReminderStatus } from "@/domain/model/reminder.entity";
-import { NotificationClient, ReminderClient, ScheduleClient } from "../port.out/api";
+import { SendEvent } from "../events";
+import { ReminderClient } from "../port.out/api";
 
 // 알림 조회 범위
 const REMINDER_READ_RANGE = Number(process.env.READ_RANGE) || 60 * 60 * 1000; // 1시간
@@ -14,15 +16,10 @@ const REMINDER_READ_RANGE = Number(process.env.READ_RANGE) || 60 * 60 * 1000; //
  */
 @Injectable()
 export default class WorkerService {
-    /**
-     * @param reminderClient - 작업자 클라이언트 인터페이스를 구현한 객체. 작업자와의 통신을 처리합니다.
-     * @param scheduleClient - 이벤트 수신 인터페이스를 구현한 객체. 외부 이벤트를 수신하고 처리합니다.
-     * @param notificationClient - 알림 전송 인터페이스를 구현한 객체. 알림 전송 로직을 처리합니다.
-     */
     constructor(
-        @Inject(ReminderClient) private readonly reminderClient: ReminderClient,
-        @Inject(ScheduleClient) private readonly scheduleClient: ScheduleClient,
-        @Inject(NotificationClient) private readonly notificationClient: NotificationClient,
+        private readonly eventBus: EventBus,
+        @Inject(ReminderClient)
+        private readonly reminderClient: ReminderClient,
     ) {}
 
     /**
@@ -44,23 +41,13 @@ export default class WorkerService {
             end_time,
             status: ReminderStatus.Pending,
         });
+        const event_ids = reminders.map((reminder) => reminder.event_id);
 
-        for (const reminder of reminders) {
+        for (const event_id of event_ids) {
             try {
-                // 알림 내용 조회
-                const schedule = await this.scheduleClient.getSchedule(reminder);
+                const event = new SendEvent(event_id);
 
-                // 발송 처리
-                this.notificationClient.postNotification(schedule);
-                console.log("발송 완료");
-
-                // 발송 완료 처리
-                const { id: event_id } = schedule;
-
-                await this.reminderClient.updatePartial({
-                    event_id,
-                    status: ReminderStatus.Sent,
-                });
+                this.eventBus.publish(event);
             } catch (error) {
                 console.error("발송 처리 중 에러 발생", error);
             }
