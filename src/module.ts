@@ -7,6 +7,7 @@ import { WorkerCronService } from "@/adapter/inbound/cron";
 import { HttpScheduleClient, OneSignalNotificationClient, TcpReminderClient } from "@/adapter/outbound/api";
 import { commands, events } from "@/application";
 import { NotificationClient, ReminderClient, ScheduleClient } from "@/application/port.out/api";
+import { ReminderSource, TcpReminderSource } from "@/application/port.out/source";
 
 /**
  * @module WorkerModule
@@ -25,6 +26,7 @@ import { NotificationClient, ReminderClient, ScheduleClient } from "@/applicatio
  *   - `ReminderClient`: Reminder 마이크로서비스와의 TCP 통신을 처리하는 클라이언트입니다.
  *   - `ScheduleClient`: 스케줄 이벤트 수신을 처리하는 클라이언트입니다.
  *   - `NotificationClient`: 알림 발송을 처리하는 클라이언트입니다.
+ *   - `ReminderSource`: 알림 조회를 처리하는 소스입니다.
  */
 @Module({
     imports: [
@@ -58,6 +60,12 @@ import { NotificationClient, ReminderClient, ScheduleClient } from "@/applicatio
             // 알림 발송하는 클라이언트
             provide: NotificationClient,
             useClass: OneSignalNotificationClient,
+        },
+
+        /** 알림 조회 소스 */
+        {
+            provide: ReminderSource,
+            useClass: TcpReminderSource,
         },
     ],
 })

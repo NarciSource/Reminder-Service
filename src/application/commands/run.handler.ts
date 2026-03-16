@@ -1,21 +1,17 @@
 import { Inject } from "@nestjs/common";
 import { CommandHandler, type EventBus, type ICommandHandler } from "@nestjs/cqrs";
 
-import { ReminderStatus } from "@/domain/model/reminder.entity";
 import { SendEvent } from "../events";
-import { ReminderClient } from "../port.out/api";
+import { ReminderSource } from "../port.out/source";
 import RunCommand from "./run.command";
-
-// 알림 조회 범위
-const REMINDER_READ_RANGE = Number(process.env.READ_RANGE) || 1 * 60 * 1000; // 1분
 
 @CommandHandler(RunCommand)
 export default class RunHandler implements ICommandHandler<RunCommand> {
     constructor(
         private readonly eventBus: EventBus,
-        @Inject(ReminderClient)
-        private readonly reminderClient: ReminderClient,
-    ) { }
+        @Inject(ReminderSource)
+        private readonly source: ReminderSource,
+    ) {}
 
     /**
      * 알림 발송 작업을 시작합니다. 특정 시간 범위 내에서 발송 대기 상태인 알림을 조회하고,
@@ -25,19 +21,8 @@ export default class RunHandler implements ICommandHandler<RunCommand> {
      */
     async execute() {
         const now = new Date();
-        const start_time = new Date(now.getTime() - REMINDER_READ_RANGE);
 
-        // 마이크로서비스 연결 확인
-        await this.reminderClient.ensureConnected();
-
-        // 발송할 알림들
-        const reminders = await this.reminderClient.readByOptions({
-            start_time,
-            end_time: now,
-            status: ReminderStatus.Pending,
-        });
-
-        const event_ids = reminders.map((reminder) => reminder.event_id)
+        const event_ids = await this.source.getReady(now);
 
         for (const event_id of event_ids) {
             try {
