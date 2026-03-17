@@ -18,7 +18,7 @@ describe("bootstrap", () => {
             init: mockInit,
         });
 
-        const { bootstrap } = await import("./main");
+        const { bootstrap } = require("./main");
         await bootstrap();
 
         expect(mockCreate).toHaveBeenCalledWith(WorkerModule);
