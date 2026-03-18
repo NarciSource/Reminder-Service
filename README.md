@@ -209,68 +209,97 @@ graph LR
 > Clean Architecture
 
 ```bash
-PickMe-Reminder-Service
+Reminder-Service
 ├─ .github
 │  ├─ workflows # 깃헙액션 워크플로어
 │  │  └─ document-hosting.yml # 스웨거 및 테스터 리포트 작성
 │  └─ document-index.html # 깃헙 페이지 진입점
-├─ .gitignore
-├─ notification # 알림 마이크로서비스
+├─ api # 알림 API 서버
 │  ├─ src
 │  │  ├─ main.ts # 서버 실행 진입점
 │  │  │  └─ main.test.ts
 │  │  ├─ module.ts # 의존성 주입 모듈
-│  │  ├─ application # 유즈케이스 계층
-│  │  │  ├─ dto.ts
-│  │  │  └─ service.ts # 유즈케이스
-│  │  │     └─ service.spec.ts
-│  │  ├─ domain # 도메인 계층
-│  │  │  ├─ entity.ts # 엔티티 객체
-│  │  │  └─ repository.ts # 레포지토리 인터페이스
-│  │  ├─ infrastructure # 인프라스트럭쳐 계층
-│  │  │  ├─ auth
-│  │  │  │  ├─ jwtInterceptor.ts # JWT 토큰 인터셉터
-│  │  │  │  │  └─ jwtInterceptor.test.ts
-│  │  │  │  └─ verifier.ts # Cognito로 토큰 인증
-│  │  │  └─ dynamo # DynamoDB
-│  │  │     ├─ model.ts # 스키마
-│  │  │     │  └─ model.test.ts
-│  │  │     ├─ provider.ts # 프로바이더 의존성
-│  │  │     │  └─ provider.test.ts
-│  │  │     └─ repository.ts # 레포지토리 구현체
-│  │  │        └─ repository.test.ts
-│  │  ├─ presentation # 프레임워크 계층
-│  │  │  ├─ controllers
-│  │  │  │  ├─ healthCheckController.ts # 헬스체크
-│  │  │  │  │  └─ healthCheckController.spec.ts
-│  │  │  │  ├─ httpController.ts # Http API
-│  │  │  │  │  └─ httpController.spec.ts
-│  │  │  │  └─ messageController.ts # TCP API
-│  │  │  │     └─ messageController.test.ts
-│  │  │  └─ dtos # 데이터 전송 객체
+│  │  ├─ domain # 엔터티 모델
+│  │  │  └─ model
+│  │  │     └─ entity.ts
+│  │  ├─ application # 유즈케이스
+│  │  │  ├─ index.ts
+│  │  │  ├─ queries
+│  │  │  │  ├─ index.ts
+│  │  │  │  ├─ get.query.ts
+│  │  │  │  │  └─ get.handler.ts
+│  │  │  │  └─ list.query.ts
+│  │  │  │     └─ list.handler.ts
+│  │  │  ├─ commands
+│  │  │  │  ├─ index.ts
+│  │  │  │  ├─ register.command.ts
+│  │  │  │  │  └─ register.handler.ts
+│  │  │  │  ├─ replace.command.ts
+│  │  │  │  │  └─ replace.handler.ts
+│  │  │  │  ├─ update.command.ts
+│  │  │  │  │  └─ update.handler.ts
+│  │  │  │  └─ delete.command.ts
+│  │  │  │     └─ delete.handler.ts
+│  │  │  ├─ port.out
+│  │  │  │  └─ repository
+│  │  │  │     ├─ index.ts
+│  │  │  │     └─ reminder.repository.ts
+│  │  ├─ adapter # 호출 규격
+│  │  │  ├─ inbound
+│  │  │  │  └─ web
+│  │  │  │     ├─ controllers # 컨트롤러
+│  │  │  │     │  ├─ index.ts
+│  │  │  │     │  ├─ health-check.controller.ts # 헬스체크
+│  │  │  │     │  │  └─ health-check.controller.test.ts
+│  │  │  │     │  ├─ http.controller.ts # Http API
+│  │  │  │     │  │  └─ http.controller.test.ts
+│  │  │  │     │  └─ message.controller.ts # Tcp API
+│  │  │  │     ├─ decorators # 커스텀 데코레이터
+│  │  │  │     │  ├─ index.ts
+│  │  │  │     │  ├─ at-least-one-option.decorator.ts # 옵션 하나 이상 유효성 검사
+│  │  │  │     │  │  └─ at-least-one-option.decorator.test.ts
+│  │  │  │     │  ├─ is-time-range.decorator.ts # 시간 범위 유효성 검사
+│  │  │  │     │  │  └─ is-time-range.decorator.test.ts
+│  │  │  │     │  ├─ payload-ex.decorator.ts # Payload를 dto 변환하고 데코레이터 기반 유효성 검사
+│  │  │  │     │  │  └─ payload-ex.decorator.test.ts
+│  │  │  │     │  └─ trim-seconds.decorator.ts # 시간 데이터의 분초 삭제 변환
+│  │  │  │     │     └─ trim-seconds.decorator.test.ts
+│  │  │  │     └─ dtos # 데이터 전송 객체
+│  │  │  │        ├─ index.ts
+│  │  │  │        ├─ read-request.dto.ts # get dto
+│  │  │  │        ├─ create-request.dto.ts # post dto
+│  │  │  │        ├─ update-request.dto.ts # patch dto
+│  │  │  │        └─ parameters.dto.ts # query dto
+│  │  │  └─ outbound
+│  │  │     └─ persistence
+│  │  │        ├─ index.ts
+│  │  │        └─ dynamo.repository.ts # 레포지토리 구현체
+│  │  │           └─ dynamo.repository.test.ts
+│  │  ├─ infrastructure # 인프라 설정
+│  │  │  ├─ auth # 인증
+│  │  │  │  ├─ jwt.interceptor.ts # JWT 토큰 인터셉터
+│  │  │  │  └─ verify-jwt.ts # JWT 토큰 인증
+│  │  │  ├─ persistence # 저장소
+│  │  │  │  └─ dynamo # DynamoDB
+│  │  │  │     ├─ index.ts
+│  │  │  │     ├─ model.ts # 스키마
+│  │  │  │     │  └─ model.test.ts
+│  │  │  │     ├─ provider.ts # 프로바이더 의존성
+│  │  │  │     │  └─ provider.test.ts
+│  │  │  │     └─ module.ts
+│  │  │  └─ swagger # 스웨거
 │  │  │     ├─ index.ts
-│  │  │     ├─ CreateRequestDTO.ts
-│  │  │     ├─ ParametersDTO.ts
-│  │  │     ├─ ReadRequestDTO.ts
-│  │  │     └─ UpdateRequestDTO.ts
-│  │  └─ utility
-│  │     ├─ decorators # 커스텀 데코레이터
-│  │     │  ├─ index.ts
-│  │     │  ├─ AtLeastOneOption.ts # 옵션 하나 이상 유효성 검사
-│  │     │  │  └─ AtLeastOneOption.test.ts
-│  │     │  ├─ IsTimeRange.ts # 시간 범위 유효성 검사
-│  │     │  │  └─ IsTimeRange.test.ts
-│  │     │  ├─ PayloadEX.test.ts
-│  │     │  │  └─ PayloadEX.ts # Payload를 dto 변환하고 데코레이터 기반 유효성 검사
-│  │     │  └─ TrimSeconds.ts # 시간 데이터의 분초 삭제 변환
-│  │     │     └─ TrimSeconds.test.ts
-│  │     ├─ downloadOpenAPI.ts # yaml 파일로 스웨거 문서 다운로드
-│  │     │  └─ downloadOpenAPI.test.ts
-│  │     └─ generatorSwagger.ts # 스웨거 문서 생성
-│  │        └─ generatorSwagger.test.ts
+│  │  │     ├─ provider.ts
+│  │  │     ├─ service.ts
+│  │  │     └─ module.ts
+│  │  └─ tools
+│  │     └─ download-open-api.ts # yaml 파일로 스웨거 문서 다운로드
+│  ├─ Dockerfile # 도커파일
+│  │  └─ .dockerignore
 │  ├─ test
 │  │  └─ app.e2e-spec.ts # end to end 테스트
 │  ├─ .env # 환경변수
+│  │  └─ .env.local
 │  ├─ package.json # 워크스페이스 의존성 관리
 │  │  └─ jest.config.js # jest 테스트 설정
 │  └─ tsconfig.json # typescript 설정
@@ -279,37 +308,52 @@ PickMe-Reminder-Service
 ├─ worker # 알림 워커 서비스
 │  ├─ src
 │  │  ├─ main.ts # 서버 실행 진입점
+│  │  │  └─ main.test.ts
 │  │  ├─ module.ts # 의존성 주입 모듈
-│  │  ├─ application
-│  │  │  ├─ dto.ts # 페이로드 DTO
-│  │  │  ├─ ports # 인터페이스
+│  │  ├─ domain # 엔터티 모델
+│  │  │  └─ model
+│  │  │     ├─ reminder.entity.ts
+│  │  │     └─ schedule.entity.ts
+│  │  ├─ application # 유즈케이스
+│  │  │  ├─ index.ts
+│  │  │  ├─ commands
 │  │  │  │  ├─ index.ts
-│  │  │  │  ├─ client.ts # 알림 저장 서비스
-│  │  │  │  ├─ receiver.ts # 메시지 수신
-│  │  │  │  └─ sender.ts # 메시지 발송
-│  │  │  └─ usecases
-│  │  │     ├─ cron.ts # 잡 스케줄러
-│  │  │     │  └─ cron.test.ts
-│  │  │     └─ service.ts # 알림 TCP 요청, 발송 처리, 완료 처리
-│  │  │        └─ service.test.ts
-│  │  └─ infrastructure
-│  │     ├─ api # axios API 인터셉터
-│  │     │  ├─ index.ts
-│  │     │  ├─ calendarClient.ts
-│  │     │  │  └─ calendarClient.test.ts
-│  │     │  └─ onesignalClient.ts
-│  │     │     └─ onesignalClient.test.ts
-│  │     ├─ receivers
-│  │     │  └─ calendarReceiver.ts # 캘린더 서비스 구현체
-│  │     │     └─ calendarReceiver.test.ts
-│  │     ├─ senders
-│  │     │  └─ webSender.ts # 웹 메시지 발송 구현체
-│  │     │     └─ webSender.test.ts
-│  │     └─ clientImpl.ts # 마이크로서비스 호출 구현체
-│  │        └─ clientImpl.test.ts
-│  ├─ test
-│  │  └─ app.e2e-spec.ts # end to end 테스트
+│  │  │  │  └─ run.command.ts # 알림 발송 작업
+│  │  │  │     ├─ run.handler.ts
+│  │  │  │     └─ run.handler.test.ts
+│  │  │  ├─ events
+│  │  │  │  ├─ index.ts
+│  │  │  │  └─ send.event.ts # 알림 TCP 요청, 발송 처리, 완료 처리
+│  │  │  │     └─ send.handler.ts
+│  │  │  └─ port.out
+│  │  │     ├─ api # axios API 인터셉터
+│  │  │     │  ├─ index.ts
+│  │  │     │  ├─ dto.ts
+│  │  │     │  ├─ schedule.client.ts # 메시지 수신
+│  │  │     │  ├─ notification.client.ts # 메시지 발송
+│  │  │     │  └─ reminder.client.ts # 알림 저장 서비스
+│  │  │     └─ source # 알림 조회 소스
+│  │  │        ├─ index.ts
+│  │  │        ├─ reminder.source.ts # 인터페이스
+│  │  │        └─ tcp-reminder.source.ts # reminder TCP 연결 구현체
+│  │  └─ adapter # 호출 규격
+│  │     ├─ inbound
+│  │     │  └─ cron.ts
+│  │     │     └─ cron.test.ts
+│  │     └─ outbound
+│  │        └─ api # 잡 스케줄러
+│  │           ├─ index.ts
+│  │           ├─ dto.ts
+│  │           ├─ http-schedule.client.ts
+│  │           │  └─ http-schedule.client.test.ts
+│  │           └─ tcp-reminder.client.ts
+│  │           │  └─ tcp-reminder.client.test.ts
+│  │           └─ oneSignal-notification.client.ts
+│  │              └─ oneSignal-notification.client.test.ts
+│  ├─ Dockerfile # 도커파일
+│  │  └─ .dockerignore
 │  ├─ .env # 환경변수
+│  │  └─ .env.local
 │  ├─ package.json # 워크스페이스 의존성 관리
 │  │  └─ jest.config.js # jest 테스트 설정
 │  └─ tsconfig.json # typescript 설정
@@ -318,14 +362,11 @@ PickMe-Reminder-Service
 ├─ test # 통합 테스트
 │  └─ jest.config.js
 ├─ .env # 공용 환경변수
+│  └─ .env.sample
 ├─ docker-compose.yml # 도커컴포즈
-│  ├─ Dockerfile.notification # 알림 마이크로서비스 도커파일
-│  └─ Dockerfile.worker # 워커 마이크로서비스 도커파일
 ├─ package.json # 의존성 관리
 │  ├─ package-lock.json
-│  ├─ .eslintrc.js # eslint 린터 설정
-│  ├─ .eslintignore # eslint 무시 설정
-│  ├─ .prettierrc # 포맷터 설정
+│  ├─ biome.json # 린트 및 포맷터 설정
 │  ├─ jest.config.js # jest 테스트 설정
 │  └─ nest-cli.json # nestjs 모듈 구조 설정
 └─ tsconfig.json # typescript 설정
