@@ -6,6 +6,7 @@
     "setup.ps1": "setup.*, .gitconfig, .gitmessage",
     "tsconfig.json": "tsconfig.*.json, env.d.ts, global.d.ts, typedoc.*",
     "*.ts": "$(capture).spec.ts, $(capture).test.ts",
+    "*.handler.ts": "$(capture).query.ts, $(capture).command.ts, $(capture).event.ts",
     "docker-compose.yml": "Dockerfile.*",
     "package.json": "package-lock.json, pnpm*, .yarnrc*, yarn*, biome.json, .eslint*, eslint*, .prettier*, prettier*, .editorconfig, steiger.config.ts, jest.config.js, nest-cli.json"
   },
