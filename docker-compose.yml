@@ -8,6 +8,14 @@ services:
     ports: 
       - "${DB_PORT}:8000"
 
+  redis-service:
+    image: redis:8.2.1
+    container_name: redis-service
+    networks:
+      - reminder-service-network
+    ports:
+      - "${REDIS_PORT}:6379"
+
   # 마이크로서비스 컨테이너 1
   api-microservice:
     image: pickme/reminder-api
