@@ -9,6 +9,7 @@ import { commands, queries } from "@/application";
 import { DelayQueue } from "@/application/port.out/messaging";
 import { ReminderRepository } from "@/application/port.out/repository";
 import { DynamoModule } from "@/infrastructure/persistence/dynamo";
+import { RedisModule } from "@/infrastructure/persistence/redis";
 import { SwaggerModule } from "@/infrastructure/swagger";
 
 /**
@@ -44,6 +45,7 @@ import { SwaggerModule } from "@/infrastructure/swagger";
         TerminusModule,
         SwaggerModule,
         DynamoModule,
+        RedisModule,
     ],
     providers: [
         {
