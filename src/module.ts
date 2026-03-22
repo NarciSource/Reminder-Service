@@ -3,12 +3,13 @@ import { ConfigModule } from "@nestjs/config";
 import { CqrsModule } from "@nestjs/cqrs";
 import { TerminusModule } from "@nestjs/terminus";
 
+import { HealthCheckController, HttpController, MessageController } from "@/adapter/inbound/web/controllers";
 import { DynamoRepository } from "@/adapter/outbound/persistence";
 import { commands, queries } from "@/application";
+import { DelayQueue } from "@/application/port.out/messaging";
 import { ReminderRepository } from "@/application/port.out/repository";
 import { DynamoModule } from "@/infrastructure/persistence/dynamo";
 import { SwaggerModule } from "@/infrastructure/swagger";
-import { HealthCheckController, HttpController, MessageController } from "./adapter/inbound/web/controllers";
 
 /**
  * ApiModule
@@ -21,9 +22,11 @@ import { HealthCheckController, HttpController, MessageController } from "./adap
  *   - `TerminusModule`: 헬스 체크 기능을 제공하는 모듈입니다.
  *   - `SwaggerModule`: API 문서 생성을 위한 모듈입니다.
  *   - `DynamoModule`: DynamoDB와의 통신을 위한 모듈입니다.
+ *   - `RedisModule`: Redis와의 상호작용을 위한 모듈입니다.
  *
  * - `providers`: 서비스와 리포지토리, 그리고 Dynamoose 모델을 제공하는 프로바이더를 정의합니다.
  *   - `ReminderRepository`: 애플리케이션에서 사용할 저장소 인터페이스를 제공합니다.
+ *   - `DelayQueue`: 메시징 지연 큐 인터페이스를 제공합니다.
  *   - `queries`와 `commands`: CQRS 패턴을 구현하기 위한 쿼리와 커맨드 핸들러를 제공합니다.
  *
  * - `controllers`: HTTP 요청 및 메시지 처리를 담당하는 컨트롤러를 정의합니다.
@@ -46,6 +49,10 @@ import { HealthCheckController, HttpController, MessageController } from "./adap
         {
             provide: ReminderRepository, // 인터페이스 제공
             useClass: DynamoRepository, // 구현체 연결
+        },
+        {
+            provide: DelayQueue,
+            useClass: class {},
         },
         ...Object.values(queries),
         ...Object.values(commands),
