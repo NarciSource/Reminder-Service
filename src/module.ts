@@ -4,6 +4,7 @@ import { CqrsModule } from "@nestjs/cqrs";
 import { TerminusModule } from "@nestjs/terminus";
 
 import { HealthCheckController, HttpController, MessageController } from "@/adapter/inbound/web/controllers";
+import { RedisZSetDelayQueue } from "@/adapter/outbound/messaging";
 import { DynamoRepository } from "@/adapter/outbound/persistence";
 import { commands, queries } from "@/application";
 import { DelayQueue } from "@/application/port.out/messaging";
@@ -54,7 +55,7 @@ import { SwaggerModule } from "@/infrastructure/swagger";
         },
         {
             provide: DelayQueue,
-            useClass: class {},
+            useClass: RedisZSetDelayQueue,
         },
         ...Object.values(queries),
         ...Object.values(commands),
