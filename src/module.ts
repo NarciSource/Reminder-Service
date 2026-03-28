@@ -9,6 +9,7 @@ import { commands, events } from "@/application";
 import { NotificationClient, ReminderClient, ScheduleClient } from "@/application/port.out/api";
 import { DelayQueue } from "@/application/port.out/messaging/delay-queue";
 import { ReminderSource, TcpReminderSource } from "@/application/port.out/source";
+import { RedisModule } from "@/infrastructure/persistence/redis";
 
 /**
  * @module WorkerModule
@@ -20,6 +21,7 @@ import { ReminderSource, TcpReminderSource } from "@/application/port.out/source
  *   - `ScheduleModule`: 작업 스케줄링을 위한 모듈입니다.
  *   - `ConfigModule`: 환경설정을 전역적으로 관리하기 위한 모듈입니다.
  *   - `CqrsModule`: CQRS 패턴을 구현하기 위한 모듈입니다.
+ *   - `RedisModule`: Redis와의 상호작용을 위한 모듈입니다.
  *
  * - `providers`: 서비스와 인프라스트럭처를 정의합니다.
  *   - `WorkerCronService`: 작업자 크론 작업을 처리합니다.
@@ -38,6 +40,7 @@ import { ReminderSource, TcpReminderSource } from "@/application/port.out/source
             envFilePath: [".env.local", ".env"],
         }),
         CqrsModule,
+        RedisModule,
     ],
     providers: [
         /** 진입점 */
