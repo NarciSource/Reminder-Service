@@ -5,6 +5,7 @@ import { ScheduleModule } from "@nestjs/schedule";
 
 import { WorkerCronService } from "@/adapter/inbound/cron";
 import { HttpScheduleClient, OneSignalNotificationClient, TcpReminderClient } from "@/adapter/outbound/api";
+import { RedisZSetDelayQueue } from "@/adapter/outbound/messaging";
 import { commands, events } from "@/application";
 import { NotificationClient, ReminderClient, ScheduleClient } from "@/application/port.out/api";
 import { DelayQueue } from "@/application/port.out/messaging/delay-queue";
@@ -70,7 +71,7 @@ import { RedisModule } from "@/infrastructure/persistence/redis";
         /** 메시징 */
         {
             provide: DelayQueue,
-            useClass: class {},
+            useClass: RedisZSetDelayQueue,
         },
 
         /** 알림 조회 소스 */
