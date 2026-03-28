@@ -9,7 +9,7 @@ import { RedisZSetDelayQueue } from "@/adapter/outbound/messaging";
 import { commands, events } from "@/application";
 import { NotificationClient, ReminderClient, ScheduleClient } from "@/application/port.out/api";
 import { DelayQueue } from "@/application/port.out/messaging/delay-queue";
-import { ReminderSource, TcpReminderSource } from "@/application/port.out/source";
+import { DelayQueueSource, ReminderSource } from "@/application/port.out/source";
 import { RedisModule } from "@/infrastructure/persistence/redis";
 
 /**
@@ -77,7 +77,7 @@ import { RedisModule } from "@/infrastructure/persistence/redis";
         /** 알림 조회 소스 */
         {
             provide: ReminderSource,
-            useClass: TcpReminderSource,
+            useClass: DelayQueueSource,
         },
     ],
 })
