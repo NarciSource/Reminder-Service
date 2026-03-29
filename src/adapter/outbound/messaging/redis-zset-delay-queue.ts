@@ -6,11 +6,10 @@ import { REDIS_STORAGE } from "@/infrastructure/persistence/redis/provider";
 
 @Injectable()
 export default class RedisZSetDelayQueue implements DelayQueue {
-    private readonly key = "reminder-delay-queue";
-
     constructor(
         @Inject(REDIS_STORAGE)
         private readonly instance: Redis,
+        private readonly key: string,
     ) {}
 
     async schedule<T>(payload: T, executeAt: Date): Promise<void> {

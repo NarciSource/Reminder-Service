@@ -2,7 +2,8 @@ import { Inject } from "@nestjs/common";
 import { CommandHandler, type ICommandHandler } from "@nestjs/cqrs";
 
 import ReminderEntity from "@/domain/model/entity";
-import { DelayQueue } from "../port.out/messaging";
+import type { DelayQueue } from "../port.out/messaging";
+import { REMINDER_DELAY_QUEUE } from "../port.out/messaging/token";
 import { ReminderRepository } from "../port.out/repository";
 import ReplaceCommand from "./replace.command";
 
@@ -11,7 +12,7 @@ export default class ReplaceHandler implements ICommandHandler<ReplaceCommand> {
     constructor(
         @Inject(ReminderRepository)
         private readonly repository: ReminderRepository,
-        @Inject(DelayQueue)
+        @Inject(REMINDER_DELAY_QUEUE)
         private readonly delayQueue: DelayQueue,
     ) {}
 

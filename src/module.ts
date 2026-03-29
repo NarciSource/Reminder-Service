@@ -2,15 +2,17 @@ import { Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 import { CqrsModule } from "@nestjs/cqrs";
 import { TerminusModule } from "@nestjs/terminus";
+import type Redis from "ioredis";
 
 import { HealthCheckController, HttpController, MessageController } from "@/adapter/inbound/web/controllers";
 import { RedisZSetDelayQueue } from "@/adapter/outbound/messaging";
 import { DynamoRepository } from "@/adapter/outbound/persistence";
 import { commands, queries } from "@/application";
-import { DelayQueue } from "@/application/port.out/messaging";
+import { REMINDER_DELAY_QUEUE } from "@/application/port.out/messaging/token";
 import { ReminderRepository } from "@/application/port.out/repository";
 import { DynamoModule } from "@/infrastructure/persistence/dynamo";
 import { RedisModule } from "@/infrastructure/persistence/redis";
+import { REDIS_STORAGE } from "@/infrastructure/persistence/redis/provider";
 import { SwaggerModule } from "@/infrastructure/swagger";
 
 /**
@@ -28,7 +30,7 @@ import { SwaggerModule } from "@/infrastructure/swagger";
  *
  * - `providers`: 서비스와 리포지토리, 그리고 Dynamoose 모델을 제공하는 프로바이더를 정의합니다.
  *   - `ReminderRepository`: 애플리케이션에서 사용할 저장소 인터페이스를 제공합니다.
- *   - `DelayQueue`: 메시징 지연 큐 인터페이스를 제공합니다.
+ *   - `REMINDER_DELAY_QUEUE`: 메시징 지연 큐를 처리하는 인프라입니다.
  *   - `queries`와 `commands`: CQRS 패턴을 구현하기 위한 쿼리와 커맨드 핸들러를 제공합니다.
  *
  * - `controllers`: HTTP 요청 및 메시지 처리를 담당하는 컨트롤러를 정의합니다.
@@ -54,8 +56,9 @@ import { SwaggerModule } from "@/infrastructure/swagger";
             useClass: DynamoRepository, // 구현체 연결
         },
         {
-            provide: DelayQueue,
-            useClass: RedisZSetDelayQueue,
+            provide: REMINDER_DELAY_QUEUE,
+            useFactory: (redis: Redis) => new RedisZSetDelayQueue(redis, "reminder-delay-queue"),
+            inject: [REDIS_STORAGE],
         },
         ...Object.values(queries),
         ...Object.values(commands),
