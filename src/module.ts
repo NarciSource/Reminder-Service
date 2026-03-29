@@ -2,15 +2,18 @@ import { Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 import { CqrsModule } from "@nestjs/cqrs";
 import { ScheduleModule } from "@nestjs/schedule";
+import type Redis from "ioredis";
 
 import { WorkerCronService } from "@/adapter/inbound/cron";
 import { HttpScheduleClient, OneSignalNotificationClient, TcpReminderClient } from "@/adapter/outbound/api";
 import { RedisZSetDelayQueue } from "@/adapter/outbound/messaging";
 import { commands, events } from "@/application";
 import { NotificationClient, ReminderClient, ScheduleClient } from "@/application/port.out/api";
-import { DelayQueue } from "@/application/port.out/messaging/delay-queue";
+import type { DelayQueue } from "@/application/port.out/messaging/delay-queue";
+import { REMINDER_DELAY_QUEUE } from "@/application/port.out/messaging/token";
 import { DelayQueueSource, ReminderSource } from "@/application/port.out/source";
 import { RedisModule } from "@/infrastructure/persistence/redis";
+import { REDIS_STORAGE } from "@/infrastructure/persistence/redis/provider";
 
 /**
  * @module WorkerModule
@@ -30,7 +33,7 @@ import { RedisModule } from "@/infrastructure/persistence/redis";
  *   - `ReminderClient`: Reminder 마이크로서비스와의 TCP 통신을 처리하는 클라이언트입니다.
  *   - `ScheduleClient`: 스케줄 이벤트 수신을 처리하는 클라이언트입니다.
  *   - `NotificationClient`: 알림 발송을 처리하는 클라이언트입니다.
- *   - `DelayQueue`: 메시징 지연 큐를 처리하는 인프라입니다.
+ *   - `REMINDER_DELAY_QUEUE`: 메시징 지연 큐를 처리하는 인프라입니다.
  *   - `ReminderSource`: 알림 조회를 처리하는 소스입니다.
  */
 @Module({
@@ -70,14 +73,16 @@ import { RedisModule } from "@/infrastructure/persistence/redis";
 
         /** 메시징 */
         {
-            provide: DelayQueue,
-            useClass: RedisZSetDelayQueue,
+            provide: REMINDER_DELAY_QUEUE,
+            useFactory: (redis: Redis) => new RedisZSetDelayQueue(redis, "reminder-delay-queue"),
+            inject: [REDIS_STORAGE],
         },
 
         /** 알림 조회 소스 */
         {
             provide: ReminderSource,
-            useClass: DelayQueueSource,
+            useFactory: (queue: DelayQueue) => new DelayQueueSource(queue),
+            inject: [REMINDER_DELAY_QUEUE],
         },
     ],
 })

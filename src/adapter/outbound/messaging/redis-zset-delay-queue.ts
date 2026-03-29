@@ -6,11 +6,10 @@ import { REDIS_STORAGE } from "@/infrastructure/persistence/redis";
 
 @Injectable()
 export default class RedisZSetDelayQueue extends DelayQueue {
-    private readonly key = "reminder-delay-queue";
-
     constructor(
         @Inject(REDIS_STORAGE)
         private readonly instance: Redis,
+        private readonly key: string,
     ) {
         super();
     }

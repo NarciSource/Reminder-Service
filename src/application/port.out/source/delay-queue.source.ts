@@ -1,12 +1,13 @@
 import { Inject, Injectable } from "@nestjs/common";
 
-import { DelayQueue } from "../messaging/delay-queue";
+import type { DelayQueue } from "../messaging/delay-queue";
+import { REMINDER_DELAY_QUEUE } from "../messaging/token";
 import ReminderSource from "./reminder.source";
 
 @Injectable()
 export default class DelayQueueSource extends ReminderSource {
     constructor(
-        @Inject(DelayQueue)
+        @Inject(REMINDER_DELAY_QUEUE)
         private readonly delayQueue: DelayQueue,
     ) {
         super();
