@@ -15,11 +15,7 @@ export default class RedisZSetDelayQueue extends DelayQueue {
     }
 
     async pollDue<T>(time: Date): Promise<T[]> {
-        const items = await this.instance.zrangebyscore(this.key, 0, time.getTime());
-
-        if (items.length === 0) return [];
-
-        await this.instance.zrem(this.key, ...items);
+        const items = await this.instance.pollDue(this.key, time.getTime());
 
         return items.map((item) => JSON.parse(item) as T);
     }
