@@ -2,6 +2,8 @@ import { Inject } from "@nestjs/common";
 import { CommandHandler, type ICommandHandler } from "@nestjs/cqrs";
 
 import ReminderEntity from "@/domain/model/entity";
+import type { DelayQueue } from "../port.out/messaging";
+import { REMINDER_DELAY_QUEUE } from "../port.out/messaging/token";
 import { ReminderRepository } from "../port.out/repository";
 import UpdateCommand from "./update.command";
 
@@ -9,7 +11,9 @@ import UpdateCommand from "./update.command";
 export default class UpdateHandler implements ICommandHandler<UpdateCommand> {
     constructor(
         @Inject(ReminderRepository)
-        private repository: ReminderRepository,
+        private readonly repository: ReminderRepository,
+        @Inject(REMINDER_DELAY_QUEUE)
+        private readonly delayQueue: DelayQueue,
     ) {}
 
     /**
@@ -22,6 +26,8 @@ export default class UpdateHandler implements ICommandHandler<UpdateCommand> {
     async execute({ event_id, send_at, status }: UpdateCommand) {
         const entity = new ReminderEntity(event_id, send_at, status); // 도메인 객체 생성
 
-        return this.repository.update(event_id, entity);
+        this.repository.update(event_id, entity);
+
+        this.delayQueue.reschedule(event_id, send_at); // Redis 지연 큐에 작업 재예약
     }
 }
