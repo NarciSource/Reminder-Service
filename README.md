@@ -240,10 +240,14 @@ Reminder-Service
 │  │  │  │  │  └─ update.handler.ts
 │  │  │  │  └─ delete.command.ts
 │  │  │  │     └─ delete.handler.ts
-│  │  │  ├─ port.out
-│  │  │  │  └─ repository
-│  │  │  │     ├─ index.ts
-│  │  │  │     └─ reminder.repository.ts
+│  │  │  └─ port.out
+│  │  │     ├─ messaging
+│  │  │     │  ├─ index.ts
+│  │  │     │  ├─ token.ts
+│  │  │     │  └─ delay-queue.ts
+│  │  │     └─ repository
+│  │  │        ├─ index.ts
+│  │  │        └─ reminder.repository.ts
 │  │  ├─ adapter # 호출 규격
 │  │  │  ├─ inbound
 │  │  │  │  └─ web
@@ -271,6 +275,9 @@ Reminder-Service
 │  │  │  │        ├─ update-request.dto.ts # patch dto
 │  │  │  │        └─ parameters.dto.ts # query dto
 │  │  │  └─ outbound
+│  │  │     ├─ messaging
+│  │  │     │  ├─ index.ts
+│  │  │     │  └─ redis-zset-delay-queue.ts # 딜레이큐 구현체
 │  │  │     └─ persistence
 │  │  │        ├─ index.ts
 │  │  │        └─ dynamo.repository.ts # 레포지토리 구현체
@@ -280,12 +287,16 @@ Reminder-Service
 │  │  │  │  ├─ jwt.interceptor.ts # JWT 토큰 인터셉터
 │  │  │  │  └─ verify-jwt.ts # JWT 토큰 인증
 │  │  │  ├─ persistence # 저장소
-│  │  │  │  └─ dynamo # DynamoDB
+│  │  │  │  ├─ dynamo # DynamoDB
+│  │  │  │  │  ├─ index.ts
+│  │  │  │  │  ├─ model.ts # 스키마
+│  │  │  │  │  │  └─ model.test.ts
+│  │  │  │  │  ├─ provider.ts # 프로바이더 의존성
+│  │  │  │  │  │  └─ provider.test.ts
+│  │  │  │  │  └─ module.ts
+│  │  │  │  └─ redis
 │  │  │  │     ├─ index.ts
-│  │  │  │     ├─ model.ts # 스키마
-│  │  │  │     │  └─ model.test.ts
-│  │  │  │     ├─ provider.ts # 프로바이더 의존성
-│  │  │  │     │  └─ provider.test.ts
+│  │  │  │     ├─ provider.ts
 │  │  │  │     └─ module.ts
 │  │  │  └─ swagger # 스웨거
 │  │  │     ├─ index.ts
@@ -332,24 +343,43 @@ Reminder-Service
 │  │  │     │  ├─ schedule.client.ts # 메시지 수신
 │  │  │     │  ├─ notification.client.ts # 메시지 발송
 │  │  │     │  └─ reminder.client.ts # 알림 저장 서비스
+│  │  │     ├─ messaging # 메시징
+│  │  │     │  ├─ token.ts
+│  │  │     │  ├─ delay-queue.ts # 딜레이큐
+│  │  │     │  └─ streams-queue.ts # 스트림큐
 │  │  │     └─ source # 알림 조회 소스
 │  │  │        ├─ index.ts
 │  │  │        ├─ reminder.source.ts # 인터페이스
 │  │  │        └─ tcp-reminder.source.ts # reminder TCP 연결 구현체
-│  │  └─ adapter # 호출 규격
-│  │     ├─ inbound
-│  │     │  └─ cron.ts
-│  │     │     └─ cron.test.ts
-│  │     └─ outbound
-│  │        └─ api # 잡 스케줄러
+│  │  ├─ adapter # 호출 규격
+│  │  │  ├─ inbound
+│  │  │  │  ├─ cron.ts # 
+│  │  │  │  │  └─ cron.test.ts
+│  │  │  │  └─ consumer.ts # 스트림 컨슈머
+│  │  │  └─ outbound
+│  │  │     ├─ api # 잡 스케줄러
+│  │  │     │  ├─ index.ts
+│  │  │     │  ├─ dto.ts
+│  │  │     │  ├─ http-schedule.client.ts
+│  │  │     │  │  └─ http-schedule.client.test.ts
+│  │  │     │  ├─ tcp-reminder.client.ts
+│  │  │     │  │  └─ tcp-reminder.client.test.ts
+│  │  │     │  └─ oneSignal-notification.client.ts
+│  │  │     │     └─ oneSignal-notification.client.test.ts
+│  │  │     └─ messaging
+│  │  │        ├─ index.ts
+│  │  │        ├─ redis-streams-queue.ts
+│  │  │        └─ redis-zset-delay-queue.ts
+│  │  └─ infrastructure # 인프라 설정
+│  │     └─ persistence # 저장소
+│  │        └─ redis
 │  │           ├─ index.ts
-│  │           ├─ dto.ts
-│  │           ├─ http-schedule.client.ts
-│  │           │  └─ http-schedule.client.test.ts
-│  │           └─ tcp-reminder.client.ts
-│  │           │  └─ tcp-reminder.client.test.ts
-│  │           └─ oneSignal-notification.client.ts
-│  │              └─ oneSignal-notification.client.test.ts
+│  │           ├─ redis.d.ts # ioredis 타입 확장
+│  │           ├─ lua # 루아 스크립트
+│  │           │  └─ pollDue.lua # atomic poll
+│  │           ├─ lua-service.ts
+│  │           ├─ provider.ts
+│  │           └─ module.ts
 │  ├─ Dockerfile # 도커파일
 │  │  └─ .dockerignore
 │  ├─ .env # 환경변수
