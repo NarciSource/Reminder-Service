@@ -1,14 +1,14 @@
 import { Inject } from "@nestjs/common";
-import { CommandHandler, type EventBus, type ICommandHandler } from "@nestjs/cqrs";
+import { CommandHandler, type ICommandHandler } from "@nestjs/cqrs";
 
-import { SendEvent } from "../events";
+import type { StreamsQueue } from "../port.out/messaging/streams-queue";
 import { ReminderSource } from "../port.out/source";
 import RunCommand from "./run.command";
 
 @CommandHandler(RunCommand)
 export default class RunHandler implements ICommandHandler<RunCommand> {
     constructor(
-        private readonly eventBus: EventBus,
+        private readonly streamsQueue: StreamsQueue,
         @Inject(ReminderSource)
         private readonly source: ReminderSource,
     ) {}
@@ -26,9 +26,7 @@ export default class RunHandler implements ICommandHandler<RunCommand> {
 
         for (const event_id of event_ids) {
             try {
-                const event = new SendEvent(event_id);
-
-                this.eventBus.publish(event);
+                await this.streamsQueue.push(event_id);
             } catch (error) {
                 console.error("발송 처리 중 에러 발생", error);
             }
