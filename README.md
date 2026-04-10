@@ -23,12 +23,12 @@
 
 ## 🛠️ 기술 스택
 
-[![NestJS](https://img.shields.io/badge/NestJS-E0234E?style=flat&logo=nestjs&logoColor=white)](https://nestjs.com/) [![NodeJS](https://img.shields.io/badge/Node.js-6DA55F?style=flat&logo=node.js&logoColor=white)](https://nodejs.org/ko)  
-[![DynamoDB](https://img.shields.io/badge/DynamoDB-4053D6?style=flat&logo=amazondynamodb&logoColor=white)](https://aws.amazon.com/ko/dynamodb/) [![OneSignal](https://img.shields.io/badge/OneSignal-E54B4D.svg?logo=data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMTQ5LjcwMiAwQzY2Ljk0NC4xNjEtLjQ2OCA2OC4xMS4wMDIgMTUwLjg2N2MuNDE0IDc3LjI5MiA1OS4zNTYgMTQwLjc0NiAxMzQuNzU4IDE0OC4zNTVhMS43MjcgMS43MjcgMCAwIDAgMS44OTYtMS43MjRWMTQ5Ljk5OWgtMTEuNjJhMS43MjUgMS43MjUgMCAwIDEtMS43MjQtMS43MjR2LTIzLjI1M2ExLjcyIDEuNzIgMCAwIDEgMS43MjQtMS43MjRoMzYuNTg2YTEuNzI1IDEuNzI1IDAgMCAxIDEuNzI0IDEuNzI0djE3Mi40NzZhMS43MTggMS43MTggMCAwIDAgLjU2MiAxLjI4MiAxLjczOCAxLjczOCAwIDAgMCAxLjMyOS40NDJDMjQwLjkyIDI5MS41ODQgMzAwIDIyNy42OTQgMzAwIDE0OS45OTkgMzAwIDY3LjA1NyAyMzIuNjc5LS4xNjEgMTQ5LjcwMiAwem00Mi42NjcgMjY1LjgwM2ExLjcyNCAxLjcyNCAwIDAgMS0yLjI5OS0xLjYyN3YtMjQuNjJhMi41OSAyLjU5IDAgMCAxIDEuNDgzLTIuMzM0IDk2LjcyNyA5Ni43MjcgMCAwIDAgNTUuMDU3LTg3LjIyM2MwLTUzLjc3NS00NC4xNjEtOTcuNDI0LTk4LjExNS05Ni41OTctNTEuMzIxLjc4Mi05My40MTggNDIuMTU1LTk1LjA1NiA5My40NTNhOTYuNzA5IDk2LjcwOSAwIDAgMCA1NS4wMjIgOTAuMzY3IDIuNTkgMi41OSAwIDAgMSAxLjQ4OSAyLjMzNHYyNC42MjZhMS43MjMgMS43MjMgMCAwIDEtMi4yOTkgMS42MjZDNjAuMTI4IDI0OC4zNzcgMjYuMjE1IDIwMi40NyAyNi43MDMgMTQ4Ljg1IDI3LjMwNyA4MS44NjcgODIuMDI1IDI3LjIxOCAxNDkuMDMgMjYuNzAxIDIxNy40NiAyNi4xNzIgMjczLjI5OSA4MS42OSAyNzMuMjk5IDE1MGMwIDUzLjEyLTMzLjc2NCA5OC40OTktODAuOTMgMTE1LjgwNHoiIGZpbGw9IiNGRkYiLz48L3N2Zz4=&style=flat&logoColor)](https://onesignal.com/) [![OneSignal](https://img.shields.io/badge/Cron-00baa9.svg?logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbDpzcGFjZT0icHJlc2VydmUiIGZpbGwtcnVsZT0iZXZlbm9kZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlLW1pdGVybGltaXQ9IjIiIGNsaXAtcnVsZT0iZXZlbm9kZCIgdmlld0JveD0iMCAwIDM5NyA1MzQiPgogIDxwYXRoIGZpbGw9Im5vbmUiIGQ9Ik0zLTNoMzk2djUyN0gzeiIvPgogIDxwYXRoIGZpbGw9IndoaXRlIiBkPSJtMTk3IDEzMSAxNDggODZ2MTcxbC0xNDggODYtMTQ4LTg2VjIxN2wxNDgtODZaTTg2IDI5NmwxNS00NmMzNSAxMiA2MCAyMiA3NiAzMWwtNy04MWg0OGMtMSAyMS0zIDQ4LTggODEgMjMtMTEgNDktMjIgNzgtMzFsMTUgNDZjLTI4IDktNTUgMTUtODIgMTggMTMgMTIgMzIgMzMgNTYgNjJsLTM5IDI4Yy0xMy0xNy0yNy00MS00NS03MC0xNiAzMC0zMCA1NC00MiA3MGwtMzktMjhjMjUtMzEgNDQtNTIgNTQtNjItMjgtNS01NC0xMS04MC0xOFptMTI0LTE4NmMxMy0yNCA1OC0yNSA5OS0xczYzIDYyIDQ5IDg2bC0xNDgtODVabS0yNiAwYy0xNC0yNC01OC0yNS05OS0xcy02MyA2Mi00OSA4NmwxNDgtODVaIi8+CiAgPHBhdGggZmlsbD0id2hpdGUiIGQ9Ik0zMDEgODljMC0zMi00NS01OC0xMDEtNThTOTkgNTcgOTkgODljMTItMjAgNTMtMzYgMTAxLTM2czg5IDE2IDEwMSAzNlptLTE5IDM0NS0yNSAxNSAzNSA0NiAxMi03LTIyLTU0Wm0tMTY5IDAgMjQgMTUtMzUgNDYtMTItNyAyMy01NFoiLz4KPC9zdmc+Cg==&style=flat&logoColor)](https://github.com/kelektiv/node-cron) [![Axios](https://img.shields.io/badge/Axios-5A29E4?style=flat&logo=axios&logoColor=white)](https://axios-http.com/kr/docs/intro)  
-[![Docker Compose](https://img.shields.io/badge/Docker_Compose-2AB4FF.svg?logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MjMgNjY1Ij4KICA8cGF0aCBmaWxsPSIjZmNmY2ZjIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik00MTggMWMtNiAxLTkgMy0xMyA4LTQgMy00IDMtMTAgMS0xMi02LTYwIDAtNjYgOC01IDYtMTEgNDQtOCA1MGwyMyAxN2M3IDQgNyA2IDIgNy0yMyAzLTM3IDI5LTI5IDUyIDMgOSAzIDktMTAgNi0xOS01LTI0LTYtNDUtNS00NyAwLTg2IDE4LTEwOSA1MGExMzUgMTM1IDAgMCAwLTI0IDY0Yy0zIDI4IDIgNDggMTcgNzJsMjIgMjdjNDAgNDQgNDEgNjYgMyA5MS00NSAzMC0xMDQgMTktMTA2LTIwLTEtMTYgNC0yOSAxNy01MiAxMy0yNCAxNC0zMyAzLTUybDEzLThjMjQtMTIgMjItOSAyMy0zNCAwLTIyIDItMjAtMjMtMzAtMTgtNi0yMC02LTQwLTEtMjggOS00MCAxNC00MSAxOCAwIDItMSAzLTIgMy03IDAtMTQgMTItMTUgMjUtMSAyMSA2IDI5IDMwIDM2IDMwIDkgMzUgMjQgMTkgNDktMzYgNTMtMzIgMTAyIDExIDEyMSAzNSAxNiA3NCAxMyAxMTktOWwxMS01IDMgMzJjMCAzNC00MCAzOC04OSA4bC0xNi0xMGMtNTEtMjktMTAyIDI0LTY2IDcwIDE1IDIwIDQyIDIxIDQ2IDIgMi04IDAtMTEtMTAtMTktMTYtMTItMTctMjQtMi0yNyA1LTEgMjYgOCAyOCAxMmwzNCAyOSAyMCAxMiAyMCA4YzM2IDEzIDgyLTE1IDgyLTUwIDAtMTAgMC0xMCA2LTUgMTAgMTAgMTggMTYgMjMgMTkgNiAzIDYgNCAxIDctNSAyLTUgMi01IDctMSA4IDEgMjkgNCAzMyA0IDcgNjMgNDYgNjkgNDYgMyAwIDQ4LTI1IDUxLTI5IDItMSAzLTM0IDEtMzZsLTE2LTljLTE2LTgtMTYtOC05LTEwIDE5LTcgMzctMjcgNDMtNDdsNS0xYTE2NSAxNjUgMCAwIDAgNjAtMTNjOSAwIDM0LTIyIDQwLTM0bDQtOGM0LTcgNi0yNiA2LTU2IDAtMjkgMS0yNy0xMC0yOS02LTItOC0zLTEzLTgtMzAtMjktNzktMjMtOTYgMTAtMyA3LTMgNy04IDlzLTYgNS01IDE3djE1YzEgMTQgNCAxNiAzNCAyOGwxMiA2YzcgMyA3IDMgMzAtNyA4LTMgOS0zIDkgMS02IDIyLTY0IDQyLTczIDI0YTg3IDg3IDAgMCAwLTYzLTQyYy04IDAtOCAwIDYtMTFhNzM2IDczNiAwIDAgMCA4NS04OWwzLTVjMTktMzEgMjEtNzMgMy0xMDctNy0xNS0yMy0zNS0zNi00OC0zOS0zNi00Ni00Ny0zOC02MiA0LTggMTUtMTcgMjAtMTVhNDUyIDQ1MiAwIDAgMCA1NS0xMmMxMS00IDEzLTUgMTQtMTAgMC00IDItNyA5LTE0IDI0LTI2LTgtODAtNDMtNzFNMjI4IDMzNGMxIDEgMCAxLTEgMS0yMCAwLTI4IDMyLTEyIDQyIDE3IDkgMzctMyAzNy0yMiAwLTctNy0xNy0xMS0xN3YtMWMzLTIgMC0zLTctNGwtNiAxbTU0IDgtNCAxYy0yMiAzLTI1IDM5LTMgNDQgMjQgNSA0MS0yMSAyNS0zOGwtNS0zdi0zYy0xLTItMTQtMy0xMy0xbS00OSAxMjBjLTYgNy05IDE0LTkgMjQgMCA4IDEgMTIgMyA2IDItMTIgOC0yOCAxMy0zM3YtM2MtMSAwLTQgMi03IDZtOTcgNGMwIDIgMjMgMTcgMjcgMTcgMiAwIDEtMy00LTctOS03LTIzLTEzLTIzLTEwbS01NCA2Yy0yMSA1MSAyOSA5NiA3MyA2NyA4LTYgOC03LTEtOC0zOS0zLTYzLTIzLTY2LTU0LTItMTItMy0xMy02LTUiLz4KPC9zdmc+Cg==&style=flat&logoColor=black)](https://docs.docker.com/compose/) [![Docker](https://img.shields.io/badge/Docker-2496ED?style=flat&logo=Docker&logoColor=white)](https://www.docker.com/)  
-[![Jest](https://img.shields.io/badge/Jest-C21325?style=flat&logo=jest&logoColor=white)](https://jestjs.io/) [![ESLint](https://img.shields.io/badge/ESLint-4B32C3?style=flat&logo=eslint&logoColor=white)](https://eslint.org/) [![Prettier](https://img.shields.io/badge/Prettier-F7B93E?style=flat&logo=prettier&logoColor=black)](https://prettier.io/) [![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)  
-[![Swagger](https://img.shields.io/badge/Swagger-85EA2D?style=flat&logo=swagger&logoColor=black)](https://swagger.io/) [![Codecov](https://img.shields.io/badge/Codecov-F01F7A?style=flat&logo=codecov&logoColor=white)](https://about.codecov.io/) [![TypeDoc](https://img.shields.io/badge/TypeDoc-3178c6.svg?logo=data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz48IS0tIFVwbG9hZGVkIHRvOiBTVkcgUmVwbywgd3d3LnN2Z3JlcG8uY29tLCBHZW5lcmF0b3I6IFNWRyBSZXBvIE1peGVyIFRvb2xzIC0tPgo8c3ZnIHdpZHRoPSI4MDBweCIgaGVpZ2h0PSI4MDBweCIgdmlld0JveD0iMCAwIDMyIDMyIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjx0aXRsZT5maWxlX3R5cGVfdHlwZWRvYzwvdGl0bGU+PHBvbHlnb24gcG9pbnRzPSIzIDIzIDMgOSAxNiAyIDE2IDMwIDMgMjMiIHN0eWxlPSJmaWxsOiNiNDRjZmUiLz48cG9seWdvbiBwb2ludHM9IjMgOSAxNiAxNiAyOSA5IDE2IDIgMyA5IiBzdHlsZT0iZmlsbDojOTYwMWZlIi8+PHBvbHlnb24gcG9pbnRzPSIzIDIzIDE2IDE2IDE2IDMwIDMgMjMiIHN0eWxlPSJmaWxsOiM5OWNiZmUiLz48cG9seWdvbiBwb2ludHM9IjI5IDkgMTYgMTYgMTYgMzAgMjkgMjMgMjkgOSIgc3R5bGU9ImZpbGw6IzBjMzY0ZiIvPjwvc3ZnPg==&style=flat&logoColor=black)](https://typedoc.org/)  
+[![Redis](https://img.shields.io/badge/Redis-FF4438?style=flat&logo=redis&logoColor=white)](https://redis.io/) [![DynamoDB](https://img.shields.io/badge/DynamoDB-4053D6?style=flat&logo=amazondynamodb&logoColor=white)](https://aws.amazon.com/ko/dynamodb/) [![Cron](https://img.shields.io/badge/Cron-00baa9.svg?logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbDpzcGFjZT0icHJlc2VydmUiIGZpbGwtcnVsZT0iZXZlbm9kZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlLW1pdGVybGltaXQ9IjIiIGNsaXAtcnVsZT0iZXZlbm9kZCIgdmlld0JveD0iMCAwIDM5NyA1MzQiPgogIDxwYXRoIGZpbGw9Im5vbmUiIGQ9Ik0zLTNoMzk2djUyN0gzeiIvPgogIDxwYXRoIGZpbGw9IndoaXRlIiBkPSJtMTk3IDEzMSAxNDggODZ2MTcxbC0xNDggODYtMTQ4LTg2VjIxN2wxNDgtODZaTTg2IDI5NmwxNS00NmMzNSAxMiA2MCAyMiA3NiAzMWwtNy04MWg0OGMtMSAyMS0zIDQ4LTggODEgMjMtMTEgNDktMjIgNzgtMzFsMTUgNDZjLTI4IDktNTUgMTUtODIgMTggMTMgMTIgMzIgMzMgNTYgNjJsLTM5IDI4Yy0xMy0xNy0yNy00MS00NS03MC0xNiAzMC0zMCA1NC00MiA3MGwtMzktMjhjMjUtMzEgNDQtNTIgNTQtNjItMjgtNS01NC0xMS04MC0xOFptMTI0LTE4NmMxMy0yNCA1OC0yNSA5OS0xczYzIDYyIDQ5IDg2bC0xNDgtODVabS0yNiAwYy0xNC0yNC01OC0yNS05OS0xcy02MyA2Mi00OSA4NmwxNDgtODVaIi8+CiAgPHBhdGggZmlsbD0id2hpdGUiIGQ9Ik0zMDEgODljMC0zMi00NS01OC0xMDEtNThTOTkgNTcgOTkgODljMTItMjAgNTMtMzYgMTAxLTM2czg5IDE2IDEwMSAzNlptLTE5IDM0NS0yNSAxNSAzNSA0NiAxMi03LTIyLTU0Wm0tMTY5IDAgMjQgMTUtMzUgNDYtMTItNyAyMy01NFoiLz4KPC9zdmc+Cg==&style=flat&logoColor)](https://github.com/kelektiv/node-cron)   
+[![NestJS](https://img.shields.io/badge/NestJS-E0234E?style=flat&logo=nestjs&logoColor=white)](https://nestjs.com/) [![NodeJS](https://img.shields.io/badge/Node.js-6DA55F?style=flat&logo=node.js&logoColor=white)](https://nodejs.org/ko) [![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)  
+[![OneSignal](https://img.shields.io/badge/OneSignal-E54B4D.svg?logo=data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMTQ5LjcwMiAwQzY2Ljk0NC4xNjEtLjQ2OCA2OC4xMS4wMDIgMTUwLjg2N2MuNDE0IDc3LjI5MiA1OS4zNTYgMTQwLjc0NiAxMzQuNzU4IDE0OC4zNTVhMS43MjcgMS43MjcgMCAwIDAgMS44OTYtMS43MjRWMTQ5Ljk5OWgtMTEuNjJhMS43MjUgMS43MjUgMCAwIDEtMS43MjQtMS43MjR2LTIzLjI1M2ExLjcyIDEuNzIgMCAwIDEgMS43MjQtMS43MjRoMzYuNTg2YTEuNzI1IDEuNzI1IDAgMCAxIDEuNzI0IDEuNzI0djE3Mi40NzZhMS43MTggMS43MTggMCAwIDAgLjU2MiAxLjI4MiAxLjczOCAxLjczOCAwIDAgMCAxLjMyOS40NDJDMjQwLjkyIDI5MS41ODQgMzAwIDIyNy42OTQgMzAwIDE0OS45OTkgMzAwIDY3LjA1NyAyMzIuNjc5LS4xNjEgMTQ5LjcwMiAwem00Mi42NjcgMjY1LjgwM2ExLjcyNCAxLjcyNCAwIDAgMS0yLjI5OS0xLjYyN3YtMjQuNjJhMi41OSAyLjU5IDAgMCAxIDEuNDgzLTIuMzM0IDk2LjcyNyA5Ni43MjcgMCAwIDAgNTUuMDU3LTg3LjIyM2MwLTUzLjc3NS00NC4xNjEtOTcuNDI0LTk4LjExNS05Ni41OTctNTEuMzIxLjc4Mi05My40MTggNDIuMTU1LTk1LjA1NiA5My40NTNhOTYuNzA5IDk2LjcwOSAwIDAgMCA1NS4wMjIgOTAuMzY3IDIuNTkgMi41OSAwIDAgMSAxLjQ4OSAyLjMzNHYyNC42MjZhMS43MjMgMS43MjMgMCAwIDEtMi4yOTkgMS42MjZDNjAuMTI4IDI0OC4zNzcgMjYuMjE1IDIwMi40NyAyNi43MDMgMTQ4Ljg1IDI3LjMwNyA4MS44NjcgODIuMDI1IDI3LjIxOCAxNDkuMDMgMjYuNzAxIDIxNy40NiAyNi4xNzIgMjczLjI5OSA4MS42OSAyNzMuMjk5IDE1MGMwIDUzLjEyLTMzLjc2NCA5OC40OTktODAuOTMgMTE1LjgwNHoiIGZpbGw9IiNGRkYiLz48L3N2Zz4=&style=flat&logoColor)](https://onesignal.com/) [![Axios](https://img.shields.io/badge/Axios-5A29E4?style=flat&logo=axios&logoColor=white)](https://axios-http.com/kr/docs/intro) [![Swagger](https://img.shields.io/badge/Swagger-85EA2D?style=flat&logo=swagger&logoColor=black)](https://swagger.io/)  
+[![Biome](https://img.shields.io/badge/Biome-60A5FA?style=flat&logo=biome&logoColor=white)](https://biomejs.dev/) [![Jest](https://img.shields.io/badge/Jest-C21325?style=flat&logo=jest&logoColor=white)](https://jestjs.io/) [![Codecov](https://img.shields.io/badge/Codecov-F01F7A?style=flat&logo=codecov&logoColor=white)](https://about.codecov.io/) [![TypeDoc](https://img.shields.io/badge/TypeDoc-3178c6.svg?logo=data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz48IS0tIFVwbG9hZGVkIHRvOiBTVkcgUmVwbywgd3d3LnN2Z3JlcG8uY29tLCBHZW5lcmF0b3I6IFNWRyBSZXBvIE1peGVyIFRvb2xzIC0tPgo8c3ZnIHdpZHRoPSI4MDBweCIgaGVpZ2h0PSI4MDBweCIgdmlld0JveD0iMCAwIDMyIDMyIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjx0aXRsZT5maWxlX3R5cGVfdHlwZWRvYzwvdGl0bGU+PHBvbHlnb24gcG9pbnRzPSIzIDIzIDMgOSAxNiAyIDE2IDMwIDMgMjMiIHN0eWxlPSJmaWxsOiNiNDRjZmUiLz48cG9seWdvbiBwb2ludHM9IjMgOSAxNiAxNiAyOSA5IDE2IDIgMyA5IiBzdHlsZT0iZmlsbDojOTYwMWZlIi8+PHBvbHlnb24gcG9pbnRzPSIzIDIzIDE2IDE2IDE2IDMwIDMgMjMiIHN0eWxlPSJmaWxsOiM5OWNiZmUiLz48cG9seWdvbiBwb2ludHM9IjI5IDkgMTYgMTYgMTYgMzAgMjkgMjMgMjkgOSIgc3R5bGU9ImZpbGw6IzBjMzY0ZiIvPjwvc3ZnPg==&style=flat&logoColor=black)](https://typedoc.org/)  
 [![Github Actions](https://img.shields.io/badge/Github_Actions-2088FF?style=flat&logo=githubactions&logoColor=white)](https://github.com/features/actions)
+[![Docker Compose](https://img.shields.io/badge/Docker_Compose-2AB4FF.svg?logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MjMgNjY1Ij4KICA8cGF0aCBmaWxsPSIjZmNmY2ZjIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik00MTggMWMtNiAxLTkgMy0xMyA4LTQgMy00IDMtMTAgMS0xMi02LTYwIDAtNjYgOC01IDYtMTEgNDQtOCA1MGwyMyAxN2M3IDQgNyA2IDIgNy0yMyAzLTM3IDI5LTI5IDUyIDMgOSAzIDktMTAgNi0xOS01LTI0LTYtNDUtNS00NyAwLTg2IDE4LTEwOSA1MGExMzUgMTM1IDAgMCAwLTI0IDY0Yy0zIDI4IDIgNDggMTcgNzJsMjIgMjdjNDAgNDQgNDEgNjYgMyA5MS00NSAzMC0xMDQgMTktMTA2LTIwLTEtMTYgNC0yOSAxNy01MiAxMy0yNCAxNC0zMyAzLTUybDEzLThjMjQtMTIgMjItOSAyMy0zNCAwLTIyIDItMjAtMjMtMzAtMTgtNi0yMC02LTQwLTEtMjggOS00MCAxNC00MSAxOCAwIDItMSAzLTIgMy03IDAtMTQgMTItMTUgMjUtMSAyMSA2IDI5IDMwIDM2IDMwIDkgMzUgMjQgMTkgNDktMzYgNTMtMzIgMTAyIDExIDEyMSAzNSAxNiA3NCAxMyAxMTktOWwxMS01IDMgMzJjMCAzNC00MCAzOC04OSA4bC0xNi0xMGMtNTEtMjktMTAyIDI0LTY2IDcwIDE1IDIwIDQyIDIxIDQ2IDIgMi04IDAtMTEtMTAtMTktMTYtMTItMTctMjQtMi0yNyA1LTEgMjYgOCAyOCAxMmwzNCAyOSAyMCAxMiAyMCA4YzM2IDEzIDgyLTE1IDgyLTUwIDAtMTAgMC0xMCA2LTUgMTAgMTAgMTggMTYgMjMgMTkgNiAzIDYgNCAxIDctNSAyLTUgMi01IDctMSA4IDEgMjkgNCAzMyA0IDcgNjMgNDYgNjkgNDYgMyAwIDQ4LTI1IDUxLTI5IDItMSAzLTM0IDEtMzZsLTE2LTljLTE2LTgtMTYtOC05LTEwIDE5LTcgMzctMjcgNDMtNDdsNS0xYTE2NSAxNjUgMCAwIDAgNjAtMTNjOSAwIDM0LTIyIDQwLTM0bDQtOGM0LTcgNi0yNiA2LTU2IDAtMjkgMS0yNy0xMC0yOS02LTItOC0zLTEzLTgtMzAtMjktNzktMjMtOTYgMTAtMyA3LTMgNy04IDlzLTYgNS01IDE3djE1YzEgMTQgNCAxNiAzNCAyOGwxMiA2YzcgMyA3IDMgMzAtNyA4LTMgOS0zIDkgMS02IDIyLTY0IDQyLTczIDI0YTg3IDg3IDAgMCAwLTYzLTQyYy04IDAtOCAwIDYtMTFhNzM2IDczNiAwIDAgMCA4NS04OWwzLTVjMTktMzEgMjEtNzMgMy0xMDctNy0xNS0yMy0zNS0zNi00OC0zOS0zNi00Ni00Ny0zOC02MiA0LTggMTUtMTcgMjAtMTVhNDUyIDQ1MiAwIDAgMCA1NS0xMmMxMS00IDEzLTUgMTQtMTAgMC00IDItNyA5LTE0IDI0LTI2LTgtODAtNDMtNzFNMjI4IDMzNGMxIDEgMCAxLTEgMS0yMCAwLTI4IDMyLTEyIDQyIDE3IDkgMzctMyAzNy0yMiAwLTctNy0xNy0xMS0xN3YtMWMzLTIgMC0zLTctNGwtNiAxbTU0IDgtNCAxYy0yMiAzLTI1IDM5LTMgNDQgMjQgNSA0MS0yMSAyNS0zOGwtNS0zdi0zYy0xLTItMTQtMy0xMy0xbS00OSAxMjBjLTYgNy05IDE0LTkgMjQgMCA4IDEgMTIgMyA2IDItMTIgOC0yOCAxMy0zM3YtM2MtMSAwLTQgMi03IDZtOTcgNGMwIDIgMjMgMTcgMjcgMTcgMiAwIDEtMy00LTctOS03LTIzLTEzLTIzLTEwbS01NCA2Yy0yMSA1MSAyOSA5NiA3MyA2NyA4LTYgOC03LTEtOC0zOS0zLTYzLTIzLTY2LTU0LTItMTItMy0xMy02LTUiLz4KPC9zdmc+Cg==&style=flat&logoColor=black)](https://docs.docker.com/compose/) [![Docker](https://img.shields.io/badge/Docker-2496ED?style=flat&logo=Docker&logoColor=white)](https://www.docker.com/)  
 
 ## 💡 주요 기능
 
@@ -39,14 +39,28 @@
 
 - **MSA (마이크로서비스아키텍처)**
 
-    1. **Notification 서비스**
+    1. **API 서비스**
         - 알림 리소스를 관리하는 _REST API_ 제공
         - 알림 데이터는 _Key-Value_ 데이터베이스인 **DynamoDB**에 저장
+        - 예약 알림은 Redis의 **Delay Queue** (*ZSET*) 에 저장
         - _DynamoDB의 TTL(Time to Live)_ 설정을 활용하여, 예약된 알림이 지나면 자동으로 삭제됨
     2. **Worker 서비스**
-        - *Cron 스케줄러*를 사용하여 매시간 주기적인 작업 수행
-        - Notification 서비스와 *TCP 통신*을 통해 알림 데이터를 조회
-        - **OneSignal** 서비스를 통해 알림 메시지를 전송
+       - Poller
+         - *Cron 스케줄러*를 사용하여 주기적으로 *Delay Queue*를 *Polling*
+         - 현재 시각 이하의 예약 알림을 조회
+         - 조회한 알림 이벤트를 **Redis Streams** 로 발행
+       - Executor
+         - Streams Consumer Group 을 통해 알림 이벤트 비동기 소비
+         - API 서비스와 *TCP 통신*을 통해 알림 데이터를 조회
+         - **OneSignal** 서비스를 통해 알림 메시지를 전송
+
+- **Redis 기반 비동기 파이프라인**
+
+  - Delay Queue (ZSET)를 사용하여 예약 시점 관리
+  - Streams 를 사용하여 이벤트 기반 비동기 처리
+  - Consumer Group 기반으로 Worker 수평 확장 가능
+  - Pending Entry 관리 및 재처리를 통해 장애 복구 지원
+  - Polling 기반 Cron 구조를 이벤트 드리븐 파이프라인 구조로 개선하여 Worker 부하 감소 및 처리량 향상
 
 ## 📖 개발 문서
 
@@ -103,40 +117,46 @@
 
 ```mermaid
 flowchart LR
-   Web["웹사이트"]
-   click Web "https://github.com/Daily1Hour/PickMe-Calendar-Application"
-   event@{ shape: bow-rect, label: "이벤트 정보" }
+    subgraph Reminder
+        RedisDelay@{ shape: lin-cyl, label: "Redis ZSET" }
+        RedisStream@{ shape: lin-cyl, label: "Redis Streams" }
 
-   Web --> event --> |REST/HTTP| Notification/server
+        Poller --> |ZRANGEBYSCORE| RedisDelay
 
-   subgraph Reminder
-      subgraph Worker
-         Worker/Cron@{ shape: circle, label: "스케줄러" }
-      end
+        subgraph Worker Layer
+            Poller@{ shape: circle, label: "Poller" }
+            Executor@{ shape: circle, label: "Executor" }
 
-      subgraph Notification
-         Notification/server@{ shape: circle, label: "등록 서버" }
-         Notification/db@{ shape: lin-cyl, label: "DynamoDB" }
+            Poller --> |XADD| RedisStream
+            Executor --> |XREADGROUP| RedisStream
+        end
 
-         Notification/server <--> Notification/db
-      end
+        Executor -.-> |TCP| Api
 
-      Worker/Cron <-.-> |TCP| Notification/server
-   end
+        subgraph Api Layer
+            Api@{ shape: circle, label: "API 서버" }
+            DB@{ shape: lin-cyl, label: "DynamoDB" }
 
-   Calendar
-   click Calendar "https://github.com/Daily1Hour/PickMe-Calendar-Service"
-   data@{ shape: bow-rect, label: "이벤트 상세 정보" }
+            Api <--> DB
+            Api --> |ZADD| RedisDelay
+        end
 
-   Calendar --> data --> Worker/Cron
-   Worker/Cron --> |HTTP| message@{ shape: bow-rect, label: "메시지" } --> OneSignal
+    end
+
+    Web["웹사이트"] --> event@{ shape: bow-rect, label: "이벤트 정보" } --> |REST/HTTP| Api
+    Scheduler --> data@{ shape: bow-rect, label: "이벤트 상세 정보" } --> |HTTP| Executor
+    Executor --> |HTTP| message@{ shape: bow-rect, label: "메시지" } --> OneSignal
 ```
 
-1. 웹사이트에서 *이벤트 정보*를 Notification 서비스 등록 서버에 REST 방식으로 전송
-2. Notification 서비스는 데이터를 DynamoDB로 관리
-3. Worker 서비스의 스케줄러가 정기적으로 등록 서버에서 TCP 연결로 데이터 읽음
-4. 데이터가 존재하면 외부 Calendar 서비스에서 *상세 정보*를 가져옴
-5. 데이터를 통합하여 *메시지*로 만들어 OneSignal로 전송
+Redis 기반 **Delay Queue** + **Streams** 비동기 처리 파이프라인
+1. 웹사이트에서 이벤트 정보를 Api 서비스 등록 서버에 REST 방식으로 전송
+2. Api 서비스는 데이터를 *DynamoDB*로 관리하고, 알림 스케줄을 **Redis ZSET** (*Delay Queue*)에 저장
+3. Worker 서비스의 Poller가 Redis ZSET에서 실행 시간이 도래한 데이터를 조회 (*ZRANGEBYSCORE*)하고 제거 (*ZREM*)
+4. Poller는 해당 데이터를 **Redis Streams**에 이벤트로 발행 (*XADD*)
+5. Worker 서비스의 Executor가 Streams Consumer Group으로 데이터를 구독 (*XREADGROUP*)
+6. Executor는 외부 Calendar 서비스에서 이벤트 상세 정보를 조회
+7. 데이터를 통합하여 메시지로 생성하고 생성된 메시지를 OneSignal로 전송
+8. 처리 결과를 Api 서버에 전달하여 상태를 DynamoDB에 반영
 
 ### 📦 배치 다이어그램
 
@@ -144,13 +164,13 @@ flowchart LR
 
 1. **NestJS 프레임워크**를 사용해 백엔드 서비스 구축
 2. NestJS의 *MicroService 모듈*을 사용해 두 개의 마이크로서비스로 구현
-3. **Notification 서비스**
+3. **API 서비스**
     - _REST API_ 방식으로 외부 요청을 처리
     - **DynamoDB**를 사용해 데이터베이스 관리
 4. **Worker 서비스**
     - *NestJS Schedule 라이브러리*를 사용해 _Cron Job_ 설정으로 주기 작업 처리
-    - 마이크로서비스 간 *TCP 연결*을 통해 Notification 서비스에서 데이터 읽기
-    - REST API로 외부 서비스 (Calendar 서비스)에서 데이터 요청
+    - 마이크로서비스 간 *TCP 연결*을 통해 API 서비스에서 데이터 읽기
+    - REST API로 외부 서비스 (Scheduler 서비스)에서 데이터 요청
     - 데이터 통합하고 **OneSignal**를 통해 알림을 전송
 5. 각 마이크로 서비스는 **Docker Image** 생성하여 컨테이너화
 6. **Docker Compose**로 마이크로서비스와 관련 서비스(DB)를 관리하고 배포
