@@ -3,11 +3,10 @@ import { ConfigModule } from "@nestjs/config";
 import { CqrsModule } from "@nestjs/cqrs";
 import { ScheduleModule } from "@nestjs/schedule";
 
-import { WorkerCronService } from "@/adapter/inbound/cron";
+import { ConsumerService } from "@/adapter/inbound/consumer";
 import { HttpScheduleClient, OneSignalNotificationClient, TcpReminderClient } from "@/adapter/outbound/api";
 import { commands, events } from "@/application";
 import { NotificationClient, ReminderClient, ScheduleClient } from "@/application/port.out/api";
-import { ReminderSource, TcpReminderSource } from "@/application/port.out/source";
 import { BullMQModule } from "@/infrastructure/messaging/bullmq";
 
 /**
@@ -23,12 +22,11 @@ import { BullMQModule } from "@/infrastructure/messaging/bullmq";
  *   - `BullMQModule`: BullMQ를 사용한 딜레이큐를 위한 모듈입니다.
  *
  * - `providers`: 서비스와 인프라스트럭처를 정의합니다.
- *   - `WorkerCronService`: 작업자 크론 작업을 처리합니다.
+ *   - `ConsumerService`:큐 기반으로 전달된 작업을 수신하여 처리합니다.
  *   - `commands`와 `events`: 애플리케이션의 명령과 이벤트 핸들러를 제공합니다.
  *   - `ReminderClient`: Reminder 마이크로서비스와의 TCP 통신을 처리하는 클라이언트입니다.
  *   - `ScheduleClient`: 스케줄 이벤트 수신을 처리하는 클라이언트입니다.
  *   - `NotificationClient`: 알림 발송을 처리하는 클라이언트입니다.
- *   - `ReminderSource`: 알림 조회를 처리하는 소스입니다.
  */
 @Module({
     imports: [
@@ -42,7 +40,7 @@ import { BullMQModule } from "@/infrastructure/messaging/bullmq";
     ],
     providers: [
         /** 진입점 */
-        WorkerCronService,
+        ConsumerService,
 
         /** 유즈케이스 */
         ...Object.values(commands),
@@ -63,12 +61,6 @@ import { BullMQModule } from "@/infrastructure/messaging/bullmq";
             // 알림 발송하는 클라이언트
             provide: NotificationClient,
             useClass: OneSignalNotificationClient,
-        },
-
-        /** 알림 조회 소스 */
-        {
-            provide: ReminderSource,
-            useClass: TcpReminderSource,
         },
     ],
 })
