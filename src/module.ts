@@ -8,6 +8,7 @@ import { HttpScheduleClient, OneSignalNotificationClient, TcpReminderClient } fr
 import { commands, events } from "@/application";
 import { NotificationClient, ReminderClient, ScheduleClient } from "@/application/port.out/api";
 import { ReminderSource, TcpReminderSource } from "@/application/port.out/source";
+import { BullMQModule } from "@/infrastructure/messaging/bullmq";
 
 /**
  * @module WorkerModule
@@ -19,6 +20,7 @@ import { ReminderSource, TcpReminderSource } from "@/application/port.out/source
  *   - `ScheduleModule`: 작업 스케줄링을 위한 모듈입니다.
  *   - `ConfigModule`: 환경설정을 전역적으로 관리하기 위한 모듈입니다.
  *   - `CqrsModule`: CQRS 패턴을 구현하기 위한 모듈입니다.
+ *   - `BullMQModule`: BullMQ를 사용한 딜레이큐를 위한 모듈입니다.
  *
  * - `providers`: 서비스와 인프라스트럭처를 정의합니다.
  *   - `WorkerCronService`: 작업자 크론 작업을 처리합니다.
@@ -36,6 +38,7 @@ import { ReminderSource, TcpReminderSource } from "@/application/port.out/source
             envFilePath: [".env.local", ".env"],
         }),
         CqrsModule,
+        BullMQModule,
     ],
     providers: [
         /** 진입점 */
