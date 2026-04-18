@@ -8,6 +8,7 @@ import { DynamoRepository } from "@/adapter/outbound/persistence";
 import { commands, queries } from "@/application";
 import { DelayQueue } from "@/application/port.out/messaging";
 import { ReminderRepository } from "@/application/port.out/repository";
+import { BullMQModule } from "@/infrastructure/messaging/bullmq";
 import { DynamoModule } from "@/infrastructure/persistence/dynamo";
 import { SwaggerModule } from "@/infrastructure/swagger";
 
@@ -22,7 +23,7 @@ import { SwaggerModule } from "@/infrastructure/swagger";
  *   - `TerminusModule`: 헬스 체크 기능을 제공하는 모듈입니다.
  *   - `SwaggerModule`: API 문서 생성을 위한 모듈입니다.
  *   - `DynamoModule`: DynamoDB와의 통신을 위한 모듈입니다.
- *   - `RedisModule`: Redis와의 상호작용을 위한 모듈입니다.
+ *   - `BullMQModule`: BullMQ를 사용한 딜레이큐를 위한 모듈입니다.
  *
  * - `providers`: 서비스와 리포지토리, 그리고 Dynamoose 모델을 제공하는 프로바이더를 정의합니다.
  *   - `ReminderRepository`: 애플리케이션에서 사용할 저장소 인터페이스를 제공합니다.
@@ -44,6 +45,7 @@ import { SwaggerModule } from "@/infrastructure/swagger";
         TerminusModule,
         SwaggerModule,
         DynamoModule,
+        BullMQModule,
     ],
     providers: [
         {
