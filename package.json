@@ -13,6 +13,7 @@
     "lint": "biome check --write"
   },
   "dependencies": {
+    "@nestjs/bullmq": "^11.0.4",
     "@nestjs/cqrs": "^11.0.3",
     "@nestjs/schedule": "^6.1.3",
     "axios": "^1.15.0",

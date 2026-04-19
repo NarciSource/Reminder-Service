@@ -1,32 +1,20 @@
-import { Inject, Injectable, type OnApplicationBootstrap, type OnApplicationShutdown } from "@nestjs/common";
+import { Processor, WorkerHost } from "@nestjs/bullmq";
+import { Injectable } from "@nestjs/common";
 import type { CommandBus } from "@nestjs/cqrs";
-import type { Processor, Worker } from "bullmq";
+import type { Job } from "bullmq";
 
 import { RunCommand } from "@/application/commands";
-import { BULLMQ_WORKER } from "@/infrastructure/messaging/bullmq";
 
 @Injectable()
-export class ConsumerService implements OnApplicationBootstrap, OnApplicationShutdown {
-    private readonly queueName = "reminder-delay-queue";
-    private worker: Worker;
-
-    constructor(
-        private readonly commandBus: CommandBus,
-        @Inject(BULLMQ_WORKER)
-        private readonly createWorker: (queueName: string, processor: Processor) => Worker,
-    ) {}
-
-    onApplicationBootstrap() {
-        this.worker = this.createWorker(this.queueName, async (job) => {
-            const command = new RunCommand(job);
-
-            await this.commandBus.execute(command);
-        });
-
-        this.worker.run();
+@Processor("reminder-delay-queue", { concurrency: 10 })
+export class ConsumerService extends WorkerHost {
+    constructor(private readonly commandBus: CommandBus) {
+        super();
     }
 
-    async onApplicationShutdown() {
-        await this.worker.close();
+    async process(job: Job) {
+        const command = new RunCommand(job);
+
+        await this.commandBus.execute(command);
     }
 }
