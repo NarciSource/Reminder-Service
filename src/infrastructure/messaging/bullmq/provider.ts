@@ -1,13 +1,11 @@
-import { Logger, type Provider } from "@nestjs/common";
+import type { SharedBullAsyncConfiguration } from "@nestjs/bullmq";
+import { Logger } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
-import { type Job, Queue } from "bullmq";
-
-export const BULLMQ_QUEUE = Symbol("bullmq-queue");
+import type { Job } from "bullmq";
 
 export type Processor<T> = (job: Job<T>) => Promise<void>;
 
 export default {
-    provide: BULLMQ_QUEUE,
     useFactory: (configService: ConfigService) => {
         const logger = new Logger("BullMQ");
         const host = configService.get<string>("REDIS_HOST", "localhost");
@@ -15,9 +13,9 @@ export default {
 
         logger.log(`BullMQ 서비스 ${host}:${port}에 연결`);
 
-        return new Queue("reminder-delay-queue", {
+        return {
             connection: { host, port },
-        });
+        };
     },
     inject: [ConfigService],
-} as Provider;
+} as SharedBullAsyncConfiguration;

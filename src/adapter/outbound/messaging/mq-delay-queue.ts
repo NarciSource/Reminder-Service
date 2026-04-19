@@ -1,13 +1,13 @@
-import { Inject, Injectable } from "@nestjs/common";
+import { InjectQueue } from "@nestjs/bullmq";
+import { Injectable } from "@nestjs/common";
 import type { Queue } from "bullmq";
 
 import type { DelayQueue } from "@/application/port.out/messaging";
-import { BULLMQ_WORKER } from "@/infrastructure/messaging/bullmq";
 
 @Injectable()
 export default class MQDelayQueue implements DelayQueue {
     constructor(
-        @Inject(BULLMQ_WORKER)
+        @InjectQueue("reminder-delay-queue")
         private readonly queue: Queue,
     ) {}
 
