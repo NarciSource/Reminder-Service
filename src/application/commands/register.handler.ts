@@ -26,6 +26,6 @@ export default class RegisterHandler implements ICommandHandler<RegisterCommand>
 
         this.repository.create(entity); // ORM 엔티티 생성
 
-        this.delayQueue.schedule(event_id, send_at); // Redis 지연 큐에 작업 예약
+        this.delayQueue.schedule(event_id, entity, send_at); // Redis 지연 큐에 작업 예약
     }
 }

@@ -29,6 +29,6 @@ export default class ReplaceHandler implements ICommandHandler<ReplaceCommand> {
 
         this.delayQueue.cancel(event_id); // 기존 작업 취소
 
-        this.delayQueue.reschedule(event_id, send_at); // Redis 지연 큐에 작업 재예약
+        this.delayQueue.reschedule(event_id, entity, send_at); // Redis 지연 큐에 작업 재예약
     }
 }

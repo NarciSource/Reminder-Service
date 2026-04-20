@@ -11,24 +11,24 @@ export default class MQDelayQueue implements DelayQueue {
         private readonly queue: Queue,
     ) {}
 
-    async schedule<T>(payload: T, executeAt: Date): Promise<void> {
+    async schedule<T>(key: string, payload: T, executeAt: Date): Promise<void> {
         const delay = Math.max(executeAt.getTime() - Date.now(), 0);
 
         await this.queue.add("dispatch", payload, {
             delay,
-            jobId: payload.toString(),
+            jobId: key,
             removeOnComplete: true,
         });
     }
 
-    async reschedule<T>(payload: T, executeAt: Date): Promise<void> {
-        await this.cancel(payload);
+    async reschedule<T>(key: string, payload: T, executeAt: Date): Promise<void> {
+        await this.cancel(key);
 
-        await this.schedule(payload, executeAt);
+        await this.schedule(key, payload, executeAt);
     }
 
-    async cancel<T>(payload: T): Promise<void> {
-        const job = await this.queue.getJob(payload.toString());
+    async cancel(key: string): Promise<void> {
+        const job = await this.queue.getJob(key);
 
         if (!job) return;
 

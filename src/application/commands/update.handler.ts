@@ -27,6 +27,6 @@ export default class UpdateHandler implements ICommandHandler<UpdateCommand> {
 
         this.repository.update(event_id, entity);
 
-        this.delayQueue.reschedule(event_id, send_at); // Redis 지연 큐에 작업 재예약
+        this.delayQueue.reschedule(event_id, entity, send_at); // Redis 지연 큐에 작업 재예약
     }
 }
