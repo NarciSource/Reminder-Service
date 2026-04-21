@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, Optional } from "@nestjs/common";
 import type { ModelType } from "dynamoose/dist/General";
 
 import type { ReminderRepository } from "@/application/port.out/repository";
@@ -6,6 +6,7 @@ import type ReminderEntity from "@/domain/model/entity";
 import type { ReminderStatus } from "@/domain/model/entity";
 // biome-ignore lint/style/useImportType: NestJS DI requires runtime class reference
 import DynamoModel from "@/infrastructure/persistence/dynamo/model";
+import type { ReminderTTLStrategy } from "./strategies";
 
 /**
  * DynamoDB를 사용하여 알림 데이터를 관리하는 저장소 클래스입니다.
@@ -27,34 +28,42 @@ export default class DynamoRepository implements ReminderRepository {
      * DynamoDB 모델을 초기화합니다.
      * @param model DynamoDB 모델을 제공하는 `DynamooseModel` 인스턴스
      */
-    constructor(model: DynamoModel) {
+    constructor(
+        model: DynamoModel,
+        @Optional()
+        private readonly ttlStrategy?: ReminderTTLStrategy,
+    ) {
         this.model = model.getModel();
     }
 
-    async create(eventData: ReminderEntity) {
+    async create(entity: ReminderEntity) {
+        const ttl = this.ttlStrategy?.calculate(entity);
+
         return this.model.update({
-            ...eventData,
-            ttl: Math.floor(eventData.send_at.getTime() / 1000) + 60 * 60, // 1시간 후 삭제
+            ...entity,
+            ttl,
         });
     }
 
     async replace(event_id: string, entity: ReminderEntity) {
+        const ttl = this.ttlStrategy?.calculate(entity);
+
         return this.model.put({
             event_id,
             ...entity,
-            ttl: Math.floor(entity.send_at.getTime() / 1000) + 60 * 60,
+            ttl,
         });
     }
 
     async update(event_id: string, entity: Partial<ReminderEntity>) {
+        const ttl = this.ttlStrategy?.calculate(entity);
+
         return this.model.update(
             { event_id },
             {
                 $SET: {
                     ...entity,
-                    ...(entity.send_at && {
-                        ttl: Math.floor(entity.send_at.getTime() / 1000) + 60 * 60,
-                    }),
+                    ...(ttl && { ttl }),
                 },
             },
         );

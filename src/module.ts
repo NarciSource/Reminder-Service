@@ -6,6 +6,7 @@ import { TerminusModule } from "@nestjs/terminus";
 import { HealthCheckController, HttpController, MessageController } from "@/adapter/inbound/web/controllers";
 import { MQDelayQueue } from "@/adapter/outbound/messaging";
 import { DynamoRepository } from "@/adapter/outbound/persistence";
+import { ReminderTTLStrategy } from "@/adapter/outbound/persistence/strategies";
 import { commands, queries } from "@/application";
 import { DelayQueue } from "@/application/port.out/messaging";
 import { ReminderRepository } from "@/application/port.out/repository";
@@ -57,6 +58,7 @@ import { SwaggerModule } from "@/infrastructure/swagger";
             provide: DelayQueue,
             useClass: MQDelayQueue,
         },
+        ReminderTTLStrategy,
         ...Object.values(queries),
         ...Object.values(commands),
     ],
