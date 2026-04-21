@@ -2,16 +2,17 @@ import { InjectQueue } from "@nestjs/bullmq";
 import { Injectable } from "@nestjs/common";
 import type { Queue } from "bullmq";
 
-import type { DelayQueue } from "@/application/port.out/messaging";
+import type { ReminderDelayQueue } from "@/application/port.out/messaging";
+import type ReminderEntity from "@/domain/model/entity";
 
 @Injectable()
-export default class MQDelayQueue implements DelayQueue {
+export default class MQDelayQueue implements ReminderDelayQueue {
     constructor(
         @InjectQueue("reminder-delay-queue")
         private readonly queue: Queue,
     ) {}
 
-    async schedule<T>(key: string, payload: T, executeAt: Date): Promise<void> {
+    async schedule(key: string, payload: ReminderEntity, executeAt: Date): Promise<void> {
         const delay = Math.max(executeAt.getTime() - Date.now(), 0);
 
         await this.queue.add("dispatch", payload, {
@@ -21,7 +22,7 @@ export default class MQDelayQueue implements DelayQueue {
         });
     }
 
-    async reschedule<T>(key: string, payload: T, executeAt: Date): Promise<void> {
+    async reschedule(key: string, payload: ReminderEntity, executeAt: Date): Promise<void> {
         await this.cancel(key);
 
         await this.schedule(key, payload, executeAt);

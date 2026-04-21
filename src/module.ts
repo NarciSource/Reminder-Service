@@ -8,7 +8,7 @@ import { MQDelayQueue } from "@/adapter/outbound/messaging";
 import { DynamoRepository } from "@/adapter/outbound/persistence";
 import { ReminderTTLStrategy } from "@/adapter/outbound/persistence/strategies";
 import { commands, queries } from "@/application";
-import { DelayQueue } from "@/application/port.out/messaging";
+import { ReminderDelayQueue } from "@/application/port.out/messaging";
 import { ReminderRepository } from "@/application/port.out/repository";
 import { BullMQModule } from "@/infrastructure/messaging/bullmq";
 import { DynamoModule } from "@/infrastructure/persistence/dynamo";
@@ -55,7 +55,7 @@ import { SwaggerModule } from "@/infrastructure/swagger";
             useClass: DynamoRepository, // 구현체 연결
         },
         {
-            provide: DelayQueue,
+            provide: ReminderDelayQueue,
             useClass: MQDelayQueue,
         },
         ReminderTTLStrategy,

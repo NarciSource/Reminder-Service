@@ -1,1 +1,1 @@
-export { default as MQDelayQueue } from "./mq-delay-queue";
+export { default as MQDelayQueue } from "./mq.delay-queue";

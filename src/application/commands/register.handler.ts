@@ -2,7 +2,7 @@ import { Inject } from "@nestjs/common";
 import { CommandHandler, type ICommandHandler } from "@nestjs/cqrs";
 
 import ReminderEntity from "@/domain/model/entity";
-import { DelayQueue } from "../port.out/messaging";
+import { ReminderDelayQueue } from "../port.out/messaging";
 import { ReminderRepository } from "../port.out/repository";
 import RegisterCommand from "./register.command";
 
@@ -11,8 +11,8 @@ export default class RegisterHandler implements ICommandHandler<RegisterCommand>
     constructor(
         @Inject(ReminderRepository)
         private readonly repository: ReminderRepository,
-        @Inject(DelayQueue)
-        private readonly delayQueue: DelayQueue,
+        @Inject(ReminderDelayQueue)
+        private readonly delayQueue: ReminderDelayQueue,
     ) {}
 
     /**
