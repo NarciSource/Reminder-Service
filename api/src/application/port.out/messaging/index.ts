@@ -1,1 +1,1 @@
-export { DelayQueue } from "./delay-queue";
+export { default as ReminderDelayQueue } from "./reminder.delay-queue";

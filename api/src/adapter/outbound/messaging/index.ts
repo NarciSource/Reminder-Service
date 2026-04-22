@@ -1,1 +1,1 @@
-export { default as RedisZSetDelayQueue } from "./redis-zset-delay-queue";
+export { default as MQDelayQueue } from "./mq.delay-queue";

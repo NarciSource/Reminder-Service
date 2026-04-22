@@ -2,17 +2,16 @@ import { Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 import { CqrsModule } from "@nestjs/cqrs";
 import { TerminusModule } from "@nestjs/terminus";
-import type Redis from "ioredis";
 
 import { HealthCheckController, HttpController, MessageController } from "@/adapter/inbound/web/controllers";
-import { RedisZSetDelayQueue } from "@/adapter/outbound/messaging";
+import { MQDelayQueue } from "@/adapter/outbound/messaging";
 import { DynamoRepository } from "@/adapter/outbound/persistence";
+import { ReminderTTLStrategy } from "@/adapter/outbound/persistence/strategies";
 import { commands, queries } from "@/application";
-import { REMINDER_DELAY_QUEUE } from "@/application/port.out/messaging/token";
+import { ReminderDelayQueue } from "@/application/port.out/messaging";
 import { ReminderRepository } from "@/application/port.out/repository";
+import { BullMQModule } from "@/infrastructure/messaging/bullmq";
 import { DynamoModule } from "@/infrastructure/persistence/dynamo";
-import { RedisModule } from "@/infrastructure/persistence/redis";
-import { REDIS_STORAGE } from "@/infrastructure/persistence/redis/provider";
 import { SwaggerModule } from "@/infrastructure/swagger";
 
 /**
@@ -26,11 +25,11 @@ import { SwaggerModule } from "@/infrastructure/swagger";
  *   - `TerminusModule`: 헬스 체크 기능을 제공하는 모듈입니다.
  *   - `SwaggerModule`: API 문서 생성을 위한 모듈입니다.
  *   - `DynamoModule`: DynamoDB와의 통신을 위한 모듈입니다.
- *   - `RedisModule`: Redis와의 상호작용을 위한 모듈입니다.
+ *   - `BullMQModule`: BullMQ를 사용한 딜레이큐를 위한 모듈입니다.
  *
  * - `providers`: 서비스와 리포지토리, 그리고 Dynamoose 모델을 제공하는 프로바이더를 정의합니다.
  *   - `ReminderRepository`: 애플리케이션에서 사용할 저장소 인터페이스를 제공합니다.
- *   - `REMINDER_DELAY_QUEUE`: 메시징 지연 큐를 처리하는 인프라입니다.
+ *   - `DelayQueue`: 메시징 지연 큐 인터페이스를 제공합니다.
  *   - `queries`와 `commands`: CQRS 패턴을 구현하기 위한 쿼리와 커맨드 핸들러를 제공합니다.
  *
  * - `controllers`: HTTP 요청 및 메시지 처리를 담당하는 컨트롤러를 정의합니다.
@@ -48,7 +47,7 @@ import { SwaggerModule } from "@/infrastructure/swagger";
         TerminusModule,
         SwaggerModule,
         DynamoModule,
-        RedisModule,
+        BullMQModule,
     ],
     providers: [
         {
@@ -56,10 +55,10 @@ import { SwaggerModule } from "@/infrastructure/swagger";
             useClass: DynamoRepository, // 구현체 연결
         },
         {
-            provide: REMINDER_DELAY_QUEUE,
-            useFactory: (redis: Redis) => new RedisZSetDelayQueue(redis, "reminder-delay-queue"),
-            inject: [REDIS_STORAGE],
+            provide: ReminderDelayQueue,
+            useClass: MQDelayQueue,
         },
+        ReminderTTLStrategy,
         ...Object.values(queries),
         ...Object.values(commands),
     ],

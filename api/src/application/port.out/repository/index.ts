@@ -1,1 +1,1 @@
-export { ReminderRepository } from "./reminder.repository";
+export { default as ReminderRepository } from "./reminder.repository";

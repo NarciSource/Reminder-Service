@@ -1,8 +1,7 @@
 import { Inject } from "@nestjs/common";
 import { CommandHandler, type ICommandHandler } from "@nestjs/cqrs";
 
-import type { DelayQueue } from "../port.out/messaging";
-import { REMINDER_DELAY_QUEUE } from "../port.out/messaging/token";
+import { ReminderDelayQueue } from "../port.out/messaging";
 import { ReminderRepository } from "../port.out/repository";
 import DeleteCommand from "./delete.command";
 
@@ -10,9 +9,9 @@ import DeleteCommand from "./delete.command";
 export default class DeleteHandler implements ICommandHandler<DeleteCommand> {
     constructor(
         @Inject(ReminderRepository)
-        private repository: ReminderRepository,
-        @Inject(REMINDER_DELAY_QUEUE)
-        private readonly delayQueue: DelayQueue,
+        private readonly repository: ReminderRepository,
+        @Inject(ReminderDelayQueue)
+        private readonly delayQueue: ReminderDelayQueue,
     ) {}
 
     /**
