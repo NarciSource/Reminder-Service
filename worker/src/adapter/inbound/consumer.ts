@@ -1,28 +1,20 @@
-import { Inject, Injectable, type OnModuleInit } from "@nestjs/common";
-import type { EventBus } from "@nestjs/cqrs";
+import { Processor, WorkerHost } from "@nestjs/bullmq";
+import { Injectable } from "@nestjs/common";
+import type { CommandBus } from "@nestjs/cqrs";
+import type { Job } from "bullmq";
 
-import { SendEvent } from "@/application/events";
-import type { StreamsQueue } from "@/application/port.out/messaging/streams-queue";
-import { REMINDER_STREAMS_QUEUE } from "@/application/port.out/messaging/token";
+import { RunCommand } from "@/application/commands";
 
 @Injectable()
-export class StreamConsumer implements OnModuleInit {
-    constructor(
-        private readonly eventBus: EventBus,
-        @Inject(REMINDER_STREAMS_QUEUE)
-        private readonly streamsQueue: StreamsQueue,
-    ) {}
+@Processor("reminder-delay-queue", { concurrency: 10 })
+export class ConsumerService extends WorkerHost {
+    constructor(private readonly commandBus: CommandBus) {
+        super();
+    }
 
-    async onModuleInit() {
-        for await (const { payload, ack } of this.streamsQueue.consume<string>()) {
-            try {
-                const event = new SendEvent(payload);
-                await this.eventBus.publish(event);
+    async process(job: Job) {
+        const command = new RunCommand(job);
 
-                await ack();
-            } catch (e) {
-                // retry
-            }
-        }
+        await this.commandBus.execute(command);
     }
 }

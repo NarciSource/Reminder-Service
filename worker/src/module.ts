@@ -2,19 +2,12 @@ import { Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 import { CqrsModule } from "@nestjs/cqrs";
 import { ScheduleModule } from "@nestjs/schedule";
-import type Redis from "ioredis";
 
-import { StreamConsumer } from "@/adapter/inbound/consumer";
-import { WorkerCronService } from "@/adapter/inbound/cron";
+import { ConsumerService } from "@/adapter/inbound/consumer";
 import { HttpScheduleClient, OneSignalNotificationClient, TcpReminderClient } from "@/adapter/outbound/api";
-import { RedisStreamQueue, RedisZSetDelayQueue } from "@/adapter/outbound/messaging";
 import { commands, events } from "@/application";
 import { NotificationClient, ReminderClient, ScheduleClient } from "@/application/port.out/api";
-import type { DelayQueue } from "@/application/port.out/messaging/delay-queue";
-import { REMINDER_DELAY_QUEUE, REMINDER_STREAMS_QUEUE } from "@/application/port.out/messaging/token";
-import { DelayQueueSource, ReminderSource } from "@/application/port.out/source";
-import { RedisModule } from "@/infrastructure/persistence/redis";
-import { REDIS_STORAGE } from "@/infrastructure/persistence/redis/provider";
+import { BullMQModule } from "@/infrastructure/messaging/bullmq";
 
 /**
  * @module WorkerModule
@@ -26,18 +19,14 @@ import { REDIS_STORAGE } from "@/infrastructure/persistence/redis/provider";
  *   - `ScheduleModule`: 작업 스케줄링을 위한 모듈입니다.
  *   - `ConfigModule`: 환경설정을 전역적으로 관리하기 위한 모듈입니다.
  *   - `CqrsModule`: CQRS 패턴을 구현하기 위한 모듈입니다.
- *   - `RedisModule`: Redis와의 상호작용을 위한 모듈입니다.
+ *   - `BullMQModule`: BullMQ를 사용한 딜레이큐를 위한 모듈입니다.
  *
  * - `providers`: 서비스와 인프라스트럭처를 정의합니다.
- *   - `WorkerCronService`: 작업자 크론 작업을 처리합니다.
- *   - `StreamConsumer`: 스트림 소비 작업을 처리합니다.
+ *   - `ConsumerService`:큐 기반으로 전달된 작업을 수신하여 처리합니다.
  *   - `commands`와 `events`: 애플리케이션의 명령과 이벤트 핸들러를 제공합니다.
  *   - `ReminderClient`: Reminder 마이크로서비스와의 TCP 통신을 처리하는 클라이언트입니다.
  *   - `ScheduleClient`: 스케줄 이벤트 수신을 처리하는 클라이언트입니다.
  *   - `NotificationClient`: 알림 발송을 처리하는 클라이언트입니다.
- *   - `REMINDER_DELAY_QUEUE`: 메시징 지연 큐를 처리하는 인프라입니다.
- *   - `REMINDER_STREAMS_QUEUE`: 메시징 스트림 큐를 처리하는 인프라입니다.
- *   - `ReminderSource`: 알림 조회를 처리하는 소스입니다.
  */
 @Module({
     imports: [
@@ -47,12 +36,11 @@ import { REDIS_STORAGE } from "@/infrastructure/persistence/redis/provider";
             envFilePath: [".env.local", ".env"],
         }),
         CqrsModule,
-        RedisModule,
+        BullMQModule,
     ],
     providers: [
         /** 진입점 */
-        WorkerCronService,
-        StreamConsumer,
+        ConsumerService,
 
         /** 유즈케이스 */
         ...Object.values(commands),
@@ -73,25 +61,6 @@ import { REDIS_STORAGE } from "@/infrastructure/persistence/redis/provider";
             // 알림 발송하는 클라이언트
             provide: NotificationClient,
             useClass: OneSignalNotificationClient,
-        },
-
-        /** 메시징 */
-        {
-            provide: REMINDER_DELAY_QUEUE,
-            useFactory: (redis: Redis) => new RedisZSetDelayQueue(redis, "reminder-delay-queue"),
-            inject: [REDIS_STORAGE],
-        },
-        {
-            provide: REMINDER_STREAMS_QUEUE,
-            useFactory: (redis: Redis) => new RedisStreamQueue(redis, "reminder:stream"),
-            inject: [REDIS_STORAGE],
-        },
-
-        /** 알림 조회 소스 */
-        {
-            provide: ReminderSource,
-            useFactory: (queue: DelayQueue) => new DelayQueueSource(queue),
-            inject: [REMINDER_DELAY_QUEUE],
         },
     ],
 })
