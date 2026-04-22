@@ -23,7 +23,7 @@
 
 ## 🛠️ 기술 스택
 
-[![Redis](https://img.shields.io/badge/Redis-FF4438?style=flat&logo=redis&logoColor=white)](https://redis.io/) [![DynamoDB](https://img.shields.io/badge/DynamoDB-4053D6?style=flat&logo=amazondynamodb&logoColor=white)](https://aws.amazon.com/ko/dynamodb/) [![Cron](https://img.shields.io/badge/Cron-00baa9.svg?logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbDpzcGFjZT0icHJlc2VydmUiIGZpbGwtcnVsZT0iZXZlbm9kZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlLW1pdGVybGltaXQ9IjIiIGNsaXAtcnVsZT0iZXZlbm9kZCIgdmlld0JveD0iMCAwIDM5NyA1MzQiPgogIDxwYXRoIGZpbGw9Im5vbmUiIGQ9Ik0zLTNoMzk2djUyN0gzeiIvPgogIDxwYXRoIGZpbGw9IndoaXRlIiBkPSJtMTk3IDEzMSAxNDggODZ2MTcxbC0xNDggODYtMTQ4LTg2VjIxN2wxNDgtODZaTTg2IDI5NmwxNS00NmMzNSAxMiA2MCAyMiA3NiAzMWwtNy04MWg0OGMtMSAyMS0zIDQ4LTggODEgMjMtMTEgNDktMjIgNzgtMzFsMTUgNDZjLTI4IDktNTUgMTUtODIgMTggMTMgMTIgMzIgMzMgNTYgNjJsLTM5IDI4Yy0xMy0xNy0yNy00MS00NS03MC0xNiAzMC0zMCA1NC00MiA3MGwtMzktMjhjMjUtMzEgNDQtNTIgNTQtNjItMjgtNS01NC0xMS04MC0xOFptMTI0LTE4NmMxMy0yNCA1OC0yNSA5OS0xczYzIDYyIDQ5IDg2bC0xNDgtODVabS0yNiAwYy0xNC0yNC01OC0yNS05OS0xcy02MyA2Mi00OSA4NmwxNDgtODVaIi8+CiAgPHBhdGggZmlsbD0id2hpdGUiIGQ9Ik0zMDEgODljMC0zMi00NS01OC0xMDEtNThTOTkgNTcgOTkgODljMTItMjAgNTMtMzYgMTAxLTM2czg5IDE2IDEwMSAzNlptLTE5IDM0NS0yNSAxNSAzNSA0NiAxMi03LTIyLTU0Wm0tMTY5IDAgMjQgMTUtMzUgNDYtMTItNyAyMy01NFoiLz4KPC9zdmc+Cg==&style=flat&logoColor)](https://github.com/kelektiv/node-cron)   
+[![BullMQ](https://img.shields.io/badge/BullMQ-00ADEF.svg?logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2MTYiIGhlaWdodD0iNjE2IiB2aWV3Qm94PSIwIDAgNDYyIDQ2MiI+DQogIDxwYXRoDQogICAgZmlsbD0id2hpdGUiDQogICAgZD0ibTIgMTAyIDUgMTYgNCAxNCAxMCA4IDEwIDhxMSAyLTkgMTJsLTExIDEyLTUgMTZxLTYgMTUtNiAxOS0xIDEgMTIgMTNsMTEgMTFoMzVsLTQgMTBjLTMgOS0zIDEwLTQgMjV2MTVsLTEwIDEwLTkgMTAtNyAyNC04IDIzIDEgMTV2MTRoMTRsMTMtMWMwLTQtNS0xNy03LTIwbC0zLTMgNS0xMGM0LTkgNS0xMSAxMi0xN2w4LTYgMjEtNiAyMS02IDE1LTEyIDE0LTEzIDEtOWMxLTcgOS0zNyAxMC0zNGwtMiAxNGE2MiA2MiAwIDAgMCAwIDI4bDg4LTNoNXYtN2wtMS04IDMgOCAzIDcgMTggMTQgMTkgMTQtMTEgMTAtMTAgMTAtMTAtMTAtMTAtMTAtMTAgMS0xMSAyIDQgOCA2IDhoOWw2IDkgOCAxMCAyOS05IDI5LTkgMy0xNCA0LTE0LTgtMTQtOC0xNCAzLTExYzMtOSA2LTMxIDYtMzhsMiAxMmMxIDExIDEgMTQtMSAyMmwtMSAxMCAxMy0xIDEzLTEgMTYtMTRjMTQtMTIgMTYtMTMgMTgtMTNsOSAxcTcgMCA0IDFsLTkgMmgtNWwtMTQgMTVjLTEzIDEzLTE1IDE2LTIwIDI1cS0xMCAxOS03IDIxbDQgMXE0LTEgMyA2YzAgNiAwIDYgNiAxMmwzIDQgMTQtNiAxMy01IDExIDFoMTFsOC01IDctNSAyMyAxMSAyNCAxMC0zMy0zOC0yLTMgNCAyIDQxIDI2LTE1LTE4LTE2LTE5LTEwLTM1LTEzLTQyLTItNi00OS00My01MS00My03MSAyOC04NiAzNGMtNDMgMTYtNDUgMTctNjYgMjgtMjAgMTEtMjIgMTItMzQgMTVsLTE1IDMtOS02LTgtNiA0LTEzYzQtMTQgMy0xMiAyMC0zMWw5LTEwLTItMnoiDQogIC8+DQo8L3N2Zz4=&style=flat&logoColor=white)](https://bullmq.io/) [![Redis](https://img.shields.io/badge/Redis-FF4438?style=flat&logo=redis&logoColor=white)](https://redis.io/) [![DynamoDB](https://img.shields.io/badge/DynamoDB-4053D6?style=flat&logo=amazondynamodb&logoColor=white)](https://aws.amazon.com/ko/dynamodb/)  
 [![NestJS](https://img.shields.io/badge/NestJS-E0234E?style=flat&logo=nestjs&logoColor=white)](https://nestjs.com/) [![NodeJS](https://img.shields.io/badge/Node.js-6DA55F?style=flat&logo=node.js&logoColor=white)](https://nodejs.org/ko) [![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)  
 [![OneSignal](https://img.shields.io/badge/OneSignal-E54B4D.svg?logo=data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMTQ5LjcwMiAwQzY2Ljk0NC4xNjEtLjQ2OCA2OC4xMS4wMDIgMTUwLjg2N2MuNDE0IDc3LjI5MiA1OS4zNTYgMTQwLjc0NiAxMzQuNzU4IDE0OC4zNTVhMS43MjcgMS43MjcgMCAwIDAgMS44OTYtMS43MjRWMTQ5Ljk5OWgtMTEuNjJhMS43MjUgMS43MjUgMCAwIDEtMS43MjQtMS43MjR2LTIzLjI1M2ExLjcyIDEuNzIgMCAwIDEgMS43MjQtMS43MjRoMzYuNTg2YTEuNzI1IDEuNzI1IDAgMCAxIDEuNzI0IDEuNzI0djE3Mi40NzZhMS43MTggMS43MTggMCAwIDAgLjU2MiAxLjI4MiAxLjczOCAxLjczOCAwIDAgMCAxLjMyOS40NDJDMjQwLjkyIDI5MS41ODQgMzAwIDIyNy42OTQgMzAwIDE0OS45OTkgMzAwIDY3LjA1NyAyMzIuNjc5LS4xNjEgMTQ5LjcwMiAwem00Mi42NjcgMjY1LjgwM2ExLjcyNCAxLjcyNCAwIDAgMS0yLjI5OS0xLjYyN3YtMjQuNjJhMi41OSAyLjU5IDAgMCAxIDEuNDgzLTIuMzM0IDk2LjcyNyA5Ni43MjcgMCAwIDAgNTUuMDU3LTg3LjIyM2MwLTUzLjc3NS00NC4xNjEtOTcuNDI0LTk4LjExNS05Ni41OTctNTEuMzIxLjc4Mi05My40MTggNDIuMTU1LTk1LjA1NiA5My40NTNhOTYuNzA5IDk2LjcwOSAwIDAgMCA1NS4wMjIgOTAuMzY3IDIuNTkgMi41OSAwIDAgMSAxLjQ4OSAyLjMzNHYyNC42MjZhMS43MjMgMS43MjMgMCAwIDEtMi4yOTkgMS42MjZDNjAuMTI4IDI0OC4zNzcgMjYuMjE1IDIwMi40NyAyNi43MDMgMTQ4Ljg1IDI3LjMwNyA4MS44NjcgODIuMDI1IDI3LjIxOCAxNDkuMDMgMjYuNzAxIDIxNy40NiAyNi4xNzIgMjczLjI5OSA4MS42OSAyNzMuMjk5IDE1MGMwIDUzLjEyLTMzLjc2NCA5OC40OTktODAuOTMgMTE1LjgwNHoiIGZpbGw9IiNGRkYiLz48L3N2Zz4=&style=flat&logoColor)](https://onesignal.com/) [![Axios](https://img.shields.io/badge/Axios-5A29E4?style=flat&logo=axios&logoColor=white)](https://axios-http.com/kr/docs/intro) [![Swagger](https://img.shields.io/badge/Swagger-85EA2D?style=flat&logo=swagger&logoColor=black)](https://swagger.io/)  
 [![Biome](https://img.shields.io/badge/Biome-60A5FA?style=flat&logo=biome&logoColor=white)](https://biomejs.dev/) [![Jest](https://img.shields.io/badge/Jest-C21325?style=flat&logo=jest&logoColor=white)](https://jestjs.io/) [![Codecov](https://img.shields.io/badge/Codecov-F01F7A?style=flat&logo=codecov&logoColor=white)](https://about.codecov.io/) [![TypeDoc](https://img.shields.io/badge/TypeDoc-3178c6.svg?logo=data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz48IS0tIFVwbG9hZGVkIHRvOiBTVkcgUmVwbywgd3d3LnN2Z3JlcG8uY29tLCBHZW5lcmF0b3I6IFNWRyBSZXBvIE1peGVyIFRvb2xzIC0tPgo8c3ZnIHdpZHRoPSI4MDBweCIgaGVpZ2h0PSI4MDBweCIgdmlld0JveD0iMCAwIDMyIDMyIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjx0aXRsZT5maWxlX3R5cGVfdHlwZWRvYzwvdGl0bGU+PHBvbHlnb24gcG9pbnRzPSIzIDIzIDMgOSAxNiAyIDE2IDMwIDMgMjMiIHN0eWxlPSJmaWxsOiNiNDRjZmUiLz48cG9seWdvbiBwb2ludHM9IjMgOSAxNiAxNiAyOSA5IDE2IDIgMyA5IiBzdHlsZT0iZmlsbDojOTYwMWZlIi8+PHBvbHlnb24gcG9pbnRzPSIzIDIzIDE2IDE2IDE2IDMwIDMgMjMiIHN0eWxlPSJmaWxsOiM5OWNiZmUiLz48cG9seWdvbiBwb2ludHM9IjI5IDkgMTYgMTYgMTYgMzAgMjkgMjMgMjkgOSIgc3R5bGU9ImZpbGw6IzBjMzY0ZiIvPjwvc3ZnPg==&style=flat&logoColor=black)](https://typedoc.org/)  
@@ -39,28 +39,25 @@
 
 - **MSA (마이크로서비스아키텍처)**
 
-    1. **API 서비스**
-        - 알림 리소스를 관리하는 _REST API_ 제공
-        - 알림 데이터는 _Key-Value_ 데이터베이스인 **DynamoDB**에 저장
-        - 예약 알림은 Redis의 **Delay Queue** (*ZSET*) 에 저장
-        - _DynamoDB의 TTL(Time to Live)_ 설정을 활용하여, 예약된 알림이 지나면 자동으로 삭제됨
-    2. **Worker 서비스**
-       - Poller
-         - *Cron 스케줄러*를 사용하여 주기적으로 *Delay Queue*를 *Polling*
-         - 현재 시각 이하의 예약 알림을 조회
-         - 조회한 알림 이벤트를 **Redis Streams** 로 발행
-       - Executor
-         - Streams Consumer Group 을 통해 알림 이벤트 비동기 소비
-         - API 서비스와 *TCP 통신*을 통해 알림 데이터를 조회
-         - **OneSignal** 서비스를 통해 알림 메시지를 전송
+  1. API 서비스
+      - 알림 리소스를 관리하는 _REST API_ 제공
+      - 알림 데이터는 _Key-Value_ 데이터베이스인 **DynamoDB**에 저장
+      - 예약 알림 작업은 Redis 기반 **BullMQ Queue**에 *delay* 옵션으로 등록
+      - _DynamoDB의 TTL(Time to Live)_ 설정을 활용하여 만료된 알림 데이터를 자동 삭제
 
-- **Redis 기반 비동기 파이프라인**
+  2. Worker 서비스
+      - BullMQ Worker를 통해 예약된 알림 작업 비동기 소비
+      - 예약 시간이 도래한 작업을 자동으로 실행
+      - API 서비스와 *TCP 통신*을 통해 알림 데이터를 조회
+      - **OneSignal** 서비스를 통해 알림 메시지를 전송
 
-  - Delay Queue (ZSET)를 사용하여 예약 시점 관리
-  - Streams 를 사용하여 이벤트 기반 비동기 처리
-  - Consumer Group 기반으로 Worker 수평 확장 가능
-  - Pending Entry 관리 및 재처리를 통해 장애 복구 지원
-  - Polling 기반 Cron 구조를 이벤트 드리븐 파이프라인 구조로 개선하여 Worker 부하 감소 및 처리량 향상
+- **BullMQ 기반 비동기 파이프라인**
+
+  - Redis 기반 Delay Queue를 활용하여 예약 작업 관리
+  - BullMQ Worker 기반 이벤트 드리븐 비동기 처리 구조 적용
+  - Worker 프로세스 수평 확장을 통한 병렬 처리 지원
+  - Retry / Failed Queue 기반 장애 복구 지원
+  - Polling 기반 Cron 구조를 제거하고 BullMQ 기반 이벤트 소비 구조로 전환하여 Worker 부하 감소 및 처리량 향상
 
 ## 📖 개발 문서
 
@@ -118,45 +115,42 @@
 ```mermaid
 flowchart LR
     subgraph Reminder
-        RedisDelay@{ shape: lin-cyl, label: "Redis ZSET" }
-        RedisStream@{ shape: lin-cyl, label: "Redis Streams" }
-
-        Poller --> |ZRANGEBYSCORE| RedisDelay
+        Queue@{ shape: lin-cyl, label: "BullMQ Queue (Redis)" }
 
         subgraph Worker Layer
-            Poller@{ shape: circle, label: "Poller" }
-            Executor@{ shape: circle, label: "Executor" }
+            Worker@{ shape: circle, label: "Worker" }
 
-            Poller --> |XADD| RedisStream
-            Executor --> |XREADGROUP| RedisStream
+            Worker --> |consume job| Queue
         end
 
-        Executor -.-> |TCP| Api
+        Worker -.-> |TCP| Api
 
         subgraph Api Layer
             Api@{ shape: circle, label: "API 서버" }
             DB@{ shape: lin-cyl, label: "DynamoDB" }
 
             Api <--> DB
-            Api --> |ZADD| RedisDelay
+            Api --> |Queue.add delay| Queue
         end
 
     end
 
     Web["웹사이트"] --> event@{ shape: bow-rect, label: "이벤트 정보" } --> |REST/HTTP| Api
-    Scheduler --> data@{ shape: bow-rect, label: "이벤트 상세 정보" } --> |HTTP| Executor
-    Executor --> |HTTP| message@{ shape: bow-rect, label: "메시지" } --> OneSignal
+
+    Scheduler --> data@{ shape: bow-rect, label: "이벤트 상세 정보" } --> |HTTP| Worker
+
+    Worker --> |HTTP| message@{ shape: bow-rect, label: "메시지" } --> OneSignal
 ```
 
-Redis 기반 **Delay Queue** + **Streams** 비동기 처리 파이프라인
-1. 웹사이트에서 이벤트 정보를 Api 서비스 등록 서버에 REST 방식으로 전송
-2. Api 서비스는 데이터를 *DynamoDB*로 관리하고, 알림 스케줄을 **Redis ZSET** (*Delay Queue*)에 저장
-3. Worker 서비스의 Poller가 Redis ZSET에서 실행 시간이 도래한 데이터를 조회 (*ZRANGEBYSCORE*)하고 제거 (*ZREM*)
-4. Poller는 해당 데이터를 **Redis Streams**에 이벤트로 발행 (*XADD*)
-5. Worker 서비스의 Executor가 Streams Consumer Group으로 데이터를 구독 (*XREADGROUP*)
-6. Executor는 외부 Calendar 서비스에서 이벤트 상세 정보를 조회
-7. 데이터를 통합하여 메시지로 생성하고 생성된 메시지를 OneSignal로 전송
-8. 처리 결과를 Api 서버에 전달하여 상태를 DynamoDB에 반영
+BullMQ 기반 비동기 알림 처리 파이프라인
+
+1. 웹사이트에서 이벤트 정보를 Api 서비스에 *REST* 방식으로 전송
+2. Api 서비스는 데이터를 **DynamoDB**에 저장하고 **BullMQ Queue**에 예약 작업을 등록
+3. BullMQ는 Redis를 기반으로 예약 작업(*Delay Queue*)과 작업 대기열을 관리
+4. 예약 시간이 되면 BullMQ Worker가 작업을 소비하여 실행
+5. Worker는 외부 Scheduler 서비스에서 이벤트 상세 정보를 조회
+6. 조회한 데이터로 메시지를 생성하고 OneSignal로 전송
+7. 처리 결과를 Api 서버에 전달하여 DynamoDB 상태를 갱신
 
 ### 📦 배치 다이어그램
 
@@ -263,8 +257,7 @@ Reminder-Service
 │  │  │  └─ port.out
 │  │  │     ├─ messaging
 │  │  │     │  ├─ index.ts
-│  │  │     │  ├─ token.ts
-│  │  │     │  └─ delay-queue.ts
+│  │  │     │  └─ reminder.delay-queue.ts
 │  │  │     └─ repository
 │  │  │        ├─ index.ts
 │  │  │        └─ reminder.repository.ts
@@ -297,9 +290,12 @@ Reminder-Service
 │  │  │  └─ outbound
 │  │  │     ├─ messaging
 │  │  │     │  ├─ index.ts
-│  │  │     │  └─ redis-zset-delay-queue.ts # 딜레이큐 구현체
+│  │  │     │  └─ mq.delay-queue.ts # 딜레이큐 구현체
 │  │  │     └─ persistence
 │  │  │        ├─ index.ts
+│  │  │        ├─ strategies # 전략패턴
+│  │  │        │  ├─ index.ts
+│  │  │        │  └─ reminder-ttl-strategy.ts # ttl 전략
 │  │  │        └─ dynamo.repository.ts # 레포지토리 구현체
 │  │  │           └─ dynamo.repository.test.ts
 │  │  ├─ infrastructure # 인프라 설정
@@ -307,14 +303,15 @@ Reminder-Service
 │  │  │  │  ├─ jwt.interceptor.ts # JWT 토큰 인터셉터
 │  │  │  │  └─ verify-jwt.ts # JWT 토큰 인증
 │  │  │  ├─ persistence # 저장소
-│  │  │  │  ├─ dynamo # DynamoDB
-│  │  │  │  │  ├─ index.ts
-│  │  │  │  │  ├─ model.ts # 스키마
-│  │  │  │  │  │  └─ model.test.ts
-│  │  │  │  │  ├─ provider.ts # 프로바이더 의존성
-│  │  │  │  │  │  └─ provider.test.ts
-│  │  │  │  │  └─ module.ts
-│  │  │  │  └─ redis
+│  │  │  │  └─ dynamo # DynamoDB
+│  │  │  │     ├─ index.ts
+│  │  │  │     ├─ model.ts # 스키마
+│  │  │  │     │  └─ model.test.ts
+│  │  │  │     ├─ provider.ts # 프로바이더 의존성
+│  │  │  │     │  └─ provider.test.ts
+│  │  │  │     └─ module.ts
+│  │  │  ├─ messaging # 메시징
+│  │  │  │  └─ bullmq # BullMQ
 │  │  │  │     ├─ index.ts
 │  │  │  │     ├─ provider.ts
 │  │  │  │     └─ module.ts
@@ -350,54 +347,35 @@ Reminder-Service
 │  │  │  ├─ commands
 │  │  │  │  ├─ index.ts
 │  │  │  │  └─ run.command.ts # 알림 발송 작업
-│  │  │  │     ├─ run.handler.ts
-│  │  │  │     └─ run.handler.test.ts
+│  │  │  │     └─ run.handler.ts
 │  │  │  ├─ events
 │  │  │  │  ├─ index.ts
 │  │  │  │  └─ send.event.ts # 알림 TCP 요청, 발송 처리, 완료 처리
 │  │  │  │     └─ send.handler.ts
 │  │  │  └─ port.out
-│  │  │     ├─ api # axios API 인터셉터
-│  │  │     │  ├─ index.ts
-│  │  │     │  ├─ dto.ts
-│  │  │     │  ├─ schedule.client.ts # 메시지 수신
-│  │  │     │  ├─ notification.client.ts # 메시지 발송
-│  │  │     │  └─ reminder.client.ts # 알림 저장 서비스
-│  │  │     ├─ messaging # 메시징
-│  │  │     │  ├─ token.ts
-│  │  │     │  ├─ delay-queue.ts # 딜레이큐
-│  │  │     │  └─ streams-queue.ts # 스트림큐
-│  │  │     └─ source # 알림 조회 소스
+│  │  │     └─ api # axios API 인터셉터
 │  │  │        ├─ index.ts
-│  │  │        ├─ reminder.source.ts # 인터페이스
-│  │  │        └─ tcp-reminder.source.ts # reminder TCP 연결 구현체
+│  │  │        ├─ dto.ts
+│  │  │        ├─ schedule.client.ts # 메시지 수신
+│  │  │        ├─ notification.client.ts # 메시지 발송
+│  │  │        └─ reminder.client.ts # 알림 저장 서비스
 │  │  ├─ adapter # 호출 규격
 │  │  │  ├─ inbound
-│  │  │  │  ├─ cron.ts # 
-│  │  │  │  │  └─ cron.test.ts
-│  │  │  │  └─ consumer.ts # 스트림 컨슈머
+│  │  │  │  └─ consumer.ts # 메시지큐 컨슈머
 │  │  │  └─ outbound
-│  │  │     ├─ api # 잡 스케줄러
-│  │  │     │  ├─ index.ts
-│  │  │     │  ├─ dto.ts
-│  │  │     │  ├─ http-schedule.client.ts
-│  │  │     │  │  └─ http-schedule.client.test.ts
-│  │  │     │  ├─ tcp-reminder.client.ts
-│  │  │     │  │  └─ tcp-reminder.client.test.ts
-│  │  │     │  └─ oneSignal-notification.client.ts
-│  │  │     │     └─ oneSignal-notification.client.test.ts
-│  │  │     └─ messaging
+│  │  │     └─ api # 잡 스케줄러
 │  │  │        ├─ index.ts
-│  │  │        ├─ redis-streams-queue.ts
-│  │  │        └─ redis-zset-delay-queue.ts
+│  │  │        ├─ dto.ts
+│  │  │        ├─ http-schedule.client.ts
+│  │  │        │  └─ http-schedule.client.test.ts
+│  │  │        ├─ tcp-reminder.client.ts
+│  │  │        │  └─ tcp-reminder.client.test.ts
+│  │  │        └─ oneSignal-notification.client.ts
+│  │  │           └─ oneSignal-notification.client.test.ts
 │  │  └─ infrastructure # 인프라 설정
-│  │     └─ persistence # 저장소
-│  │        └─ redis
+│  │     └─ messaging # 메시징
+│  │        └─ bullmq
 │  │           ├─ index.ts
-│  │           ├─ redis.d.ts # ioredis 타입 확장
-│  │           ├─ lua # 루아 스크립트
-│  │           │  └─ pollDue.lua # atomic poll
-│  │           ├─ lua-service.ts
 │  │           ├─ provider.ts
 │  │           └─ module.ts
 │  ├─ Dockerfile # 도커파일
