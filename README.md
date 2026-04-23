@@ -13,11 +13,8 @@
     - [📘 타입 문서](#-타입-문서)
     - [🧪 테스트 리포트](#-테스트-리포트)
 - [📐 다이어그램](#-다이어그램)
-    - [🔹 유즈케이스 다이어그램](#-유즈케이스-다이어그램)
+    - [🧩 컨테이너 다이어그램](#-컨테이너-다이어그램) 
     - [🔀 데이터 흐름 다이어그램](#-데이터-흐름-다이어그램)
-    - [📦 배치 다이어그램](#-배치-다이어그램)
-    - [🗺️ AWS 아키텍처 다이어그램](#️-aws-아키텍처-다이어그램)
-    - [🚚 CI/CD 파이프라인](#-cicd-파이프라인)
 - [📂 폴더 구조](#-폴더-구조)
 - [🚀 실행 방법](#-실행-방법)
 
@@ -32,10 +29,13 @@
 
 ## 💡 주요 기능
 
-- **NestJS 프레임워크**
+- **BullMQ 기반 비동기 파이프라인**
 
-    - NestJS 애플리케이션 아키텍처를 활용하여 모듈과 공급자 간의 의존성 주입을 설정
-    - NestJS의 전송 계층 마이크로서비스 기능을 사용하여 마이크로서비스 간 TCP 통신을 구현
+  - Redis 기반 Delay Queue를 활용하여 예약 작업 관리
+  - BullMQ Worker 기반 이벤트 드리븐 비동기 처리 구조 적용
+  - Worker 프로세스 수평 확장을 통한 병렬 처리 지원
+  - Retry / Failed Queue 기반 장애 복구 지원
+  - Polling 기반 Cron 구조를 제거하고 BullMQ 기반 이벤트 소비 구조로 전환하여 Worker 부하 감소 및 처리량 향상
 
 - **MSA (마이크로서비스아키텍처)**
 
@@ -51,13 +51,10 @@
       - API 서비스와 *TCP 통신*을 통해 알림 데이터를 조회
       - **OneSignal** 서비스를 통해 알림 메시지를 전송
 
-- **BullMQ 기반 비동기 파이프라인**
+- **NestJS 프레임워크**
 
-  - Redis 기반 Delay Queue를 활용하여 예약 작업 관리
-  - BullMQ Worker 기반 이벤트 드리븐 비동기 처리 구조 적용
-  - Worker 프로세스 수평 확장을 통한 병렬 처리 지원
-  - Retry / Failed Queue 기반 장애 복구 지원
-  - Polling 기반 Cron 구조를 제거하고 BullMQ 기반 이벤트 소비 구조로 전환하여 Worker 부하 감소 및 처리량 향상
+    - NestJS 애플리케이션 아키텍처를 활용하여 모듈과 공급자 간의 의존성 주입을 설정
+    - NestJS의 전송 계층 마이크로서비스 기능을 사용하여 마이크로서비스 간 TCP 통신을 구현
 
 ## 📖 개발 문서
 
@@ -92,23 +89,41 @@
 
 ## 📐 다이어그램
 
-### 🔹 유즈케이스 다이어그램
+### 🧩 컨테이너 다이어그램
 
-![usecase](https://github.com/user-attachments/assets/d1527c03-5d4a-40d2-aa51-e4b31920c25e)
+```mermaid
+flowchart LR
+    subgraph Schedule["Schedule Service"]
+        ScheduleAPI[REST API]
+        ScheduleDB[(DataBase)]
+    end
 
-1. _사용자 (Actor)_
-    - 웹사이트 사용자: 이벤트를 등록하고 알림을 받는 사용자
-    - 알림 워커: 정기적으로 메시지를 처리하고 전송하는 시스템
-2. _유즈케이스 (Use Case)_
-    - 알림 등록: 사용자가 새로운 이벤트 알림을 등록하는 기능
-    - 알림 삭제: 사용자가 기존에 등록된 알림을 삭제하는 기능
-    - 알림 확인: 사용자가 등록된 알림 목록을 확인하는 기능
-    - 메시지 상태 확인:알림 워커가 이벤트를 읽는 기능
-    - 메시지 전송: 알림 워커가 메시지를 사용자에게 전송하는 기능
-3. _상호작용 (Interaction)_
-    - 웹사이트 사용자 ↔ 알림 서비스: 웹사이트 사용자가 이벤트 정보를 입력하여 알림 등록을 요청
-    - 알림 워커 ↔ 알림 서비스: 알림 워커가 알림 서비스에 등록된 이벤트 정보를 확인
-    - 알림 워커 ↔ OneSignal: 알림 워커가 OneSignal을 통해 알림 메시지를 사용자에게 전송
+    subgraph Reminder["Reminder Service"]
+        ReminderAPI[REST API]
+        DynamoDB
+        BullMQ[BullMQ Queue]
+    end
+
+    subgraph Worker["Reminder Worker"]
+        Processor[Queue Processor]
+    end
+
+    subgraph Notification["Notification Service"]
+        NotificationAPI[Notification Sender]
+    end
+
+    Client --> ScheduleAPI & ReminderAPI
+
+    ScheduleAPI --> ScheduleDB
+
+    Processor -- ScheduleCreated Event --> ScheduleAPI
+
+    ReminderAPI --> DynamoDB & BullMQ
+
+    BullMQ --> Processor
+
+    Processor -- Send Notification --> NotificationAPI
+```
 
 ### 🔀 데이터 흐름 다이어그램
 
@@ -151,68 +166,6 @@ BullMQ 기반 비동기 알림 처리 파이프라인
 5. Worker는 외부 Scheduler 서비스에서 이벤트 상세 정보를 조회
 6. 조회한 데이터로 메시지를 생성하고 OneSignal로 전송
 7. 처리 결과를 Api 서버에 전달하여 DynamoDB 상태를 갱신
-
-### 📦 배치 다이어그램
-
-![deployment](https://github.com/user-attachments/assets/8f36e425-cc3f-4d7a-9f5c-66e133bbfc81)
-
-1. **NestJS 프레임워크**를 사용해 백엔드 서비스 구축
-2. NestJS의 *MicroService 모듈*을 사용해 두 개의 마이크로서비스로 구현
-3. **API 서비스**
-    - _REST API_ 방식으로 외부 요청을 처리
-    - **DynamoDB**를 사용해 데이터베이스 관리
-4. **Worker 서비스**
-    - *NestJS Schedule 라이브러리*를 사용해 _Cron Job_ 설정으로 주기 작업 처리
-    - 마이크로서비스 간 *TCP 연결*을 통해 API 서비스에서 데이터 읽기
-    - REST API로 외부 서비스 (Scheduler 서비스)에서 데이터 요청
-    - 데이터 통합하고 **OneSignal**를 통해 알림을 전송
-5. 각 마이크로 서비스는 **Docker Image** 생성하여 컨테이너화
-6. **Docker Compose**로 마이크로서비스와 관련 서비스(DB)를 관리하고 배포
-
-### 🗺️ AWS 아키텍처 다이어그램
-
-![aws-architecture](https://github.com/user-attachments/assets/92c1a636-5431-45d3-82ba-ce8c94d384fa)
-
-1. **ECR(Elastic Container Registery)** 에 Docker 이미지 업로드
-2. **ECS(Elastic Container Service) Cluster** 생성
-    - 두 서비스 간의 연결을 위해 **브릿지 모드** 설정
-3. ECS의 *용량 공급자*로 **EC2 인스턴스** 생성 (_Auto Scaling_ 적용)
-4. *ECR 이미지*를 기반으로 _Task Definition_ 생성
-5. **Task Definition**을 바탕으로 _ECS 서비스_ 생성
-6. **ECS 서비스**에서 태스크 실행 (**Auto Scaling** 적용)
-7. **ALB(Application Load Balencer)** 연결을 통해 외부 트래픽 라우팅
-
-### 🚚 CI/CD 파이프라인
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="https://github.com/Daily1Hour/PickMe-Reminder-Service/actions" title="GitHub Actions"> <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/githubactions/githubactions-original.svg" alt="GitHubActions" height="45" /> GitHub Actions 바로가기 </a>
-
-```mermaid
-graph LR
-    Tag[태그 푸시] ---> test-report & openapi
-
-    subgraph test-report
-        direction LR
-        Test/Coverage[커버리지 측정] --> |🟢 통과|Test/Codecov[Codecov 퍼블리싱]
-        Test/Execution[테스트 수행] --> |🟢 통과|Test/Report[리포트 생성]
-    end
-
-    subgraph openapi
-        direction LR
-        Docs[타입 문서화]
-        OpenAPI/Define[명세서 생성] --> OpenAPI/Validate[검증] --> |🟢 통과|OpenAPI/Publish[API 문서 생성]
-    end
-
-    Test/Report & Docs & OpenAPI/Publish -.-> |📦 아티팩트|Artifact/Download
-
-    subgraph deploy-document
-        direction LR
-        Artifact/Download[다운로드] --> Release[릴리즈 배포]
-        Artifact/Download --> DeployGH[gh-pages 배포] --> |자동 워크플로 실행|pages-build-deployment[GitHub Pages 배포 완료]
-    end
-
-    click Test/Execution,Docs,OpenAPI/Define,DeployGH "https://github.com/Daily1Hour/PickMe-Reminder-Service/actions/workflows/document-hosting.yml"
-    click pages-build-deployment "https://github.com/Daily1Hour/PickMe-Reminder-Service/actions/workflows/pages/pages-build-deployment"
-```
 
 ## 📂 폴더 구조
 
@@ -389,6 +342,10 @@ Reminder-Service
 │     └─ global.d.ts # 환경변수 타입
 ├─ test # 통합 테스트
 │  └─ jest.config.js
+├─ docs
+│  ├─ aws-architecture.md
+│  ├─ ci-cd.md
+│  └─ use-case.md
 ├─ .env # 공용 환경변수
 │  └─ .env.sample
 ├─ docker-compose.yml # 도커컴포즈
